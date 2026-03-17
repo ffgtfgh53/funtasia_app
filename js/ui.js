@@ -31,7 +31,23 @@ export function hideBottomSheet() {
   sheet.classList.remove("show");
 }
 
-export function setupUI(floors, floorObjects, switchFloorCb) {
+export function showToast(message, duration = 3000) {
+  const toast = document.getElementById("toast-popup");
+  const toastMsg = document.getElementById("toast-message");
+  if (!toast || !toastMsg) return;
+
+  toastMsg.textContent = message;
+  toast.classList.add("show");
+
+  // Remove any existing timeout to reset the timer if called repeatedly
+  if (toast.hideTimeout) clearTimeout(toast.hideTimeout);
+
+  toast.hideTimeout = setTimeout(() => {
+    toast.classList.remove("show");
+  }, duration);
+}
+
+export function setupUI(floors, switchFloorCb) {
   closeBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     e.preventDefault();
@@ -48,39 +64,16 @@ export function setupUI(floors, floorObjects, switchFloorCb) {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
       const floorId = btn.dataset.floor;
-      if (floors[floorId]) switchFloorCb(floorId, floors, floorObjects);
+      if (floors[floorId] && floors[floorId].isLoaded()) switchFloorCb(floorId);
     });
     
     btn.addEventListener("touchend", (e) => {
       e.stopPropagation();
       e.preventDefault();
       const floorId = btn.dataset.floor;
-      if (floors[floorId]) switchFloorCb(floorId, floors, floorObjects);
+      if (floors[floorId] && floors[floorId].isLoaded()) switchFloorCb(floorId);
     });
   });
 }
 
-export function switchFloor(floorId, floors, floorObjects, currentState) {
-  Object.keys(floors).forEach((id) => {
-    if (floors[id]) floors[id].visible = false;
-  });
 
-  if (floors[floorId]) {
-    floors[floorId].visible = true;
-    currentState.interactiveObjects = floorObjects[floorId];
-    currentState.currentFloor = floorId;
-    console.log(`Switched to ${floorId}`);
-  } else {
-    console.warn(`Floor ${floorId} not loaded yet`);
-  }
-
-  document.querySelectorAll(".floor-btn").forEach((btn) => {
-    btn.classList.remove("active");
-    if (btn.dataset.floor === floorId) btn.classList.add("active");
-  });
-
-  if (currentState.selected) {
-    currentState.selected.material.emissive.setHex(0x000000);
-    currentState.selected = null;
-  }
-}
