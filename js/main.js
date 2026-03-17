@@ -6,6 +6,7 @@ import { setupEventListeners } from "./event.js";
 import { startAnimationLoop } from "./animate.js";
 import { Floor } from "./floor.js";
 import { QRMarker } from "./marker.js";
+import { loadFont } from "./font.js";
 
 const { scene, camera, renderer, controls } = setupScene();
 
@@ -39,6 +40,11 @@ setupEventListeners(renderer, mouse, appState, raycaster, camera, infoLabel, con
 
 // Initializing the application
 async function initApp() {
+  const font = await loadFont();
+  if (font === undefined) {
+    console.log("Font not loaded");
+  }
+  console.log(`Font: ${font}`)
   const { floors } = await loadModels(scene, camera, controls, floorPaths);
   
   // Custom switch floor callback to handle main.js state
@@ -48,11 +54,11 @@ async function initApp() {
     // Persistence: Check if we need to re-render the last scanned marker
     if (appState.lastScannedInfo && appState.lastScannedInfo.floorId === floorId) {
       const startTime = appState.lastScannedInfo.startTime;
-      const greyDelay = 10000;
+      const greyDelay = 5 * 60000;
       const now = performance.now();
       
       if (now - startTime < greyDelay) {
-        const marker = new QRMarker(scene, appState.lastScannedInfo.pos, greyDelay);
+        const marker = new QRMarker(scene, appState.lastScannedInfo.pos, font, greyDelay);
         // Correct the start time so it greys out at the right moment
         marker.startTime = startTime; 
         appState.activeMarkers.push(marker);
@@ -63,7 +69,7 @@ async function initApp() {
   setupUI(floors, switchFloorCb);
 
   const handleURLQR = () => {
-    QRMarker.handleURLQR(scene, camera, controls, appState, switchFloorCb);
+    QRMarker.handleURLQR(scene, camera, controls, appState, switchFloorCb, font);
   };
 
   // Listen for URL changes (back/forward or manual scan)

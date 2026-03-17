@@ -1,18 +1,6 @@
 import * as THREE from "three";
 import { showBottomSheet } from "./ui.js";
-
-const mutedColors = {
-  "-1": 0xb9a6b9,
-  0: 0xd97c7c,
-  1: 0xe6a57e,
-  2: 0x8fa7b3,
-  3: 0x8fbf9f,
-  4: 0xe8e2a1,
-  5: 0xb9a6b9,
-  6: 0xd6c1c8,
-  7: 0xb1b1b1,
-  8: 0xb0b0b0,
-};
+import { zoneColours } from "./modelParser.js";
 
 export function isPointerOverUI(event) {
   return !!event.target.closest("#bottom-sheet, #close-btn, #floor-selector");
@@ -32,8 +20,8 @@ export function applySelection(target, appState, infoLabel) {
   appState.selected = target;
 
   if (appState.selected) {
-    const baseColor = new THREE.Color(mutedColors[appState.selected.userData.ZONE]);
-    const emissiveColor = baseColor.clone().multiplyScalar(0.5);
+    const baseColor = new THREE.Color(zoneColours[appState.selected.userData.ZONE]);
+    const emissiveColor = baseColor.clone().multiplyScalar(2);
     appState.selected.material.emissive.copy(emissiveColor);
     if (infoLabel) infoLabel.textContent = `Selected: ${appState.selected.name}`;
   } else {

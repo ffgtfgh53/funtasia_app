@@ -13,10 +13,10 @@ const miscColours = {
   "MARKER":0xffffff,
   "STAIRCASE":0xffffff
 };
-const zoneColours = {
+export const zoneColours = {
   "GREEN": 0x00ff00,
   "BLUE": 0x0066ff,
-  "ORANGE":  0xff9900,
+  "ORANGE":  0xff7700,
   "PURPLE": 0x9900ff,
   "YELLOW": 0xffff00,
   "RED": 0xff0000,

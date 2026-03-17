@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 export function getViewportSize() {
   if (window.visualViewport) {
@@ -44,8 +44,8 @@ export function setupScene() {
 
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.touches = {
-    ONE: THREE.TOUCH.ROTATE,
-    TWO: THREE.TOUCH.DOLLY_PAN,
+    ONE: THREE.TOUCH.PAN,
+    TWO: THREE.TOUCH.DOLLY_ROTATE,
   };
   controls.target.set(0, 0, 0);
   controls.screenSpacePanning = false;
