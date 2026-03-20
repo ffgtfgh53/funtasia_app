@@ -1,5 +1,5 @@
 import * as THREE from "three";
-
+import { Icon } from "./icon.js";
 const miscColours = {
   "BASE": 0x6e7176,
   "DRIVE": 0xa5ccd1,
@@ -14,6 +14,7 @@ const miscColours = {
   "STAIRCASE":0xffffff
 };
 export const zoneColours = {
+  "NONE": 0x000000,
   "GREEN": 0x00ff00,
   "BLUE": 0x0066ff,
   "ORANGE":  0xff7700,
@@ -26,6 +27,13 @@ let skybox = null;
 let maxRadius = 0;
 
 export function parseModel(gltf, floorId, scene) {
+  const roledict = {
+    "ATOILET": "atoilet",
+    "MTOILET": "mtoilet",
+    "FTOILET": "ftoilet",
+    "LIFT": "lift",
+    "STAIRCASE": "staircase"
+  };
   const model = gltf.scene;
   model.visible = false;
   scene.add(model);
@@ -72,11 +80,8 @@ export function parseModel(gltf, floorId, scene) {
       console.log("Undefined role:",child.name)
     };
     const isInteractive = child.userData?.ROLE === "OBJECT";
-    // console.log(child.userData.ROLE)
-    if (child.userData.ZONE == undefined) {child.userData.ZONE = 0};
+    if (child.userData.ZONE == undefined) {child.userData.ZONE = "NONE"};
     if (!isInteractive) {
-      // console.log(child.name,"Internal" + child.userData.ROLE);
-      // console.log("Mesh" + !child.isMesh);
       const isGrey = child.userData.ROLE === "GREY";
       child.material = new THREE.MeshStandardMaterial({
         color: miscColours[child.userData.ROLE],
@@ -88,18 +93,34 @@ export function parseModel(gltf, floorId, scene) {
 
       // Collect Markers
       if (child.userData.ROLE === "MARKER") {
-        const markerId = child.userData.MARKERID || child.name;
+        const markerId = child.userData.MARKERID;
         markers[markerId] = child.getWorldPosition(new THREE.Vector3());
       }
 
       // Collect Icons
-      const iconTypes = ["ATOILET", "MTOILET", "FTOILET", "STAIRCASE", "LIFT"];
-      console.log(child.userData.ROLE)
-      if (iconTypes.includes(child.userData.ROLE)) {
-        icons.push({
-          pos: child.getWorldPosition(new THREE.Vector3()),
-          type: child.userData.ROLE.toUpperCase(), // Normalize to your ICON_PATHS keys
-        });
+      if (Object.keys(roledict).includes(child.userData.ROLE)) {
+        let normalisedRole = roledict[child.userData.ROLE];
+        if (normalisedRole === "staircase") {
+          switch(child.userData?.STAIRCASEDIRECTION){
+            case "U":
+              normalisedRole = "stair-u";
+              break;
+            case "D":
+              normalisedRole = "stair-d";
+              break;
+            case "UD":
+              normalisedRole = "stair-ud";
+              break;
+            default:
+              normalisedRole = "stair-ud";
+              break;
+          }
+        }
+        if (normalisedRole) {
+          const pos = child.getWorldPosition(new THREE.Vector3());
+          const icon = new Icon(normalisedRole, pos, floorId);
+          icons.push(icon);
+        }
       }
     } else {
       child.material = new THREE.MeshStandardMaterial({

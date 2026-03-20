@@ -7,8 +7,10 @@ import { startAnimationLoop } from "./animate.js";
 import { Floor } from "./floor.js";
 import { QRMarker } from "./marker.js";
 import { loadFont } from "./font.js";
+import { Icon } from "./icon.js";
 
 const { scene, camera, renderer, controls } = setupScene();
+Icon.scene = scene;
 
 const floorPaths = {
   l4: "./assets/models/njc-l1.glb",
@@ -71,6 +73,24 @@ async function initApp() {
   };
   
   setupUI(floors, switchFloorCb);
+
+  // Temporary UI button for toggling icons
+  const toggleBtn = document.createElement("button");
+  toggleBtn.innerText = "Toggle Icons";
+  toggleBtn.style.position = "absolute";
+  toggleBtn.style.bottom = "20px";
+  toggleBtn.style.left = "20px";
+  toggleBtn.style.zIndex = "1000";
+  toggleBtn.style.padding = "10px";
+  toggleBtn.style.background = "rgba(255, 255, 255, 0.8)";
+  toggleBtn.style.border = "1px solid #ccc";
+  toggleBtn.style.borderRadius = "5px";
+  toggleBtn.style.cursor = "pointer";
+  
+  toggleBtn.onclick = () => {
+    Icon.state(!Icon.iconsVisible);
+  };
+  document.body.appendChild(toggleBtn);
 
   const handleURLQR = () => {
     QRMarker.handleURLQR(scene, camera, controls, appState, switchFloorCb, font);

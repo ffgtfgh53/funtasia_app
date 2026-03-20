@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { Floor } from "./floor.js";
 import { showToast } from "./ui.js";
 // import { TextGeometry }  from 'three/addons/geometries/TextGeometry.js';
@@ -29,7 +30,31 @@ export class QRMarker {
     this.ringOutline = new THREE.LineSegments(ring_edges, this.outlineMaterialActive);
     this.ring.add(this.ringOutline);
 
-    // ----- diamond (two flipped cones) -----
+    // ----- 3D Model for marker (temporary) -----
+    const loader = new GLTFLoader();
+    this.markerModel = null;
+    loader.load('misc/google-map-icon.glb', (gltf) => {
+      this.markerModel = gltf.scene;
+      
+      // Apply activeMaterial and add outlines to all meshes in the model
+      this.markerModel.traverse((child) => {
+        if (child.isMesh) {
+          child.material = this.activeMaterial;
+          
+          const edges = new THREE.EdgesGeometry(child.geometry,60);
+          const outline = new THREE.LineSegments(edges, this.outlineMaterialActive);
+          child.add(outline);
+        }
+      });
+
+      // Adjust scale and rotation as needed
+      const scale = 10;
+      this.markerModel.scale.set(scale, scale, scale); 
+      this.markerModel.position.y = this.coneHeight;
+      this.group.add(this.markerModel);
+    });
+
+    /* Original diamond (two flipped cones) commented out
     this.diamondGroup = new THREE.Group();
     const radius = 0.1
     const height = 0.2
@@ -56,6 +81,7 @@ export class QRMarker {
     this.diamondGroup.add(this.topCone);
     
     this.diamondGroup.position.y = this.coneHeight;
+    */
 
     // ----- text label group -----
     if (this.font) {
@@ -102,7 +128,7 @@ export class QRMarker {
     }
 
     this.group.add(this.ring);
-    this.group.add(this.diamondGroup);
+    // this.group.add(this.diamondGroup);
 
     this.group.position.copy(position);
     this.scene.add(this.group);
@@ -117,20 +143,31 @@ export class QRMarker {
 
     const t = time * 0.003;
 
+    // floating effect
+    if (this.markerModel) {
+      this.markerModel.position.y = this.coneHeight + Math.sin(t*0.5) * 0.05;
+      // this.markerModel.rotation.y += 0.01;
+    }
+
+    /* 
     // floating diamond only
     this.diamondGroup.position.y = this.coneHeight + Math.sin(t*0.5) * 0.05;
 
     // spinning
     this.diamondGroup.rotation.y += 0.01;
+    */
 
     // Bob text with diamond
-    if (this.textLabelGroup) {
-      this.textLabelGroup.position.y = this.coneHeight + 0.4 + Math.sin(t*0.5) * 0.05;
-    }
+    // if (this.textLabelGroup) {
+    //   this.textLabelGroup.position.y = this.coneHeight + 0.4 + Math.sin(t*0.5) * 0.05;
+    // }
 
     // Billboarding text
     if (this.textLabelGroup && camera) {
       this.textLabelGroup.quaternion.copy(camera.quaternion);
+    }
+    if (this.markerModel && camera) {
+      this.markerModel.quaternion.copy(camera.quaternion);
     }
 
     // grey-out timer
@@ -143,6 +180,17 @@ export class QRMarker {
     this.ring.material = this.greyMaterial;
     this.bottomCone.material = this.greyMaterial;
     this.topCone.material = this.greyMaterial;
+    
+    if (this.markerModel) {
+      this.markerModel.traverse((child) => {
+        if (child.isMesh) {
+          child.material = this.greyMaterial;
+        } else if (child.isLine || child.isLineSegments) {
+          child.material = this.outlineMaterialGrey;
+        }
+      });
+    }
+
     if (this.textLabelGroup) {
       this.group.remove(this.textLabelGroup);
     }

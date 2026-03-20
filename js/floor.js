@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { Icon } from "./icon.js";
 
 export const ICON_PATHS = {
   stairs: "./assets/icons/stairs.png",
@@ -36,6 +37,8 @@ export class Floor {
       appState.interactiveObjects = targetFloor.interactiveObjects;
       appState.currentFloor = targetFloor; // Store object instead of string
       
+      Icon.setLevel(floorId);
+
       console.log(`Switched to floor: ${floorId}`);
     } else {
       console.warn(`Floor ${floorId} not found or not loaded yet`);

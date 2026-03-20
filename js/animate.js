@@ -1,4 +1,4 @@
-
+import { Icon } from "./icon.js";
 
 export function startAnimationLoop(controls, renderer, scene, camera, mouse, appState, raycaster, infoLabel) {
   function animate() {
@@ -22,12 +22,14 @@ export function startAnimationLoop(controls, renderer, scene, camera, mouse, app
 
     controls.update();
     
-    // Animate markers
+    // Animate markers and icons
+    const time = performance.now();
     if (appState.activeMarkers) {
-      const time = performance.now();
       appState.activeMarkers.forEach(m => m.animate(time, camera));
     }
 
+    Icon.allIcons.forEach(icon => icon.animate(time, camera));
+    
     renderer.render(scene, camera);
   }
 
