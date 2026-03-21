@@ -5,7 +5,7 @@ import {
   updateMouseFromTouch 
 } from "./util.js";
 
-export function setupEventListeners(renderer, mouse, appState, raycaster, camera, infoLabel, controls) {
+export function setupEventListeners(appState) {
   /* 
     GESTURE ISOLATION LOGIC:
     The code below isolates Rotate (parallel 2-finger movement) and Zoom (pinch 2-finger movement) 
@@ -21,7 +21,7 @@ export function setupEventListeners(renderer, mouse, appState, raycaster, camera
   let prevTouches = [];
   window.addEventListener("mousemove", (event) => {
     if (isPointerOverUI(event)) return;
-    updateMousePosition(event.clientX, event.clientY, renderer, mouse);
+    updateMousePosition(event.clientX, event.clientY, appState);
   });
 
   window.addEventListener("mousedown", () => {
@@ -31,13 +31,13 @@ export function setupEventListeners(renderer, mouse, appState, raycaster, camera
   window.addEventListener("touchstart", (event) => {
     if (isPointerOverUI(event)) return;
     appState.pointerStartTime = Date.now();
-    updateMouseFromTouch(event, renderer, mouse);
+    updateMouseFromTouch(event, appState);
     
     // [GUESTURE ISOLATION] Reset control state on new touches
     if (event.touches.length === 2 || event.touches.length < 2) {
       touchGestureMode = null;
-      controls.enableZoom = true;
-      controls.enableRotate = true;
+      appState.controls.enableZoom = true;
+      appState.controls.enableRotate = true;
     }
     prevTouches = Array.from(event.touches).map(t => ({ clientX: t.clientX, clientY: t.clientY }));
   }, { passive: false });
@@ -65,13 +65,13 @@ export function setupEventListeners(renderer, mouse, appState, raycaster, camera
         if (dot > 0.7) { 
           // Parallel movement -> Rotate Mode
           touchGestureMode = 'rotate';
-          controls.enableZoom = false;
-          controls.enableRotate = true;
+          appState.controls.enableZoom = false;
+          appState.controls.enableRotate = true;
         } else if (dot < -0.5) {
           // Opposite movement -> Zoom Mode
           touchGestureMode = 'zoom';
-          controls.enableRotate = false;
-          controls.enableZoom = true;
+          appState.controls.enableRotate = false;
+          appState.controls.enableZoom = true;
         }
       }
     }
@@ -82,7 +82,7 @@ export function setupEventListeners(renderer, mouse, appState, raycaster, camera
     }
 
     if (event.touches.length > 0) {
-      updateMouseFromTouch(event, renderer, mouse);
+      updateMouseFromTouch(event, appState);
       event.preventDefault();
     }
   }, { passive: false });
@@ -93,18 +93,18 @@ export function setupEventListeners(renderer, mouse, appState, raycaster, camera
     // [GUESTURE ISOLATION] Restore default state when fingers are removed
     if (event.touches.length < 2) {
       touchGestureMode = null;
-      controls.enableZoom = true;
-      controls.enableRotate = true;
+      appState.controls.enableZoom = true;
+      appState.controls.enableRotate = true;
     }
     prevTouches = Array.from(event.touches).map(t => ({ clientX: t.clientX, clientY: t.clientY }));
 
-    updateMouseFromTouch(event, renderer, mouse);
+    updateMouseFromTouch(event, appState);
     event.preventDefault();
-    handleInteraction(event, appState, raycaster, mouse, camera, infoLabel, controls);
+    handleInteraction(event, appState);
   }, { passive: false });
 
   window.addEventListener("click", (event) => {
-    handleInteraction(event, appState, raycaster, mouse, camera, infoLabel, controls);
+    handleInteraction(event, appState);
   });
 
   window.addEventListener("camera-interaction-start", () => {

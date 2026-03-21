@@ -8,6 +8,14 @@ export const ICON_PATHS = {
 };
 
 export class Floor {
+  // Static class attributes initialized in main.js
+  static appState = null;
+
+  // Static dictionary for mapping object names to child model floor IDs
+  static childModels = {
+    Canteen: "canteen"
+  };
+
   // Static dictionary of all loaded floors
   static floors = {};
   
@@ -21,8 +29,8 @@ export class Floor {
     Floor.floors[floor.id] = floor;
   }
 
-  static switchFloor(floorId, appState, camera, controls) {
-    if (appState.currentFloor && appState.currentFloor.id === floorId) return;
+  static switchFloor(floorId) {
+    if (Floor.appState.currentFloor && Floor.appState.currentFloor.id === floorId) return;
 
     // Hide all floors first
     Object.values(Floor.floors).forEach((floor) => floor.hide());
@@ -30,12 +38,12 @@ export class Floor {
     // Activate new floor
     const targetFloor = Floor.floors[floorId];
     if (targetFloor && targetFloor.isLoaded()) {
-      targetFloor.activate(camera, controls);
+      targetFloor.activate(Floor.appState.camera, Floor.appState.controls);
       
       // Update state
       Floor.currentFloor = targetFloor;
-      appState.interactiveObjects = targetFloor.interactiveObjects;
-      appState.currentFloor = targetFloor; // Store object instead of string
+      Floor.appState.interactiveObjects = targetFloor.interactiveObjects;
+      Floor.appState.currentFloor = targetFloor; // Store object instead of string
       
       Icon.setLevel(floorId);
 
@@ -51,19 +59,19 @@ export class Floor {
     });
 
     // Clear any selected state and camera animations when swapping floors
-    if (appState.selected) {
-      appState.selected.material.emissive.setHex(0x000000);
-      appState.selected = null;
+    if (Floor.appState.selected) {
+      Floor.appState.selected.material.emissive.setHex(0x000000);
+      Floor.appState.selected = null;
     }
 
-    if (appState.cameraAnim) {
-      appState.cameraAnim.active = false;
+    if (Floor.appState.cameraAnim) {
+      Floor.appState.cameraAnim.active = false;
     }
 
     // Clear active markers
-    if (appState.activeMarkers && appState.activeMarkers.length > 0) {
-      appState.activeMarkers.forEach(m => m.clear());
-      appState.activeMarkers = [];
+    if (Floor.appState.activeMarkers && Floor.appState.activeMarkers.length > 0) {
+      Floor.appState.activeMarkers.forEach(m => m.clear());
+      Floor.appState.activeMarkers = [];
     }
   }
 

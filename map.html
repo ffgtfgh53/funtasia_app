@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>GLB Hover Interaction</title>
+    <link rel="stylesheet" href="./css/main.css" />
+  </head>
+  <body>
+    <div id="canvas-container"></div>
+    <div id="info">Hover over the model</div>
+
+    <!-- Floor Selector UI -->
+    <div id="floor-selector">
+      <button class="floor-btn" data-floor="b3">Basement 3</button>
+      <button class="floor-btn" data-floor="b2">Basement 2</button>
+      <button class="floor-btn" data-floor="b1">Basement 1</button>
+      <button class="floor-btn" data-floor="l1">Level 1</button>
+      <button class="floor-btn" data-floor="l2">Level 2</button>
+      <button class="floor-btn" data-floor="l3">Level 3</button>
+      <button class="floor-btn" data-floor="l4">Level 4</button>
+    </div>
+
+    <!-- Bottom sheet popup -->
+    <div id="bottom-sheet">
+      <button id="close-btn">&times;</button>
+      <h2 id="sheet-title">Location Title</h2>
+      <p id="sheet-desc">Location description will appear here.</p>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-popup" class="toast">
+      <span id="toast-message"></span>
+    </div>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.172.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.172.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>

@@ -5,11 +5,14 @@ import { showToast } from "./ui.js";
 // import { TextGeometry }  from 'three/addons/geometries/TextGeometry.js';
 
 export class QRMarker {
+  // Static class attributes initialized in main.js
+  static appState = null;
+  static font = null;
 
   constructor(scene, position, font, greyDelay = 5 * 60000) {
     this.scene = scene;
     this.font = font;
-    this.coneHeight = 0.8;
+    this.markerHeight = 0.8;
 
     this.group = new THREE.Group();
 
@@ -33,7 +36,7 @@ export class QRMarker {
     // ----- 3D Model for marker (temporary) -----
     const loader = new GLTFLoader();
     this.markerModel = null;
-    loader.load('misc/google-map-icon.glb', (gltf) => {
+    loader.load('assets/icons/google-map-icon.glb', (gltf) => {
       this.markerModel = gltf.scene;
       
       // Apply activeMaterial and add outlines to all meshes in the model
@@ -50,38 +53,9 @@ export class QRMarker {
       // Adjust scale and rotation as needed
       const scale = 10;
       this.markerModel.scale.set(scale, scale, scale); 
-      this.markerModel.position.y = this.coneHeight;
+      this.markerModel.position.y = this.markerHeight;
       this.group.add(this.markerModel);
     });
-
-    /* Original diamond (two flipped cones) commented out
-    this.diamondGroup = new THREE.Group();
-    const radius = 0.1
-    const height = 0.2
-    const coneGeom = new THREE.ConeGeometry(radius, height, 4); // 4 radial segments for a square base
-    
-    // Bottom cone
-    this.bottomCone = new THREE.Mesh(coneGeom, this.activeMaterial);
-    this.bottomCone.rotation.x = Math.PI;
-    this.bottomCone.position.y = -height/2; // Shift down by half height
-    
-    const cone_edges = new THREE.EdgesGeometry(coneGeom);
-    this.coneOutline = new THREE.LineSegments(cone_edges, this.outlineMaterialActive);
-    this.bottomCone.add(this.coneOutline);
-
-    // Top cone
-    this.topCone = new THREE.Mesh(coneGeom, this.activeMaterial);
-    this.topCone.position.y = height/2; // Shift up by half height
-    
-    const top_cone_edges = new THREE.EdgesGeometry(coneGeom);
-    this.topConeOutline = new THREE.LineSegments(top_cone_edges, this.outlineMaterialActive);
-    this.topCone.add(this.topConeOutline);
-
-    this.diamondGroup.add(this.bottomCone);
-    this.diamondGroup.add(this.topCone);
-    
-    this.diamondGroup.position.y = this.coneHeight;
-    */
 
     // ----- text label group -----
     if (this.font) {
@@ -123,7 +97,7 @@ export class QRMarker {
       this.textLabelGroup.add(this.textBgMesh);
       this.textLabelGroup.add(this.textMesh);
       
-      this.textLabelGroup.position.y = this.coneHeight + 0.4; // Above the diamond
+      this.textLabelGroup.position.y = this.markerHeight + 0.4; // Above the diamond
       this.group.add(this.textLabelGroup);
     }
 
@@ -145,23 +119,8 @@ export class QRMarker {
 
     // floating effect
     if (this.markerModel) {
-      this.markerModel.position.y = this.coneHeight + Math.sin(t*0.5) * 0.05;
-      // this.markerModel.rotation.y += 0.01;
+      this.markerModel.position.y = this.markerHeight + Math.sin(t*0.5) * 0.05;
     }
-
-    /* 
-    // floating diamond only
-    this.diamondGroup.position.y = this.coneHeight + Math.sin(t*0.5) * 0.05;
-
-    // spinning
-    this.diamondGroup.rotation.y += 0.01;
-    */
-
-    // Bob text with diamond
-    // if (this.textLabelGroup) {
-    //   this.textLabelGroup.position.y = this.coneHeight + 0.4 + Math.sin(t*0.5) * 0.05;
-    // }
-
     // Billboarding text
     if (this.textLabelGroup && camera) {
       this.textLabelGroup.quaternion.copy(camera.quaternion);
@@ -186,8 +145,6 @@ export class QRMarker {
 
   greyOut() {
     this.ring.material = this.greyMaterial;
-    this.bottomCone.material = this.greyMaterial;
-    this.topCone.material = this.greyMaterial;
     
     if (this.markerModel) {
       this.markerModel.traverse((child) => {
@@ -216,8 +173,6 @@ export class QRMarker {
     this.scene.remove(this.group);
 
     this.ring.geometry.dispose();
-    this.bottomCone.geometry.dispose();
-    this.topCone.geometry.dispose();
     if (this.textMesh) {
       this.textMesh.geometry.dispose();
       if (this.textMaterialActive) this.textMaterialActive.dispose();
@@ -226,24 +181,15 @@ export class QRMarker {
       this.textBgMesh.geometry.dispose();
       if (this.textBgMaterial) this.textBgMaterial.dispose();
     }
-    if (this.coneOutline) {
-      this.coneOutline.geometry.dispose();
-    }
-    if (this.topConeOutline) {
-      this.topConeOutline.geometry.dispose();
-    }
     
     if (this.outlineMaterialActive) this.outlineMaterialActive.dispose();
     if (this.outlineMaterialGrey) this.outlineMaterialGrey.dispose();
 
     this.ring.material.dispose();
-    this.bottomCone.material.dispose();
-    this.topCone.material.dispose();
-
     this.group = null;
   }
 
-  static handleQRID(qrID, scene, camera, controls, appState, font) {
+  static handleQRID(qrID) {
     const markerInfo = Floor.allMarkers[qrID];
     if (!markerInfo) {
       console.warn(`Marker ${qrID} not found.`);
@@ -251,7 +197,7 @@ export class QRMarker {
     }
 
     // Store in appState for persistence across floor switches
-    appState.lastScannedInfo = {
+    QRMarker.appState.lastScannedInfo = {
       id: qrID,
       floorId: markerInfo.floorId,
       pos: markerInfo.pos,
@@ -259,18 +205,17 @@ export class QRMarker {
     };
 
     // Trigger floor switch
-    Floor.switchFloor(markerInfo.floorId, appState, camera, controls);
+    Floor.switchFloor(markerInfo.floorId);
 
     // Floor.switchFloor clears activeMarkers, so we add the new one back
-    // (Floor.switchFloor logic in main.js might also handle this, but handleQRID owns the specific scan)
-    const marker = new QRMarker(scene, markerInfo.pos, font);
-    appState.activeMarkers = [marker]; // Ensure it's the only one
+    const marker = new QRMarker(QRMarker.appState.scene, markerInfo.pos, QRMarker.font);
+    QRMarker.appState.activeMarkers = [marker]; // Ensure it's the only one
 
     // Camera animation logic (matching util.js pattern)
     const markerCenter = markerInfo.pos.clone().add(new THREE.Vector3(0, 1, 0));
     
-    const camPos = camera.position.clone();
-    const direction = new THREE.Vector3().subVectors(camPos, controls.target);
+    const camPos = QRMarker.appState.camera.position.clone();
+    const direction = new THREE.Vector3().subVectors(camPos, QRMarker.appState.controls.target);
     direction.y = 0;
     if (direction.lengthSq() < 0.001) direction.set(0, 0, 1);
     direction.normalize();
@@ -283,19 +228,19 @@ export class QRMarker {
       .add(direction.multiplyScalar(distance))
       .add(new THREE.Vector3(0, heightOffset, 0));
 
-    appState.cameraAnim.controlsTarget.copy(markerCenter);
-    appState.cameraAnim.cameraTarget.copy(newCamPos);
-    appState.cameraAnim.active = true;
+    QRMarker.appState.cameraAnim.controlsTarget.copy(markerCenter);
+    QRMarker.appState.cameraAnim.cameraTarget.copy(newCamPos);
+    QRMarker.appState.cameraAnim.active = true;
 
     return true;
   }
 
-  static handleURLQR(scene, camera, controls, appState, switchFloorCb, font) {
+  static handleURLQR(switchFloorCb) {
     const urlParams = new URLSearchParams(window.location.search);
     const qrID = urlParams.get("qrID");
     if (qrID) {
       console.log(`URL/Popstate qrID: ${qrID}`);
-      const handled = QRMarker.handleQRID(qrID, scene, camera, controls, appState, font);
+      const handled = QRMarker.handleQRID(qrID);
       if (handled) return;
 
       // Unhandled: meaning the marker wasn't found

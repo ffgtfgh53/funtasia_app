@@ -8,9 +8,9 @@ import { Floor } from "./floor.js";
 import { QRMarker } from "./marker.js";
 import { loadFont } from "./font.js";
 import { Icon } from "./icon.js";
+import { AppState } from "./appState.js";
 
 const { scene, camera, renderer, controls } = setupScene();
-Icon.scene = scene;
 
 const floorPaths = {
   l4: "./assets/models/njc-l1.glb",
@@ -22,27 +22,30 @@ const floorPaths = {
   b3: "./assets/models/njc-l1.glb",
 };
 
-let appState = {
-  currentFloor: null, // Will hold Floor object
-  interactiveObjects: [],
-  selected: null,
-  cameraAnim: {
-    active: false,
-    cameraTarget: new THREE.Vector3(),
-    controlsTarget: new THREE.Vector3(),
-  },
-  activeMarkers: [],
-  lastScannedInfo: null,
-  pointerStartTime: 0
+const childModelPaths = {
+  canteen: "./assets/models/njc-l1-canteen.glb",
 };
-
-
-export const infoLabel = document.getElementById("info");
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
-setupEventListeners(renderer, mouse, appState, raycaster, camera, infoLabel, controls);
+export const infoLabel = document.getElementById("info");
+
+const appState = new AppState();
+appState.scene = scene;
+appState.camera = camera;
+appState.renderer = renderer;
+appState.controls = controls;
+appState.raycaster = raycaster;
+appState.mouse = mouse;
+appState.infoLabel = infoLabel;
+
+// Set class attributes for static methods
+QRMarker.appState = appState;
+Floor.appState = appState;
+Icon.appState = appState;
+
+setupEventListeners(appState);
 
 // Initializing the application
 async function initApp() {
@@ -51,11 +54,16 @@ async function initApp() {
     console.log("Font not loaded");
   }
   console.log(`Font: ${font}`)
-  const { floors } = await loadModels(scene, camera, controls, floorPaths);
+  
+  // Set font as a class attribute so handleURLQR etc. don't need it passed
+  QRMarker.font = font;
+
+  const { floors } = await loadModels(appState, floorPaths);
+  await loadModels(appState, childModelPaths);
   
   // Custom switch floor callback to handle main.js state
   const switchFloorCb = (floorId) => {
-    Floor.switchFloor(floorId, appState, camera, controls);
+    Floor.switchFloor(floorId);
     
     // Persistence: Check if we need to re-render the last scanned marker
     if (appState.lastScannedInfo && appState.lastScannedInfo.floorId === floorId) {
@@ -71,6 +79,8 @@ async function initApp() {
       }
     }
   };
+  
+  appState.switchFloorCb = switchFloorCb;
   
   setupUI(floors, switchFloorCb);
 
@@ -93,7 +103,7 @@ async function initApp() {
   document.body.appendChild(toggleBtn);
 
   const handleURLQR = () => {
-    QRMarker.handleURLQR(scene, camera, controls, appState, switchFloorCb, font);
+    QRMarker.handleURLQR(switchFloorCb);
   };
 
   // Listen for URL changes (back/forward or manual scan)
@@ -102,7 +112,7 @@ async function initApp() {
   // Initial check
   handleURLQR();
 
-  startAnimationLoop(controls, renderer, scene, camera, mouse, appState, raycaster, infoLabel);
+  startAnimationLoop(appState);
 }
 
 initApp();

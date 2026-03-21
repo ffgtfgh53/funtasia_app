@@ -2,7 +2,7 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { parseModel } from "./modelParser.js";
 import { Floor } from "./floor.js";
 
-export function loadModels(scene, camera, controls, floorPaths) {
+export function loadModels(appState, floorPaths) {
   return new Promise((resolve) => {
     const loader = new GLTFLoader();
     const floors = {}; // Will now hold Floor instances
@@ -18,7 +18,7 @@ export function loadModels(scene, camera, controls, floorPaths) {
         floorPaths[floorId],
         (gltf) => {
           // 2. Parse the model
-          const result = parseModel(gltf, floorId, scene);
+          const result = parseModel(gltf, floorId, appState.scene);
           
           // 3. Attach data to the instance
           floorInstance.attachParsedData(

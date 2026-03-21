@@ -1,6 +1,9 @@
 import * as THREE from "three";
 
 export class Icon {
+  // Static class attributes initialized in main.js
+  static appState = null;
+
   // Class attribute dictionary matching icontype to file path
   // The path points to a folder in assets called icon
   static iconPaths = {
@@ -63,10 +66,10 @@ export class Icon {
 
     this.group.add(this.sprite);
     this.group.position.copy(this.position);
-    if (Icon.scene) {
-      Icon.scene.add(this.group);
+    if (Icon.appState && Icon.appState.scene) {
+      Icon.appState.scene.add(this.group);
     } else {
-      console.warn("Icon.scene is not set. Icon group not added to scene.");
+      console.warn("Icon.appState.scene is not set. Icon group not added to scene.");
     }
 
     // Apply the current global visibility state
@@ -124,8 +127,8 @@ export class Icon {
 
   // Cleanup to prevent memory leaks, similar to marker.js
   clear() {
-    if (Icon.scene) {
-      Icon.scene.remove(this.group);
+    if (Icon.appState && Icon.appState.scene) {
+      Icon.appState.scene.remove(this.group);
     }
 
     if (this.material) {

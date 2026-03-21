@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { Icon } from "./icon.js";
+import { Floor } from "./floor.js";
 const miscColours = {
   "BASE": 0x6e7176,
   "DRIVE": 0xa5ccd1,
@@ -134,6 +135,10 @@ export function parseModel(gltf, floorId, scene) {
     if (!isInteractive) return;
     if (!child.name || child.name === "") {
       child.name = `${floorId}_Object_${objects.length + 1}`;
+    }
+
+    if (Floor.childModels && Floor.childModels[child.name]) {
+      child.userData.child = Floor.childModels[child.name];
     }
 
     objects.push(child);

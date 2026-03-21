@@ -6,14 +6,14 @@ export function isPointerOverUI(event) {
   return !!event.target.closest("#bottom-sheet, #close-btn, #floor-selector");
 }
 
-export function performRaycast(appState, raycaster, mouse, camera) {
+export function performRaycast(appState) {
   if (!appState.interactiveObjects || appState.interactiveObjects.length === 0) return null;
-  raycaster.setFromCamera(mouse, camera);
-  const intersects = raycaster.intersectObjects(appState.interactiveObjects, true);
+  appState.raycaster.setFromCamera(appState.mouse, appState.camera);
+  const intersects = appState.raycaster.intersectObjects(appState.interactiveObjects, true);
   return intersects.length > 0 ? intersects[0].object : null;
 }
 
-export function applySelection(target, appState, infoLabel) {
+export function applySelection(target, appState) {
   if (appState.selected === target) return;
 
   if (appState.selected) appState.selected.material.emissive.setHex(0x000000);
@@ -23,13 +23,13 @@ export function applySelection(target, appState, infoLabel) {
     const baseColor = new THREE.Color(zoneColours[appState.selected.userData.ZONE]);
     const emissiveColor = baseColor.clone().multiplyScalar(2);
     appState.selected.material.emissive.copy(emissiveColor);
-    if (infoLabel) infoLabel.textContent = `Selected: ${appState.selected.name}`;
+    if (appState.infoLabel) appState.infoLabel.textContent = `Selected: ${appState.selected.name}`;
   } else {
-    if (infoLabel) infoLabel.textContent = "Select a model";
+    if (appState.infoLabel) appState.infoLabel.textContent = "Select a model";
   }
 }
 
-export function handleInteraction(event, appState, raycaster, mouse, camera, infoLabel, controls) {
+export function handleInteraction(event, appState) {
   if (isPointerOverUI(event)) return;
 
   // New: Differentiate between a simple tap and a long press/drag
@@ -39,15 +39,23 @@ export function handleInteraction(event, appState, raycaster, mouse, camera, inf
     return;
   }
 
-  const targetObject = performRaycast(appState, raycaster, mouse, camera);
-  applySelection(targetObject, appState, infoLabel);
+  const targetObject = performRaycast(appState);
+  applySelection(targetObject, appState);
 
   if (targetObject) {
     console.log(`Clicked on: ${targetObject.name}`);
+
+    if (targetObject.userData.child) {
+      if (appState.switchFloorCb) {
+        appState.switchFloorCb(targetObject.userData.child);
+      }
+      return;
+    }
+
     showBottomSheet(targetObject.name);
 
     // Camera animation logic
-    if (controls) {
+    if (appState.controls) {
       // 1. Get object visual center (native Blender origin)
       const objectCenter = targetObject.getWorldPosition(new THREE.Vector3());
       
@@ -56,8 +64,8 @@ export function handleInteraction(event, appState, raycaster, mouse, camera, inf
       const objectSize = box.getSize(new THREE.Vector3());
 
       // 2. Get current camera 2D direction
-      const camPos = camera.position.clone();
-      const controlsTarget = controls.target.clone();
+      const camPos = appState.camera.position.clone();
+      const controlsTarget = appState.controls.target.clone();
       
       const direction = new THREE.Vector3().subVectors(camPos, controlsTarget);
       direction.y = 0; // maintain horizontal direction
@@ -92,16 +100,16 @@ export function handleInteraction(event, appState, raycaster, mouse, camera, inf
   }
 }
 
-export function updateMousePosition(clientX, clientY, renderer, mouse) {
-  const rect = renderer.domElement.getBoundingClientRect();
-  mouse.x = ((clientX - rect.left) / rect.width) * 2 - 1;
-  mouse.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+export function updateMousePosition(clientX, clientY, appState) {
+  const rect = appState.renderer.domElement.getBoundingClientRect();
+  appState.mouse.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+  appState.mouse.y = -((clientY - rect.top) / rect.height) * 2 + 1;
 }
 
-export function updateMouseFromTouch(event, renderer, mouse) {
+export function updateMouseFromTouch(event, appState) {
   const touch =
     (event.touches && event.touches[0]) ||
     (event.changedTouches && event.changedTouches[0]);
   if (!touch) return;
-  updateMousePosition(touch.clientX, touch.clientY, renderer, mouse);
+  updateMousePosition(touch.clientX, touch.clientY, appState);
 }

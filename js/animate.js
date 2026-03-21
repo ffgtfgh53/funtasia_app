@@ -1,6 +1,6 @@
 import { Icon } from "./icon.js";
 
-export function startAnimationLoop(controls, renderer, scene, camera, mouse, appState, raycaster, infoLabel) {
+export function startAnimationLoop(appState) {
   function animate() {
     requestAnimationFrame(animate);
 
@@ -8,29 +8,29 @@ export function startAnimationLoop(controls, renderer, scene, camera, mouse, app
     if (appState.cameraAnim && appState.cameraAnim.active) {
       const lerpFactor = 0.05;
       
-      camera.position.lerp(appState.cameraAnim.cameraTarget, lerpFactor);
-      controls.target.lerp(appState.cameraAnim.controlsTarget, lerpFactor);
+      appState.camera.position.lerp(appState.cameraAnim.cameraTarget, lerpFactor);
+      appState.controls.target.lerp(appState.cameraAnim.controlsTarget, lerpFactor);
 
       // Check if we arrived
-      const posDist = camera.position.distanceTo(appState.cameraAnim.cameraTarget);
-      const targetDist = controls.target.distanceTo(appState.cameraAnim.controlsTarget);
+      const posDist = appState.camera.position.distanceTo(appState.cameraAnim.cameraTarget);
+      const targetDist = appState.controls.target.distanceTo(appState.cameraAnim.controlsTarget);
       
       if (posDist < 0.1 && targetDist < 0.1) {
         appState.cameraAnim.active = false;
       }
     }
 
-    controls.update();
+    appState.controls.update();
     
     // Animate markers and icons
     const time = performance.now();
     if (appState.activeMarkers) {
-      appState.activeMarkers.forEach(m => m.animate(time, camera));
+      appState.activeMarkers.forEach(m => m.animate(time, appState.camera));
     }
 
-    Icon.allIcons.forEach(icon => icon.animate(time, camera));
+    Icon.allIcons.forEach(icon => icon.animate(time, appState.camera));
     
-    renderer.render(scene, camera);
+    appState.renderer.render(appState.scene, appState.camera);
   }
 
   animate();
