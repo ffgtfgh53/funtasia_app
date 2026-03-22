@@ -43,6 +43,7 @@ appState.infoLabel = infoLabel;
 // Set class attributes for static methods
 QRMarker.appState = appState;
 Floor.appState = appState;
+Floor.QRMarker = QRMarker; // Inject to avoid circular dependency in floor.js
 Icon.appState = appState;
 
 setupEventListeners(appState);
@@ -61,28 +62,7 @@ async function initApp() {
   const { floors } = await loadModels(appState, floorPaths);
   await loadModels(appState, childModelPaths);
   
-  // Custom switch floor callback to handle main.js state
-  const switchFloorCb = (floorId) => {
-    Floor.switchFloor(floorId);
-    
-    // Persistence: Check if we need to re-render the last scanned marker
-    if (appState.lastScannedInfo && appState.lastScannedInfo.floorId === floorId) {
-      const startTime = appState.lastScannedInfo.startTime;
-      const greyDelay = 5 * 60000;
-      const now = performance.now();
-      
-      if (now - startTime < greyDelay) {
-        const marker = new QRMarker(scene, appState.lastScannedInfo.pos, font, greyDelay);
-        // Correct the start time so it greys out at the right moment
-        marker.startTime = startTime; 
-        appState.activeMarkers.push(marker);
-      }
-    }
-  };
-  
-  appState.switchFloorCb = switchFloorCb;
-  
-  setupUI(floors, switchFloorCb);
+  setupUI(floors);
 
   // Temporary UI button for toggling icons
   const toggleBtn = document.createElement("button");
@@ -103,7 +83,7 @@ async function initApp() {
   document.body.appendChild(toggleBtn);
 
   const handleURLQR = () => {
-    QRMarker.handleURLQR(switchFloorCb);
+    QRMarker.handleURLQR();
   };
 
   // Listen for URL changes (back/forward or manual scan)

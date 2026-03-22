@@ -2,6 +2,7 @@ const sheet = document.getElementById("bottom-sheet");
 const sheetTitle = document.getElementById("sheet-title");
 const sheetDesc = document.getElementById("sheet-desc");
 const closeBtn = document.getElementById("close-btn");
+import { Floor } from "./floor.js";
 
 const locationData = {}; // Placeholder
 
@@ -47,7 +48,7 @@ export function showToast(message, duration = 3000) {
   }, duration);
 }
 
-export function setupUI(floors, switchFloorCb) {
+export function setupUI(floors) {
   closeBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     e.preventDefault();
@@ -64,14 +65,14 @@ export function setupUI(floors, switchFloorCb) {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
       const floorId = btn.dataset.floor;
-      if (floors[floorId] && floors[floorId].isLoaded()) switchFloorCb(floorId);
+      if (floors[floorId] && floors[floorId].isLoaded()) Floor.switchFloor(floorId);
     });
     
     btn.addEventListener("touchend", (e) => {
       e.stopPropagation();
       e.preventDefault();
       const floorId = btn.dataset.floor;
-      if (floors[floorId] && floors[floorId].isLoaded()) switchFloorCb(floorId);
+      if (floors[floorId] && floors[floorId].isLoaded()) Floor.switchFloor(floorId);
     });
   });
 }

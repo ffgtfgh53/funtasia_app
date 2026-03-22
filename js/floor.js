@@ -6,7 +6,9 @@ export const ICON_PATHS = {
   toilets: "./assets/icons/toilets.png",
   lifts: "./assets/icons/lifts.png",
 };
-
+/**
+ * 
+ */
 export class Floor {
   // Static class attributes initialized in main.js
   static appState = null;
@@ -25,6 +27,7 @@ export class Floor {
   // Dictionary of all markers across all floors { id: { pos, floorId } }
   static allMarkers = {};
 
+  // Adds floor object to Floor class attribute: dictionary 'floors'
   static registerFloor(floor) {
     Floor.floors[floor.id] = floor;
   }
@@ -72,6 +75,22 @@ export class Floor {
     if (Floor.appState.activeMarkers && Floor.appState.activeMarkers.length > 0) {
       Floor.appState.activeMarkers.forEach(m => m.clear());
       Floor.appState.activeMarkers = [];
+    }
+
+    // Persistence: Check if we need to re-render the last scanned marker
+    const appState = Floor.appState;
+    if (appState.lastScannedInfo && appState.lastScannedInfo.floorId === floorId) {
+      const QRMarker = Floor.QRMarker;
+      const startTime = appState.lastScannedInfo.startTime;
+      const greyDelay = 5 * 60000;
+      const now = performance.now();
+      
+      if (QRMarker && (now - startTime < greyDelay)) {
+        const marker = new QRMarker(appState.scene, appState.lastScannedInfo.pos, QRMarker.font, greyDelay);
+        // Correct the start time so it greys out at the right moment
+        marker.startTime = startTime; 
+        appState.activeMarkers.push(marker);
+      }
     }
   }
 

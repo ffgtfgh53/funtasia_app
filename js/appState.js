@@ -1,3 +1,6 @@
+/*
+Class: AppState -> Stores information regarding the current appState
+*/
 import * as THREE from "three";
 
 export class AppState {

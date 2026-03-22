@@ -19,15 +19,28 @@ export function setupEventListeners(appState) {
   */
   let touchGestureMode = null;
   let prevTouches = [];
+
+  /*
+  Desktop
+  Function: mousemove -> Handles when the user moves the mouse
+  */
   window.addEventListener("mousemove", (event) => {
     if (isPointerOverUI(event)) return;
     updateMousePosition(event.clientX, event.clientY, appState);
   });
 
+  /*
+  Desktop
+  Function: mousedown -> Handles when the user clicks on the screen
+  */
   window.addEventListener("mousedown", () => {
     appState.pointerStartTime = Date.now();
   });
 
+  /*
+  Mobile
+  Function: touchstart -> Handles when the user first clicks on the screen
+  */
   window.addEventListener("touchstart", (event) => {
     if (isPointerOverUI(event)) return;
     appState.pointerStartTime = Date.now();
@@ -42,9 +55,13 @@ export function setupEventListeners(appState) {
     prevTouches = Array.from(event.touches).map(t => ({ clientX: t.clientX, clientY: t.clientY }));
   }, { passive: false });
 
+  /*
+  Mobile
+  Function: touchmove -> Handles when the user moves their fingers on the screen
+  */
   window.addEventListener("touchmove", (event) => {
     if (isPointerOverUI(event)) return;
-    
+    // TODO: Achieve a DOLLY_ROTATE setup such that both actions only occur when the conditions are met but can occur simulatenously in that same period
     // [GUESTURE ISOLATION] Process gesture detection
     if (event.touches.length === 2 && prevTouches.length === 2) {
       const p1 = prevTouches[0];
@@ -61,7 +78,11 @@ export function setupEventListeners(appState) {
       // Determine gesture only if fingers moved sufficiently
       if (!touchGestureMode && mag1 > 2 && mag2 > 2) {
         const dot = (v1.x * v2.x + v1.y * v2.y) / (mag1 * mag2);
-        
+        /*
+        Camera Locking :
+        - If the user is moving 2 fingers across the screen, it will only rotate if both fingers stay side by side
+        - If the user is pinching / expanding the screeen, it will only zoom and not rotate
+        */
         if (dot > 0.7) { 
           // Parallel movement -> Rotate Mode
           touchGestureMode = 'rotate';
@@ -86,7 +107,10 @@ export function setupEventListeners(appState) {
       event.preventDefault();
     }
   }, { passive: false });
-
+  /*
+  Mobile
+  Function: touchend -> Handles when the user lifts their fingers off the screen
+  */
   window.addEventListener("touchend", (event) => {
     if (isPointerOverUI(event)) return;
     
@@ -106,7 +130,9 @@ export function setupEventListeners(appState) {
   window.addEventListener("click", (event) => {
     handleInteraction(event, appState);
   });
-
+  /*
+  Event listener to handle when user ovverides the 3D scene by interacting with it during a camera animation
+  */
   window.addEventListener("camera-interaction-start", () => {
     if (appState.cameraAnim && appState.cameraAnim.active) {
       appState.cameraAnim.active = false;

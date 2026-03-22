@@ -235,7 +235,7 @@ export class QRMarker {
     return true;
   }
 
-  static handleURLQR(switchFloorCb) {
+  static handleURLQR() {
     const urlParams = new URLSearchParams(window.location.search);
     const qrID = urlParams.get("qrID");
     if (qrID) {
@@ -247,6 +247,6 @@ export class QRMarker {
       showToast(`Marker "${qrID}" not found.`);
     }
     const defaultFloorId = "l1";
-    switchFloorCb(defaultFloorId);
+    Floor.switchFloor(defaultFloorId);
   }
 }

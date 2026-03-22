@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { showBottomSheet } from "./ui.js";
 import { zoneColours } from "./modelParser.js";
+import { Floor } from "./floor.js";
 
 export function isPointerOverUI(event) {
   return !!event.target.closest("#bottom-sheet, #close-btn, #floor-selector");
@@ -46,9 +47,7 @@ export function handleInteraction(event, appState) {
     console.log(`Clicked on: ${targetObject.name}`);
 
     if (targetObject.userData.child) {
-      if (appState.switchFloorCb) {
-        appState.switchFloorCb(targetObject.userData.child);
-      }
+      Floor.switchFloor(targetObject.userData.child);
       return;
     }
 
