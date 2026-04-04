@@ -7,13 +7,13 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <title>GLB Hover Interaction</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <script type="module" crossorigin src="/assets/map-C244tiID.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/input-CLFeGT2J.js">
-    <link rel="stylesheet" crossorigin href="/assets/input-D-EaXp1g.css">
-    <link rel="stylesheet" crossorigin href="/assets/map-BxkYNxDA.css">
-  </head>
+    <script type="module" crossorigin src="/assets/map-B9Yi0Bo3.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/input-Bhe2icwX.js">
+    <link rel="stylesheet" crossorigin href="/assets/input-O3yogY31.css">
+    <link rel="stylesheet" crossorigin href="/assets/map-BJur2Iaa.css">
+  <link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
   <body>
     <div id="canvas-container"></div>
     <div id="info">Hover over the model</div>
@@ -44,12 +44,12 @@
 
     <!-- Settings Open Button -->
     <button id="open-settings-btn" style="position: fixed; bottom: 96px; right: 20px; z-index: 9999; background: #004b53; width: 64px; height: 64px; border-radius: 50%; cursor: pointer; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; padding: 14px;">
-      <img src="/assets/icons/settings.svg" alt="Settings" style="width: 100%; height: 100%; object-fit: contain;" />
+      <img id="settings-icon-img" alt="Settings" style="width: 100%; height: 100%; object-fit: contain;" />
     </button>
 
     <!-- Directory Open Button -->
     <button id="open-directory-btn" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; background: #004b53; width: 64px; height: 64px; border-radius: 50%; cursor: pointer; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; padding: 14px;">
-      <img src="/assets/icons/directory_button.svg" alt="Directory" style="width: 100%; height: 100%; object-fit: contain;" />
+      <img id="directory-icon-img" alt="Directory" style="width: 100%; height: 100%; object-fit: contain;" />
     </button>
 
     <!-- Settings Modal Wrapper -->
@@ -230,6 +230,6 @@
         settingsModal.style.display = 'none';
         showFabButtons();
       });
-    </script>
+    </script>
   </body>
 </html>

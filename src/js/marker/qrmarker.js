@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { Floor } from "@/js/floor/floor.js";
 import { showToast } from "@/js/base/ui.js";
+import googleMapIconGlb from "@/assets/icons/google-map-icon.glb";
 
 export class QRMarker {
   // Static class attributes initialized in main.js
@@ -35,7 +36,7 @@ export class QRMarker {
     // ----- 3D Model for marker (temporary) -----
     const loader = new GLTFLoader();
     this.markerModel = null;
-    loader.load('assets/icons/google-map-icon.glb', (gltf) => {
+    loader.load(googleMapIconGlb, (gltf) => {
       this.markerModel = gltf.scene;
       
       // Apply activeMaterial and add outlines to all meshes in the model

@@ -15,7 +15,7 @@
     {
       "label": "Serve App",
       "type": "shell",
-      "command": "npx serve -l 3000",
+      "command": "npx vite --host",
       "isBackground": true,
       "presentation": {
         "group": "funtasia-servers",

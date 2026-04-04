@@ -58,10 +58,13 @@ export function setupScene() {
   controls.enableDamping = true;
   controls.dampingFactor = 0.1;
 
-  scene.add(new THREE.AmbientLight(0xffffff, 2));
-  const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
-  dirLight.position.set(100, 200, 50); 
-  dirLight.castShadow = true;
+  const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444455,1);
+  hemiLight.position.set(0, 200, 0);
+  scene.add(hemiLight);
+  
+  const dirLight = new THREE.DirectionalLight(0xffffff, 10);
+  dirLight.position.set(10, 20, 50); 
+  dirLight.castShadow = false;
   dirLight.shadow.camera.top = 50;
   dirLight.shadow.camera.bottom = -50;
   dirLight.shadow.camera.left = -50;
@@ -70,6 +73,15 @@ export function setupScene() {
   dirLight.shadow.camera.far = 500;
   dirLight.shadow.bias = -0.0001; // Avoid shadow acne
   scene.add(dirLight);
+  
+  const fillLight = new THREE.DirectionalLight(0xaaccff, 0.4); // Cool fill light
+  fillLight.position.set(-100, 0, -50);
+  // scene.add(fillLight);
+  
+  const rimLight = new THREE.PointLight(0xffddaa, 0.6); // Warm rim light
+  rimLight.position.set(0, -50, -100);
+  // scene.add(rimLight);
+  
 
   // Setup event listener to cancel animation on user interaction
   controls.addEventListener("start", () => {

@@ -16,6 +16,7 @@ body {
 
 body {
   background: #111;
+  font-family: "JetBrains Mono", monospace;
   -webkit-tap-highlight-color: transparent; /* ✅ removes blue highlight on tap */
   user-select: none; /* ✅ prevents text selection */
   touch-action: none; /* ✅ disables built-in panning/zoom gestures */
@@ -41,7 +42,7 @@ body {
   top: 10px;
   left: 10px;
   color: white;
-  font-family: sans-serif;
+  font-family: "JetBrains Mono", monospace;
   background: rgba(0, 0, 0, 0.5);
   padding: 8px 12px;
   border-radius: 4px;
@@ -195,7 +196,7 @@ body {
   padding: 0;
   border-radius: 50%;
   cursor: pointer;
-  font-family: sans-serif;
+  font-family: "JetBrains Mono", monospace;
   font-size: 13px;
   font-weight: 600;
   transition: color 0.15s;
@@ -255,7 +256,7 @@ body {
   color: white;
   padding: 12px 24px;
   border-radius: 8px;
-  font-family: sans-serif;
+  font-family: "JetBrains Mono", monospace;
   font-size: 14px;
   font-weight: 500;
   box-shadow: 0 4px 12px rgba(255, 68, 68, 0.3);

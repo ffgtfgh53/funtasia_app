@@ -80,9 +80,9 @@
   --color-primary-container: #00656f;
   --color-error: #ba1a1a;
 
-  --font-headline: "Plus Jakarta Sans", sans-serif;
-  --font-body: "Manrope", sans-serif;
-  --font-label: "Manrope", sans-serif;
+  --font-headline: "JetBrains Mono", monospace;
+  --font-body: "JetBrains Mono", monospace;
+  --font-label: "JetBrains Mono", monospace;
 
   --radius-DEFAULT: 0.25rem;
   --radius-lg: 0.5rem;

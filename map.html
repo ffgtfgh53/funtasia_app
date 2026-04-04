@@ -8,9 +8,10 @@
     />
     <title>GLB Hover Interaction</title>
     <link rel="stylesheet" href="/src/css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <link href="/src/css/input.css" rel="stylesheet"/>
+    <script type="module" src="/src/js/pwa.js"></script>
   </head>
   <body>
     <div id="canvas-container"></div>
@@ -42,12 +43,12 @@
 
     <!-- Settings Open Button -->
     <button id="open-settings-btn" style="position: fixed; bottom: 96px; right: 20px; z-index: 9999; background: #004b53; width: 64px; height: 64px; border-radius: 50%; cursor: pointer; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; padding: 14px;">
-      <img src="/assets/icons/settings.svg" alt="Settings" style="width: 100%; height: 100%; object-fit: contain;" />
+      <img id="settings-icon-img" alt="Settings" style="width: 100%; height: 100%; object-fit: contain;" />
     </button>
 
     <!-- Directory Open Button -->
     <button id="open-directory-btn" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; background: #004b53; width: 64px; height: 64px; border-radius: 50%; cursor: pointer; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; padding: 14px;">
-      <img src="/assets/icons/directory_button.svg" alt="Directory" style="width: 100%; height: 100%; object-fit: contain;" />
+      <img id="directory-icon-img" alt="Directory" style="width: 100%; height: 100%; object-fit: contain;" />
     </button>
 
     <!-- Settings Modal Wrapper -->
@@ -230,5 +231,11 @@
       });
     </script>
     <script type="module" src="/src/js/base/main.js"></script>
+    <script type="module">
+        import settingsIcon from "@/assets/icons/settings.svg";
+        import directoryDocIcon from "@/assets/icons/directory_button.svg";
+        document.getElementById('settings-icon-img').src = settingsIcon;
+        document.getElementById('directory-icon-img').src = directoryDocIcon;
+    </script>
   </body>
 </html>

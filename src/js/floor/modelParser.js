@@ -84,7 +84,7 @@ export function parseModel(gltf, floorId, scene) {
       const isGrey = child.userData.ROLE === "GREY";
       child.material = new THREE.MeshStandardMaterial({
         color: miscColours[child.userData.ROLE],
-        transparent: isGrey,
+        transparent: false,
         opacity: isGrey ? 0 : 1,
         roughness: isGrey ? 0 : 1,
         metalness: 0,

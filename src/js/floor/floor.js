@@ -1,9 +1,9 @@
 import * as THREE from "three";
 import { Icon } from "@/js/marker/icon.js";
 
-import stairsIcon from "@/assets/icons/stairs.png";
-import toiletsIcon from "@/assets/icons/toilets.png";
-import liftsIcon from "@/assets/icons/lifts.png";
+import stairsIcon from "@/assets/icons/stair-ud.png";
+import toiletsIcon from "@/assets/icons/atoilet.png";
+import liftsIcon from "@/assets/icons/lift.png";
 
 export const ICON_PATHS = {
   stairs: stairsIcon,
