@@ -19,6 +19,9 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
+  define:{
+    __APP_VERSION__:JSON.stringify(process.env.npm_package_version)
+  },
   assetsInclude: ['**/*.glb'],
   server: {
     port:3000,
