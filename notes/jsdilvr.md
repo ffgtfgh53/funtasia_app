@@ -18,7 +18,7 @@
 
 ## 2. Utilise JsDelivr
 ```js
-const BASE = `https://cdn.jsdelivr.net/gh/garethlearnscoding/funtasia_app@${VERSION}/public`;
+const BASE = `https://cdn.jsdelivr.net/gh/garethlearnscoding/funtasia_app@assets`;
 ```
 
 ---

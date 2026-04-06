@@ -1,6 +1,6 @@
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
-const BASE = `https://cdn.jsdelivr.net/gh/garethlearnscoding/funtasia_app@${__APP_VERSION__}/public`;
+const BASE = `https://cdn.jsdelivr.net/gh/garethlearnscoding/funtasia_app@assets`;
 
 const loader = new GLTFLoader();
 
