@@ -2,9 +2,6 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 const BASE = `https://cdn.jsdelivr.net/gh/garethlearnscoding/funtasia_app@${__APP_VERSION__}/public`;
 
-/** In-memory cache of parsed GLTF objects, keyed by relative path. */
-const modelCache = new Map();
-
 const loader = new GLTFLoader();
 
 /**
@@ -14,10 +11,7 @@ const loader = new GLTFLoader();
  * @returns {Promise<import("three/examples/jsm/loaders/GLTFLoader").GLTF>}
  */
 export function loadModel(relativePath) {
-  if (modelCache.has(relativePath)) {
-    console.log(`[modelLoader] Cache hit: ${relativePath}`);
-    return Promise.resolve(modelCache.get(relativePath));
-  }
+
 
   const url = `${BASE}/${relativePath}`;
   console.log(`[modelLoader] Fetching: ${url}`);
@@ -26,8 +20,7 @@ export function loadModel(relativePath) {
     loader.load(
       url,
       (gltf) => {
-        modelCache.set(relativePath, gltf);
-        console.log(`[modelLoader] Loaded and cached: ${relativePath}`);
+        console.log(`[modelLoader] Loaded: ${relativePath}`);
         resolve(gltf);
       },
       (xhr) => {

@@ -3,15 +3,7 @@ import { Icon } from "@/js/marker/icon.js";
 import { loadModel } from "@/js/floor/modelLoader.js";
 import { parseModel } from "@/js/floor/modelParser.js";
 
-import stairsIcon from "@/assets/icons/stair-ud.png";
-import toiletsIcon from "@/assets/icons/atoilet.png";
-import liftsIcon from "@/assets/icons/lift.png";
 
-export const ICON_PATHS = {
-  stairs: stairsIcon,
-  toilets: toiletsIcon,
-  lifts: liftsIcon,
-};
 /**
  * 
  */

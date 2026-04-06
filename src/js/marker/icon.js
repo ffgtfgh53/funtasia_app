@@ -1,12 +1,6 @@
 import * as THREE from "three";
 
-import liftIcon from "@/assets/icons/lift.png";
-import stairUIcon from "@/assets/icons/stair-u.png";
-import stairDIcon from "@/assets/icons/stair-d.png";
-import stairUDIcon from "@/assets/icons/stair-ud.png";
-import mtoiletIcon from "@/assets/icons/mtoilet.png";
-import ftoiletIcon from "@/assets/icons/ftoilet.png";
-import atoiletIcon from "@/assets/icons/atoilet.png";
+const BASE = `https://cdn.jsdelivr.net/gh/garethlearnscoding/funtasia_app@${__APP_VERSION__}/public`;
 
 export class Icon {
   // Static class attributes initialized in main.js
@@ -15,13 +9,13 @@ export class Icon {
   // Class attribute dictionary matching icontype to file path
   // The path points to a folder in assets called icon
   static iconPaths = {
-    'lift': liftIcon,
-    'stair-u': stairUIcon,
-    'stair-d': stairDIcon,
-    'stair-ud': stairUDIcon,
-    'mtoilet': mtoiletIcon,
-    'ftoilet': ftoiletIcon,
-    'atoilet': atoiletIcon
+    'lift': `${BASE}/icons/lift.png`,
+    'stair-u': `${BASE}/icons/stair-u.png`,
+    'stair-d': `${BASE}/icons/stair-d.png`,
+    'stair-ud': `${BASE}/icons/stair-ud.png`,
+    'mtoilet': `${BASE}/icons/mtoilet.png`,
+    'ftoilet': `${BASE}/icons/ftoilet.png`,
+    'atoilet': `${BASE}/icons/atoilet.png`
   };
 
   // State flag for all icons visibility

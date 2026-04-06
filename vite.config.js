@@ -33,6 +33,16 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         map: resolve(__dirname, 'map.html'),
+      },
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('three')) {
+              return 'vendor-three';
+            }
+            return 'vendor'; // all other node_modules
+          }
+        }
       }
     }
   }
