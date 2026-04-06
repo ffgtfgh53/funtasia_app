@@ -102,9 +102,7 @@ export function setupUI(floors) {
         updateThumbUI(index);
         
         const floorId = floorBtns[index].dataset.floor;
-        if (floors[floorId] && floors[floorId].isLoaded()) {
-           Navigation.switchFloor(floorId);
-        }
+        Navigation.switchFloor(floorId);
       }
     }
 

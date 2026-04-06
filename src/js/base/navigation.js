@@ -11,26 +11,38 @@ export class Navigation {
     Navigation.appState = appState;
   }
 
-  static switchFloor(floorId) {
+  static async switchFloor(floorId) {
     if (Navigation.appState.currentFloor && Navigation.appState.currentFloor.id === floorId) return;
 
     // Hide all floors first
     Object.values(Floor.floors).forEach((floor) => floor.hide());
 
-    // Activate new floor
     const targetFloor = Floor.floors[floorId];
-    if (targetFloor && targetFloor.isLoaded()) {
-      targetFloor.activate(Navigation.appState.camera, Navigation.appState.controls);
-      
-      // Update state
-      Floor.currentFloor = targetFloor;
-      Navigation.appState.interactiveObjects = targetFloor.interactiveObjects;
-      Navigation.appState.currentFloor = targetFloor; // Store object instead of string
-      Icon.setLevel(floorId);
-      console.log(`Switched to floor: ${floorId}`);
-    } else {
-      console.warn(`Floor ${floorId} not found or not loaded yet`);
+    if (!targetFloor) {
+      console.warn(`Floor ${floorId} not found`);
+      return;
     }
+
+    // Lazy load — fetch from jsDelivr if not yet in memory
+    if (!targetFloor.isLoaded()) {
+      showToast(`Loading floor ${floorId.toUpperCase()}…`, 10000);
+      try {
+        await targetFloor.load(Navigation.appState);
+      } catch (err) {
+        console.error(`Failed to load floor ${floorId}:`, err);
+        showToast(`Failed to load floor ${floorId.toUpperCase()}.`);
+        return;
+      }
+    }
+
+    targetFloor.activate(Navigation.appState.camera, Navigation.appState.controls);
+
+    // Update state
+    Floor.currentFloor = targetFloor;
+    Navigation.appState.interactiveObjects = targetFloor.interactiveObjects;
+    Navigation.appState.currentFloor = targetFloor;
+    Icon.setLevel(floorId);
+    console.log(`Switched to floor: ${floorId}`);
 
     // Update UI buttons
     document.querySelectorAll(".floor-btn").forEach((btn) => {
@@ -63,8 +75,7 @@ export class Navigation {
       
       if (now - startTime < greyDelay) {
         const marker = new QRMarker(appState.scene, appState.lastScannedInfo.pos, QRMarker.font, greyDelay);
-        // Correct the start time so it greys out at the right moment
-        marker.startTime = startTime; 
+        marker.startTime = startTime;
         appState.activeMarkers.push(marker);
       }
     }

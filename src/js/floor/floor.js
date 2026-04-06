@@ -1,5 +1,7 @@
 import * as THREE from "three";
 import { Icon } from "@/js/marker/icon.js";
+import { loadModel } from "@/js/floor/modelLoader.js";
+import { parseModel } from "@/js/floor/modelParser.js";
 
 import stairsIcon from "@/assets/icons/stair-ud.png";
 import toiletsIcon from "@/assets/icons/atoilet.png";
@@ -60,6 +62,21 @@ export class Floor {
 
   isLoaded() {
     return this.sceneModel !== null;
+  }
+
+  /**
+   * Lazily loads this floor's model from jsDelivr and parses it.
+   * Safe to call multiple times — resolves immediately if already loaded.
+   * @param {import("@/js/base/appState.js").AppState} appState
+   * @returns {Promise<void>}
+   */
+  async load(appState) {
+    if (this.isLoaded()) return;
+
+    const gltf = await loadModel(this.modelPath);
+    const result = parseModel(gltf, this.id, appState.scene);
+    this.attachParsedData(result.model, result.interactiveObjects, result.cameraConfig);
+    console.log(`[Floor] Parsed ${this.id}: ${result.interactiveObjects.length} interactive meshes.`);
   }
 
   /**

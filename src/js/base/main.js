@@ -1,6 +1,5 @@
 import * as THREE from "three";
 import { setupScene } from "@/js/base/sceneSetup.js";
-import { loadModels } from "@/js/floor/modelLoader.js";
 import { setupUI } from "@/js/base/ui.js";
 import { setupEventListeners } from "@/js/base/event.js";
 import { startAnimationLoop } from "@/js/base/animate.js";
@@ -14,28 +13,25 @@ import { Navigation } from "@/js/base/navigation.js";
 
 const { scene, camera, renderer, controls } = setupScene();
 
-import modelL4 from "@/assets/models/v2-31-3/njc-l4-v2-31-3.glb";
-import modelL3 from "@/assets/models/v2-31-3/njc-l3-v2-31-3.glb";
-import modelL2 from "@/assets/models/v2-31-3/njc-l2-v2-31-3.glb";
-import modelL1 from "@/assets/models/v2-31-3/njc-l1-v2-31-3.glb";
-import modelB1 from "@/assets/models/v2-31-3/njc-b1-v2-31-3.glb";
-import modelB2 from "@/assets/models/v2-31-3/njc-b2-v2-31-3.glb";
-import modelB3 from "@/assets/models/v2-31-3/njc-b3-v2-31-3.glb";
-import modelCanteen from "@/assets/models/njc-l1-canteen.glb";
-
-const floorPaths = {
-  l4: modelL4,
-  l3: modelL3,
-  l2: modelL2,
-  l1: modelL1,
-  b1: modelB1,
-  b2: modelB2,
-  b3: modelB3,
+// Register all floors with their relative CDN paths (no static imports needed).
+// Models are fetched lazily from jsDelivr on first switchFloor() call.
+const floorDefs = {
+  l4: "models/njc-l4-v2-31-3.glb",
+  l3: "models/njc-l3-v2-31-3.glb",
+  l2: "models/njc-l2-v2-31-3.glb",
+  l1: "models/njc-l1-v2-31-3.glb",
+  b1: "models/njc-b1-v2-31-3.glb",
+  b2: "models/njc-b2-v2-31-3.glb",
+  b3: "models/njc-b3-v2-31-3.glb",
 };
 
-const childModelPaths = {
-  canteen: modelCanteen,
+const childModelDefs = {
+  canteen: "models/njc-l1-canteen.glb",
 };
+
+// Instantiate Floor objects — they self-register into Floor.floors
+Object.entries(floorDefs).forEach(([id, path]) => new Floor(id, path));
+Object.entries(childModelDefs).forEach(([id, path]) => new Floor(id, path));
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -65,15 +61,13 @@ async function initApp() {
   if (font === undefined) {
     console.log("Font not loaded");
   }
-  console.log(`Font: ${font}`)
-  
+  console.log(`Font: ${font}`);
+
   // Set font as a class attribute so handleURLQR etc. don't need it passed
   QRMarker.font = font;
 
-  const { floors } = await loadModels(appState, floorPaths);
-  await loadModels(appState, childModelPaths);
-  
-  setupUI(floors);
+  // No pre-loading — floors are fetched on-demand in Navigation.switchFloor()
+  setupUI(Floor.floors);
 
   // Initialize modular Settings menu
   SettingsController.init('settings-content-area');
@@ -94,8 +88,8 @@ async function initApp() {
 
   // Listen for URL changes (back/forward or manual scan)
   window.addEventListener("popstate", handleURLQR);
-  
-  // Initial check
+
+  // Initial check — triggers first lazy load for the default floor
   handleURLQR();
 
   startAnimationLoop(appState);
