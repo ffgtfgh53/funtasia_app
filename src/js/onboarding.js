@@ -57,6 +57,13 @@ Alpine.data('onboarding', () => ({
             try {
                 await fetch(url, { cache: 'force-cache' });
                 console.log(`[Preloader] Cached: ${url}`);
+                
+                // Persist loaded status for the Map page
+                const loaded = JSON.parse(localStorage.getItem('funtasia_preloaded_assets') || '[]');
+                if (!loaded.includes(url)) {
+                    loaded.push(url);
+                    localStorage.setItem('funtasia_preloaded_assets', JSON.stringify(loaded));
+                }
             } catch (e) {
                 console.warn(`[Preloader] Failed to cache: ${url}`, e);
             }

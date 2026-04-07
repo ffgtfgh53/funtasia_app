@@ -1,17 +1,19 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <title>GLB Hover Interaction</title>
+    <title>Funtasia 3D Map</title>
     <link rel="stylesheet" href="/src/css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <link href="/src/css/input.css" rel="stylesheet"/>
     <script type="module" src="/src/js/helper/pwa.js"></script>
+    <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico"/>
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   </head>
   <body>
     <div id="canvas-container"></div>
@@ -31,6 +33,7 @@
 
     <!-- Bottom sheet popup -->
     <div id="bottom-sheet">
+      <div id="sheet-handle"></div>
       <button id="close-btn">&times;</button>
       <h2 id="sheet-title">Location Title</h2>
       <p id="sheet-desc">Location description will appear here.</p>
@@ -42,13 +45,13 @@
     </div>
 
     <!-- Settings Open Button -->
-    <button id="open-settings-btn" style="position: fixed; bottom: 86px; right: 20px; z-index: 9999; background: #004b53; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; padding: 5px;">
-      <img id="settings-icon-img" alt="Settings" style="width: 80%; height: 80%; object-fit: contain;" />
+    <button id="open-settings-btn" class="fab-btn fab-btn--settings">
+      <img id="settings-icon-img" alt="Settings" />
     </button>
 
     <!-- Directory Open Button -->
-    <button id="open-directory-btn" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; background: #004b53; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; padding: 5px;">
-      <img id="directory-icon-img" alt="Directory" style="width: 80%; height: 80%; object-fit: contain;" />
+    <button id="open-directory-btn" class="fab-btn fab-btn--directory">
+      <img id="directory-icon-img" alt="Directory" />
     </button>
 
     <!-- Settings Modal Wrapper -->
@@ -97,7 +100,7 @@
           <!-- Content Area -->
           <div class="modal-content">
             <!-- Section: IP Open House -->
-            <div class="px-2 mb-6">
+            <div class="px-4 mb-6">
               <div class="modal-search-wrapper">
                 <div class="modal-search-icon-wrapper">
                   <span class="modal-search-icon">search</span>
@@ -106,7 +109,7 @@
               </div>
             </div>
             <section>
-              <div class="px-2 mb-4">
+              <div class="px-4 mb-4">
                 <h2 class="modal-section-title">IP Open House</h2>
               </div>
               <div class="space-y-3">
@@ -143,33 +146,8 @@
               <div class="px-2 mb-4">
                 <h2 class="modal-section-title">Funtasia</h2>
               </div>
-              <div class="space-y-3">
-                <!-- Carousel Item -->
-                <div class="modal-list-item">
-                  <div class="modal-item-icon-wrapper bg-amber-50 text-amber-600">
-                    <span class="material-symbols-outlined" data-icon="toys">toys</span>
-                  </div>
-                  <!-- Accent Bar -->
-                  <div class="modal-item-accent-bar bg-amber-400"></div>
-                  <div class="modal-item-content">
-                    <h3 class="modal-item-title">Carousel</h3>
-                    <p class="modal-item-subtitle">Classic vintage whimsical ride</p>
-                  </div>
-                  <span class="modal-item-chevron">chevron_right</span>
-                </div>
-                <!-- Rollercoaster Item -->
-                <div class="modal-list-item">
-                  <div class="modal-item-icon-wrapper bg-rose-50 text-rose-600">
-                    <span class="material-symbols-outlined" data-icon="rocket">rocket</span>
-                  </div>
-                  <!-- Accent Bar -->
-                  <div class="modal-item-accent-bar bg-rose-500"></div>
-                  <div class="modal-item-content">
-                    <h3 class="modal-item-title">Rollercoaster</h3>
-                    <p class="modal-item-subtitle">High-speed adrenaline circuit</p>
-                  </div>
-                  <span class="modal-item-chevron">chevron_right</span>
-                </div>
+              <div id="funtasia-directory-list" class="space-y-6">
+                <!-- Dynamically populated via directory.js -->
               </div>
             </section>
           </div>

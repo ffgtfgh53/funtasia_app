@@ -19,11 +19,7 @@ import bgTextureUrl from "@/assets/media/dark-astro-abstract-background.jpg";
 export function setupScene() {
   const container = document.getElementById("canvas-container");
   const scene = new THREE.Scene();
-
-  const textureLoader = new THREE.TextureLoader();
-  textureLoader.load(bgTextureUrl, (texture) => {
-    scene.background = texture;
-  });
+  scene.background = new THREE.Color("#dce8ff"); // Fixed light accent blue per user request
 
   const viewportSize = getViewportSize();
   const camera = new THREE.PerspectiveCamera(

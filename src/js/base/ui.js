@@ -21,15 +21,29 @@ function getLocationInfo(objectName) {
   };
 }
 
+let currentAppState = null;
+
 export function showBottomSheet(objectName) {
   const locationInfo = getLocationInfo(objectName);
   sheetTitle.textContent = locationInfo.title;
   sheetDesc.textContent = locationInfo.description;
   sheet.classList.add("show");
+  if (currentAppState) currentAppState.isBottomSheetOpen = true;
 }
 
 export function hideBottomSheet() {
   sheet.classList.remove("show");
+  if (currentAppState) currentAppState.isBottomSheetOpen = false;
+}
+
+export function hideToast() {
+  const toast = document.getElementById("toast-popup");
+  if (!toast) return;
+  toast.classList.remove("show");
+  if (toast.hideTimeout) {
+    clearTimeout(toast.hideTimeout);
+    toast.hideTimeout = null;
+  }
 }
 
 export function showToast(message, duration = 3000) {
@@ -37,18 +51,20 @@ export function showToast(message, duration = 3000) {
   const toastMsg = document.getElementById("toast-message");
   if (!toast || !toastMsg) return;
 
+  hideToast(); // Clear any existing toast before showing new one
+
   toastMsg.textContent = message;
   toast.classList.add("show");
 
-  // Remove any existing timeout to reset the timer if called repeatedly
-  if (toast.hideTimeout) clearTimeout(toast.hideTimeout);
-
   toast.hideTimeout = setTimeout(() => {
     toast.classList.remove("show");
+    toast.hideTimeout = null;
   }, duration);
 }
 
-export function setupUI(floors) {
+export function setupUI(floors, appState) {
+  currentAppState = appState;
+  
   closeBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     e.preventDefault();
@@ -60,6 +76,7 @@ export function setupUI(floors) {
     e.preventDefault();
     hideBottomSheet();
   });
+
 
   const floorSelector = document.getElementById("floor-selector");
   const floorThumb = document.getElementById("floor-thumb");
@@ -136,6 +153,88 @@ export function setupUI(floors) {
         try { floorSelector.releasePointerCapture(e.pointerId); } catch(err) {}
     });
   }
+
+  // --- Bottom Sheet Swipe-to-Close Logic ---
+  let startY = 0;
+  let currentY = 0;
+  let isDragging = false;
+  let rafId = null;
+
+  const updatePosition = () => {
+    if (!isDragging) return;
+    sheet.style.transform = `translate3d(0, ${currentY}px, 0)`;
+    rafId = requestAnimationFrame(updatePosition);
+  };
+
+  const handlePointerDown = (e) => {
+    if (e.target.closest('#sheet-handle') || e.target.closest('h2') || e.target === sheet) {
+      isDragging = true;
+      startY = e.clientY - currentY; // Consistent start from current position
+      sheet.setPointerCapture(e.pointerId);
+      sheet.classList.add("shifting");
+      
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(updatePosition);
+    }
+  };
+
+  const handlePointerMove = (e) => {
+    if (!isDragging) return;
+    const deltaY = e.clientY - startY;
+    currentY = Math.max(0, deltaY);
+  };
+
+  const handlePointerUp = (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+    sheet.releasePointerCapture(e.pointerId);
+    sheet.classList.remove("shifting");
+    cancelAnimationFrame(rafId);
+
+    const threshold = sheet.offsetHeight * 0.05; // Honoring user's 5% change
+    
+    if (currentY > threshold) {
+      // Use Web Animations API to finish the motion fluidly to the bottom (100%)
+      const closingAnim = sheet.animate([
+        { transform: `translate3d(0, ${currentY}px, 0)` },
+        { transform: `translate3d(0, 100%, 0)` }
+      ], {
+        duration: 250,
+        easing: 'cubic-bezier(0.2, 0, 0, 1)',
+        fill: 'forwards'
+      });
+
+      closingAnim.onfinish = () => {
+        sheet.classList.remove("shifting");
+        sheet.style.transform = "";
+        hideBottomSheet();
+        closingAnim.cancel(); // Remove the "fill: forwards" effect so CSS takes over
+        currentY = 0;
+      };
+    } else {
+      // Snap back to 0
+      const snapAnim = sheet.animate([
+        { transform: `translate3d(0, ${currentY}px, 0)` },
+        { transform: `translate3d(0, 0, 0)` }
+      ], {
+        duration: 200,
+        easing: 'cubic-bezier(0.2, 0, 0, 1)',
+        fill: 'forwards'
+      });
+
+      snapAnim.onfinish = () => {
+        sheet.classList.remove("shifting");
+        sheet.style.transform = "";
+        snapAnim.cancel();
+        currentY = 0;
+      };
+    }
+  };
+
+  sheet.addEventListener("pointerdown", handlePointerDown);
+  sheet.addEventListener("pointermove", handlePointerMove);
+  sheet.addEventListener("pointerup", handlePointerUp);
+  sheet.addEventListener("pointercancel", handlePointerUp);
 }
 
 

@@ -2,13 +2,21 @@ import * as THREE from "three";
 import { Floor } from "@/js/floor/floor.js";
 import { QRMarker } from "@/js/marker/qrmarker.js";
 import { Icon } from "@/js/marker/icon.js";
-import { showToast } from "@/js/base/ui.js";
+import { showToast, hideToast } from "@/js/base/ui.js";
 
 export class Navigation {
   static appState = null;
 
   static init(appState) {
     Navigation.appState = appState;
+    
+    // Sync preloaded status from localStorage
+    try {
+      const preloaded = JSON.parse(localStorage.getItem('funtasia_preloaded_assets') || '[]');
+      preloaded.forEach(url => appState.loadedAssets.add(url));
+    } catch(e) {
+      console.warn("Failed to parse preloaded assets from localStorage", e);
+    }
   }
 
   static async switchFloor(floorId) {
@@ -25,13 +33,23 @@ export class Navigation {
 
     // Lazy load — fetch from jsDelivr if not yet in memory
     if (!targetFloor.isLoaded()) {
-      showToast(`Loading floor ${floorId.toUpperCase()}…`, 10000);
+      const isPreloaded = Navigation.appState.loadedAssets.has(targetFloor.modelPath);
+      
+      // Only show toast if not already pre-fetched (or if user is explicitly re-triggering)
+      if (!isPreloaded) {
+        showToast(`Loading ${floorId.toUpperCase()}…`, 15000);
+      }
+      
       try {
         await targetFloor.load(Navigation.appState);
+        // Mark as successful for future switches
+        Navigation.appState.loadedAssets.add(targetFloor.modelPath);
       } catch (err) {
         console.error(`Failed to load floor ${floorId}:`, err);
-        showToast(`Failed to load floor ${floorId.toUpperCase()}.`);
+        showToast(`Error: ${floorId.toUpperCase()} failed.`);
         return;
+      } finally {
+        hideToast();
       }
     }
 

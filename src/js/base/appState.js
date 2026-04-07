@@ -19,5 +19,7 @@ export class AppState {
     this.activeMarkers = [];
     this.lastScannedInfo = null;
     this.pointerStartTime = 0;
+    this.isBottomSheetOpen = false;
+    this.loadedAssets = new Set();
   }
 }

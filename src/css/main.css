@@ -1,3 +1,12 @@
+/* =============================================================
+   main.css — Map page styles
+   Follows DESIGN.md: Catppuccin editorial design system
+   - No 1px borders (§2 "No-Line" Rule)
+   - Tonal layering, not drop-shadows (§4)
+   - Glassmorphism for floating elements (§2 "Glass & Gradient")
+   - xl (1.5rem) roundedness (§5)
+   ============================================================= */
+
 * {
   box-sizing: border-box;
 }
@@ -15,11 +24,13 @@ body {
 }
 
 body {
-  background: #111;
+  background: var(--color-background);
   font-family: "JetBrains Mono", monospace;
-  -webkit-tap-highlight-color: transparent; /* ✅ removes blue highlight on tap */
-  user-select: none; /* ✅ prevents text selection */
-  touch-action: none; /* ✅ disables built-in panning/zoom gestures */
+  color: var(--color-on-surface);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: none;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 #canvas-container {
@@ -37,19 +48,25 @@ body {
   height: 100% !important;
 }
 
+/* === Info Label (Floating — Glassmorphism per §2) === */
 #info {
   position: fixed;
   top: 10px;
   left: 10px;
-  color: white;
+  color: var(--color-on-surface);
   font-family: "JetBrains Mono", monospace;
-  background: rgba(0, 0, 0, 0.5);
+  background: color-mix(in srgb, var(--color-surface-container-high) 80%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   padding: 8px 12px;
-  border-radius: 4px;
+  border-radius: 1.5rem;
   z-index: 5;
   font-size: 14px;
   max-width: calc(100vw - 20px);
   word-wrap: break-word;
+  /* Ambient shadow per §4 — 30-60px blur, 4-8% opacity, on-surface tint */
+  box-shadow: 0 8px 40px color-mix(in srgb, var(--color-on-surface) 6%, transparent);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 @media (max-width: 768px) {
@@ -61,26 +78,51 @@ body {
   }
 }
 
-/* === Bottom sheet popup styles === */
+/* === Bottom Sheet (Floating — Glassmorphism per §2) === */
 #bottom-sheet {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  background: rgba(25, 25, 25, 0.95);
-  color: white;
+  background: color-mix(in srgb, var(--color-surface-container) 80%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: var(--color-on-surface);
   padding: 24px 20px;
   padding-bottom: max(24px, env(safe-area-inset-bottom));
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
+  /* Ambient shadow (§4) */
+  box-shadow: 0 -8px 48px color-mix(in srgb, var(--color-on-surface) 6%, transparent);
   transform: translateY(100%);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 100;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.3s ease;
+  z-index: 10001;
   max-height: 60vh;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   pointer-events: auto;
+  touch-action: pan-y; /* Allow vertical panning for the sheet */
+  will-change: transform;
+}
+
+#bottom-sheet.shifting {
+  transition: none !important;
+  /* Disable expensive backdrop-filter during real-time movement for smoothness */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  /* Use a slightly more opaque background to compensate for lost blur */
+  background: color-mix(in srgb, var(--color-surface-container) 95%, transparent) !important;
+}
+
+#sheet-handle {
+  width: 40px;
+  height: 4px;
+  background: color-mix(in srgb, var(--color-on-surface) 20%, transparent);
+  border-radius: 2px;
+  margin: 12px auto 0;
+  cursor: grab;
+  flex-shrink: 0;
 }
 
 #bottom-sheet.show {
@@ -90,15 +132,16 @@ body {
 #bottom-sheet h2 {
   margin: 0 0 12px;
   margin-right: 40px;
-  color: #ff6b00;
+  color: var(--color-primary);
   font-size: 1.5em;
   font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 #bottom-sheet p {
   margin: 0;
   font-size: 1em;
-  color: #ddd;
+  color: var(--color-on-surface-variant);
   line-height: 1.5;
 }
 
@@ -107,8 +150,8 @@ body {
     padding: 20px 16px;
     padding-bottom: max(20px, env(safe-area-inset-bottom));
     max-height: 70vh;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
   }
 
   #bottom-sheet h2 {
@@ -121,13 +164,14 @@ body {
   }
 }
 
+/* === Close Button === */
 #close-btn {
   position: absolute;
   right: 20px;
   top: 20px;
   background: none;
   border: none;
-  color: white;
+  color: var(--color-on-surface);
   font-size: 1.8em;
   cursor: pointer;
   transition: color 0.2s, background 0.2s;
@@ -140,13 +184,13 @@ body {
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
   pointer-events: auto;
-  z-index: 101;
+  z-index: 10002;
 }
 
 #close-btn:hover,
 #close-btn:active {
-  color: #ff6b00;
-  background: rgba(255, 107, 0, 0.1);
+  color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 10%, transparent);
 }
 
 @media (max-width: 768px) {
@@ -159,7 +203,7 @@ body {
   }
 }
 
-/* === Floor Selector UI === */
+/* === Floor Selector UI (Floating — Glassmorphism per §2) === */
 #floor-selector {
   position: fixed;
   top: 50%;
@@ -169,30 +213,37 @@ body {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  background: rgba(0, 0, 0, 0.4);
+  background: color-mix(in srgb, var(--color-surface-container-low) 70%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   padding: 8px;
-  border-radius: 30px;
-  backdrop-filter: blur(8px);
-  touch-action: none; /* Disable map scrolling while dragging the floor bar */
+  border-radius: 1.5rem;
+  /* Ambient shadow (§4) */
+  box-shadow: 0 8px 40px color-mix(in srgb, var(--color-on-surface) 6%, transparent);
+  touch-action: none;
   user-select: none;
+  transition: background 0.3s ease;
 }
 
+/* Floor thumb — Solid CTA (§2 update) */
 #floor-thumb {
   position: absolute;
   left: 8px;
   width: 40px;
   height: 40px;
-  background: #ff6b00;
+  background: var(--color-primary);
   border-radius: 50%;
   z-index: -1;
-  transition: transform 0.15s cubic-bezier(0.2, 0, 0, 1);
-  box-shadow: 0 2px 8px rgba(255, 107, 0, 0.4);
+  transition: transform 0.15s cubic-bezier(0.2, 0, 0, 1),
+              background 0.3s ease;
+  /* Ambient glow */
+  box-shadow: 0 4px 24px color-mix(in srgb, var(--color-primary) 25%, transparent);
 }
 
 .floor-btn {
   background: transparent;
   border: none;
-  color: white;
+  color: var(--color-on-surface);
   padding: 0;
   border-radius: 50%;
   cursor: pointer;
@@ -208,7 +259,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1; /* keep text above the sliding thumb */
+  z-index: 1;
 }
 
 .floor-btn:active {
@@ -246,20 +297,65 @@ body {
   }
 }
 
-/* === Toast Notification === */
+/* === FAB Buttons (Floating Action Buttons) === */
+.fab-btn {
+  position: fixed;
+  z-index: 9999;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  /* Solid CTA (§2 update) */
+  background: var(--color-primary);
+  /* Ambient shadow (§4) */
+  box-shadow: 0 8px 32px color-mix(in srgb, var(--color-on-surface) 12%, transparent);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+}
+
+.fab-btn:active {
+  transform: scale(0.92);
+}
+
+.fab-btn img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  /* Ensure icon is visible on both light and dark gradient */
+  filter: brightness(0) invert(1);
+}
+
+.fab-btn--directory {
+  bottom: 20px;
+  right: 20px;
+}
+
+.fab-btn--settings {
+  bottom: 82px;
+  right: 20px;
+}
+
+/* === Toast Notification (Greyish Blue §2 update) === */
 .toast {
   position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%) translateY(100px);
-  background: rgba(255, 68, 68, 0.95);
-  color: white;
+  background: color-mix(in srgb, var(--color-toast-brand) 30%, var(--color-surface-container-high));
+  color: var(--color-on-surface);
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 1.5rem;
   font-family: "JetBrains Mono", monospace;
   font-size: 14px;
   font-weight: 500;
-  box-shadow: 0 4px 12px rgba(255, 68, 68, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  /* Ambient tinted shadow */
+  box-shadow: 0 8px 40px color-mix(in srgb, var(--color-on-surface) 10%, transparent);
   z-index: 1000;
   opacity: 0;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);

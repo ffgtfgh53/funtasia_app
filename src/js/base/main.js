@@ -10,6 +10,13 @@ import { Icon } from "@/js/marker/icon.js";
 import { AppState } from "@/js/base/appState.js";
 import { SettingsController } from "@/js/base/settings.js";
 import { Navigation } from "@/js/base/navigation.js";
+import { initDirectory } from "@/js/base/directory.js";
+
+// Initialize theme from localStorage on page load
+const savedTheme = localStorage.getItem('funtasia-theme');
+if (savedTheme) {
+  document.documentElement.dataset.theme = savedTheme;
+}
 
 const { scene, camera, renderer, controls } = setupScene();
 
@@ -67,7 +74,8 @@ async function initApp() {
   QRMarker.font = font;
 
   // No pre-loading — floors are fetched on-demand in Navigation.switchFloor()
-  setupUI(Floor.floors);
+  setupUI(Floor.floors, appState);
+  initDirectory();
 
   // Initialize modular Settings menu
   SettingsController.init('settings-content-area');
@@ -85,8 +93,11 @@ async function initApp() {
       visualsSection,
       'Dark Mode',
       'Toggle dark mode',
-      (state) => { Icon.state(state); },
-      Icon.iconsVisible !== true
+      (isDark) => {
+        document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
+        localStorage.setItem('funtasia-theme', isDark ? 'dark' : 'light');
+      },
+      document.documentElement.dataset.theme === 'dark'
     );
   }
   if (controlsSection) {
