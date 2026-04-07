@@ -72,6 +72,7 @@ async function initApp() {
   // Initialize modular Settings menu
   SettingsController.init('settings-content-area');
   const visualsSection = SettingsController.addSection('Visual Preferences');
+  const controlsSection = SettingsController.addSection('Controls');
   if (visualsSection) {
     SettingsController.addToggle(
       visualsSection,
@@ -79,6 +80,34 @@ async function initApp() {
       'Toggle 3D points of interest markers',
       (state) => { Icon.state(state); },
       Icon.iconsVisible !== false
+    );
+    SettingsController.addToggle(
+      visualsSection,
+      'Dark Mode',
+      'Toggle dark mode',
+      (state) => { Icon.state(state); },
+      Icon.iconsVisible !== true
+    );
+  }
+  if (controlsSection) {
+    SettingsController.addToggle(
+      controlsSection,
+      'Rotation Lock',
+      'Lock the rotation of the 3D model',
+      (isLocked) => {
+        appState.rotationLocked = isLocked;
+        controls.enableRotate = !isLocked;
+        controls.touches.TWO = isLocked ? THREE.TOUCH.DOLLY_PAN : THREE.TOUCH.DOLLY_ROTATE;
+        
+        // Lerp camera to front of the model when locked
+        if (isLocked && appState.currentFloor && appState.currentFloor.cameraConfig) {
+          const config = appState.currentFloor.cameraConfig;
+          appState.cameraAnim.controlsTarget.copy(config.target);
+          appState.cameraAnim.cameraTarget.copy(config.initialPosition);
+          appState.cameraAnim.active = true;
+        }
+      },
+      appState.rotationLocked
     );
   }
 

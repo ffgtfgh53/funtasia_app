@@ -3,7 +3,7 @@ export class SettingsController {
         this.container = document.getElementById(containerId);
         if (this.container) {
             this.container.innerHTML = ''; // Clear placeholders
-            this.container.className = 'px-2 pb-6 space-y-6'; // Add some standard spacing
+            this.container.className = 'px-2 pb-8 space-y-6 overflow-y-auto hide-scrollbar'; // Set spacing and restore scrollability
         }
     }
 
@@ -15,7 +15,7 @@ export class SettingsController {
         sectionDiv.className = 'mt-6 first:mt-0';
         
         const headerDiv = document.createElement('div');
-        headerDiv.className = 'mb-4';
+        headerDiv.className = 'pt-4 mb-4 px-4';
         headerDiv.innerHTML = `<h2 class="modal-section-title">${title}</h2>`;
         
         const contentDiv = document.createElement('div');

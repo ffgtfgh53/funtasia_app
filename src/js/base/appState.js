@@ -8,6 +8,7 @@ export class AppState {
     this.currentFloor = null; // Will hold Floor object
     this.interactiveObjects = [];
     this.selected = null;
+    this.rotationLocked = true;
     this.cameraAnim = {
       active: false,
       cameraTarget: new THREE.Vector3(),

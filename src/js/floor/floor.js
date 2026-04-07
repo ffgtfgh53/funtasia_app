@@ -87,8 +87,11 @@ export class Floor {
     camera.position.copy(this.cameraConfig.initialPosition);
     controls.minDistance = this.cameraConfig.minDistance;
     controls.maxDistance = this.cameraConfig.maxDistance;
-    camera.near = this.cameraConfig.near;
-    camera.far = this.cameraConfig.far;
+    // camera.near = this.cameraConfig.near;
+    // camera.far = this.cameraConfig.far;
+    
+    controls.enableRotate = !Floor.appState.rotationLocked;
+    controls.touches.TWO = Floor.appState.rotationLocked ? THREE.TOUCH.DOLLY_PAN : THREE.TOUCH.DOLLY_ROTATE;
     
     camera.updateProjectionMatrix();
     controls.update();

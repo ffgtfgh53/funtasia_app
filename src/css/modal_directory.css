@@ -1,13 +1,13 @@
 /* modal_directory.css */
 @layer components {
     .modal-container {
-        @apply relative z-50 flex flex-col h-full items-center justify-end md:justify-center p-4;
+        @apply relative z-50 flex flex-col h-full items-center justify-center p-4;
     }
     .modal-backdrop {
         @apply fixed inset-0 bg-on-surface/10 backdrop-blur-[2px];
     }
     .modal-card {
-        @apply relative w-full max-w-md bg-white/90 backdrop-blur-2xl rounded-[2rem] shadow-[0_32px_64px_-12px_rgba(16,28,47,0.12)] border border-white/40 overflow-hidden flex flex-col max-h-[751px];
+        @apply relative w-[80vw] md:w-[60vw] h-[60vh] bg-white/90 backdrop-blur-2xl rounded-[2rem] shadow-[0_32px_64px_-12px_rgba(16,28,47,0.12)] border border-white/40 overflow-hidden flex flex-col;
     }
     .modal-header {
         @apply px-6 pt-6 pb-4 flex justify-between items-start sticky top-0 bg-white/40 z-10;
