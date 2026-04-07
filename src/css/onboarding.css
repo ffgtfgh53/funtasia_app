@@ -17,9 +17,10 @@ body { min-height: 100dvh; }
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 2.5rem;
+    padding: 2.5rem 4rem 10rem;
     text-align: center;
     gap: 2rem;
+    box-sizing: border-box;
 }
 .slide-title {
     font-family: var(--font-headline, "JetBrains Mono", monospace);
@@ -90,15 +91,10 @@ body { min-height: 100dvh; }
 /* Navigation Buttons */
 .nav-btn {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 14vw;
-    height: 14vw;
-    max-width: 56px;
-    max-height: 56px;
-    min-width: 44px;
-    min-height: 44px;
-    border-radius: 50%;
+    bottom: 7rem;
+    width: 38px;
+    height: 64px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -119,11 +115,11 @@ body { min-height: 100dvh; }
 
 .nav-btn:hover {
     background: color-mix(in srgb, var(--color-primary) 20%, transparent);
-    transform: translateY(-50%) scale(1.08);
+    transform: scale(1.08);
 }
 
 .nav-btn:active {
-    transform: translateY(-50%) scale(0.92);
+    transform: scale(0.92);
 }
 
 .nav-btn--back {

@@ -105,7 +105,7 @@ export class QRMarker {
     this.group.add(this.ring);
     // this.group.add(this.diamondGroup);
 
-    this.group.position.copy(position);
+    // this.group.position.copy(position);
     this.scene.add(this.group);
 
     this.startTime = performance.now();
