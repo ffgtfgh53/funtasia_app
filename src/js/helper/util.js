@@ -16,14 +16,17 @@ export function performRaycast(appState) {
 
 export function applySelection(target, appState) {
   if (appState.selected === target) return;
-
-  if (appState.selected) appState.selected.material.emissive.setHex(0x000000);
+  
+  if (appState.selected) appState.selected.material = appState.selected.userData.material;
   appState.selected = target;
 
   if (appState.selected) {
     const baseColor = new THREE.Color(zoneColours[appState.selected.userData.ZONE]);
     const emissiveColor = baseColor.clone().multiplyScalar(2);
-    appState.selected.material.emissive.copy(emissiveColor);
+    const highlightMaterial = new THREE.MeshBasicMaterial({
+      color: emissiveColor,
+    });
+    appState.selected.material = highlightMaterial;
     if (appState.infoLabel) appState.infoLabel.textContent = `Selected: ${appState.selected.name}`;
   } else {
     if (appState.infoLabel) appState.infoLabel.textContent = "Select a model";

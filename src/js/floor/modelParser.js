@@ -71,6 +71,7 @@ export function parseModel(gltf, floorId, scene) {
 
   const objects = [];
   model.traverse((child) => {
+    console.log(child.geometry)
     if (!child.isMesh) return;
     // IDK if the following 2 lines are needed
     child.castShadow = false;
@@ -124,12 +125,10 @@ export function parseModel(gltf, floorId, scene) {
         }
       }
     } else {
-      child.material = new THREE.MeshStandardMaterial({
+      child.material = new THREE.MeshBasicMaterial({
         color: zoneColours[child.userData.ZONE],
-        emissive: 0x000000,
-        roughness: 1,
-        metalness: 1,
       });
+      child.userData.material = child.material;
     }
 
     if (!isInteractive) return;
