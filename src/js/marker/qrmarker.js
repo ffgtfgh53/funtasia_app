@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { Floor } from "@/js/floor/floor.js";
 import { showToast } from "@/js/base/ui.js";
-const BASE = `https://cdn.jsdelivr.net/gh/garethlearnscoding/funtasia_app@assets`;
+const BASE = ASSETS_BASE_URL;
 const googleMapIconUrl = `${BASE}/icons/google-map-icon.glb`;
 
 export class QRMarker {

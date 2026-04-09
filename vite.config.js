@@ -15,6 +15,9 @@ export default defineConfig({
       }
     })
   ],
+  define: {
+    ASSETS_BASE_URL: JSON.stringify('https://cdn.jsdelivr.net/gh/garethlearnscoding/funtasia_app@assets')
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

@@ -38,7 +38,7 @@ Alpine.data('onboarding', () => ({
     },
 
     preloadMapAssets() {
-        const BASE = `https://cdn.jsdelivr.net/gh/garethlearnscoding/funtasia_app@assets`;
+        const BASE = ASSETS_BASE_URL;
         const icons = [
             `${BASE}/icons/settings.svg`,
             `${BASE}/icons/directory_button.svg`

@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-const BASE = `https://cdn.jsdelivr.net/gh/garethlearnscoding/funtasia_app@assets`;
+const BASE = ASSETS_BASE_URL;
 
 export class Icon {
   // Static class attributes initialized in main.js
