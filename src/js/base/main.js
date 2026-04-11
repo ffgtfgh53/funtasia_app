@@ -19,7 +19,7 @@ if (savedTheme) {
   document.documentElement.dataset.theme = savedTheme;
 }
 
-const { scene, camera, renderer, controls } = setupScene();
+const { scene, camera, renderer, controls, composer, outlinePass } = setupScene();
 
 // Register all floors with their relative CDN paths (no static imports needed).
 // Models are fetched lazily from jsDelivr on first switchFloor() call.
@@ -54,6 +54,8 @@ appState.controls = controls;
 appState.raycaster = raycaster;
 appState.mouse = mouse;
 appState.infoLabel = infoLabel;
+appState.composer = composer;
+appState.outlinePass = outlinePass;
 
 Marker.appState = appState;
 Floor.appState = appState;

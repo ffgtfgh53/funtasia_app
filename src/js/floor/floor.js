@@ -68,6 +68,11 @@ export class Floor {
     const gltf = await loadModel(this.modelPath);
     const result = parseModel(gltf, this.id, appState.scene);
     this.attachParsedData(result.model, result.interactiveObjects, result.cameraConfig);
+    
+    if (appState.outlinePass) {
+      appState.outlinePass.selectedObjects.push(...result.interactiveObjects);
+    }
+    
     console.log(`[Floor] Parsed ${this.id}: ${result.interactiveObjects.length} interactive meshes.`);
   }
 

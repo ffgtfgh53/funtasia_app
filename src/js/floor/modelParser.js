@@ -90,19 +90,17 @@ export function parseModel(gltf, floorId, scene) {
     if (!isInteractive) {
       const isGrey = child.userData.ROLE === "GREY";
       const colorVal = miscColours[child.userData.ROLE] !== undefined ? miscColours[child.userData.ROLE] : 0xc1c3c7; // default
-      child.material = new THREE.MeshStandardMaterial({
+      child.material = new THREE.MeshBasicMaterial({
         color: colorVal,
         transparent: false,
         opacity: isGrey ? 0 : 1,
-        roughness: isGrey ? 0 : 1,
-        metalness: 0,
       });
 
       // Register Markers globally
       if (child.userData.ROLE === "MARKER") {
         const markerId = child.userData.MARKERID;
         const pos = child.getWorldPosition(new THREE.Vector3());
-        QRMarker.storeMarker(markerId, pos, floorId);
+        Floor.allMarkers[markerId] = { pos, floorId };
       }
 
       // Collect Icons

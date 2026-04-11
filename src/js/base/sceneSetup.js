@@ -1,5 +1,8 @@
 import * as THREE from "three";
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass.js';
 
 export function getViewportSize() {
   if (window.visualViewport) {
@@ -42,6 +45,23 @@ export function setupScene() {
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   container.appendChild(renderer.domElement);
+
+  const composer = new EffectComposer(renderer);
+
+  const renderPass = new RenderPass(scene, camera);
+  composer.addPass(renderPass);
+
+  const outlinePass = new OutlinePass(
+    new THREE.Vector2(viewportSize.width, viewportSize.height),
+    scene,
+    camera
+  );
+  outlinePass.edgeStrength = 10;
+  outlinePass.edgeThickness = 10;
+  outlinePass.edgeGlow = 0;
+  outlinePass.visibleEdgeColor.set(0xffffff);
+  outlinePass.hiddenEdgeColor.set(0xffffff);
+  composer.addPass(outlinePass);
 
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.touches = {
@@ -86,6 +106,7 @@ export function setupScene() {
     camera.aspect = viewportSize.width / viewportSize.height;
     camera.updateProjectionMatrix();
     renderer.setSize(viewportSize.width, viewportSize.height);
+    composer.setSize(viewportSize.width, viewportSize.height);
   }
   
 
@@ -98,5 +119,5 @@ export function setupScene() {
     });
   }
 
-  return { scene, camera, renderer, controls };
+  return { scene, camera, renderer, controls, composer, outlinePass };
 }
