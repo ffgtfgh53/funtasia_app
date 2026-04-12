@@ -98,9 +98,11 @@ export function parseModel(gltf, floorId, scene) {
 
       // Register Markers globally
       if (child.userData.ROLE === "MARKER") {
-        const markerId = child.userData.MARKERID;
+        const markerId = String(child.userData.MARKERID);
         const pos = child.getWorldPosition(new THREE.Vector3());
-        Floor.allMarkers[markerId] = { pos, floorId };
+        const entry = { pos, floorId };
+        Floor.allMarkers[markerId] = entry;
+        QRMarker.allMarkers[markerId] = entry;
       }
 
       // Collect Icons

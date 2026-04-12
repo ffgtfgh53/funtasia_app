@@ -1,7 +1,7 @@
 {
   "name": "funtasia-app",
   "private": true,
-  "version": "1.0.2",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "alpinejs": "^3.15.11",
+    "html5-qrcode": "^2.3.8",
     "three": "^0.172.0"
   },
   "devDependencies": {

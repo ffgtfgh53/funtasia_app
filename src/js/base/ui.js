@@ -235,6 +235,22 @@ export function setupUI(floors, appState) {
   sheet.addEventListener("pointermove", handlePointerMove);
   sheet.addEventListener("pointerup", handlePointerUp);
   sheet.addEventListener("pointercancel", handlePointerUp);
+
+  // --- FAB Button Listeners ---
+  const infoBtn = document.getElementById("open-info-btn");
+
+  if (infoBtn) {
+    infoBtn.addEventListener("click", () => {
+      showInfo();
+    });
+  }
+}
+
+
+
+export function showInfo() {
+  console.log("Info button clicked - function placeholder");
+  // Future implementation: show app info / tutorial modal
 }
 
 

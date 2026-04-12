@@ -206,8 +206,8 @@ body {
 /* === Floor Selector UI (Floating — Glassmorphism per §2) === */
 #floor-selector {
   position: fixed;
-  top: 50%;
-  right: 15px;
+  top: calc(50% - 54px);
+  right: 8px;
   transform: translateY(-50%);
   z-index: 10;
   display: flex;
@@ -301,8 +301,8 @@ body {
 .fab-btn {
   position: fixed;
   z-index: 9999;
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   cursor: pointer;
   border: none;
@@ -331,12 +331,22 @@ body {
 
 .fab-btn--directory {
   bottom: 20px;
-  right: 20px;
+  right: 16px;
 }
 
 .fab-btn--settings {
-  bottom: 82px;
-  right: 20px;
+  bottom: 74px;
+  right: 16px;
+}
+
+.fab-btn--qr {
+  bottom: 128px;
+  right: 16px;
+}
+
+.fab-btn--info {
+  top: 20px;
+  right: 16px;
 }
 
 /* === Toast Notification (Greyish Blue §2 update) === */

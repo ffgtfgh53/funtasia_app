@@ -19,22 +19,22 @@ if (savedTheme) {
   document.documentElement.dataset.theme = savedTheme;
 }
 
-const { scene, camera, renderer, controls, composer, outlinePass } = setupScene();
+const { scene, camera, renderer, controls } = setupScene();
 
 // Register all floors with their relative CDN paths (no static imports needed).
 // Models are fetched lazily from jsDelivr on first switchFloor() call.
 const floorDefs = {
-  l4: "models/njc-l4-v2-31-3.glb",
-  l3: "models/njc-l3-v2-31-3.glb",
-  l2: "models/njc-l2-v2-31-3.glb",
-  l1: "models/njc-l1-v2-31-3.glb",
-  b1: "models/njc-b1-v2-31-3.glb",
-  b2: "models/njc-b2-v2-31-3.glb",
-  b3: "models/njc-b3-v2-31-3.glb",
+  l4: "models/v2-31-3/njc-l4-v2-31-3.glb",
+  l3: "models/v2-31-3/njc-l3-v2-31-3.glb",
+  l2: "models/v2-31-3/njc-l2-v2-31-3.glb",
+  l1: "models/v2-31-3/njc-l1-v2-31-3.glb",
+  b1: "models/v2-31-3/njc-b1-v2-31-3.glb",
+  b2: "models/v2-31-3/njc-b2-v2-31-3.glb",
+  b3: "models/v2-31-3/njc-b3-v2-31-3.glb",
 };
 
 const childModelDefs = {
-  canteen: "models/njc-l1-canteen.glb",
+  canteen: "models/v2-31-3/njc-l1-canteen.glb",
 };
 
 // Instantiate Floor objects — they self-register into Floor.floors
@@ -54,8 +54,8 @@ appState.controls = controls;
 appState.raycaster = raycaster;
 appState.mouse = mouse;
 appState.infoLabel = infoLabel;
-appState.composer = composer;
-appState.outlinePass = outlinePass;
+appState.mouse = mouse;
+appState.infoLabel = infoLabel;
 
 Marker.appState = appState;
 Floor.appState = appState;
@@ -142,4 +142,8 @@ initApp();
 window.printCurrentFloorInfo = function () {
   const currentFloorId = appState.currentFloor ? appState.currentFloor.id : "None";
   console.log(`=== Info for Current Floor: ${currentFloorId} ===`);
+};
+
+window.printAllMarkers = function () {
+  console.log(QRMarker.allMarkers);
 };

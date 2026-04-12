@@ -51,7 +51,7 @@ export function startAnimationLoop(appState) {
       levelIcons.forEach(icon => icon.animate(time, appState.camera));
     });
     
-    appState.composer.render();
+    appState.renderer.render(appState.scene, appState.camera);
   }
 
   animate();

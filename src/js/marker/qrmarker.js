@@ -6,12 +6,16 @@ export class QRMarker extends LocationMarker {
   // Static class attribute initialized in main.js
   static appState = null;
 
+  // Registry of all known QR marker positions, keyed by marker ID
+  // Populated by modelParser. Shape: { [qrId]: { pos: THREE.Vector3, floorId: string } }
+  static allMarkers = {};
+
   /**
    * @param {THREE.Scene} scene - Scene to add the marker to.
    * @param {THREE.Vector3} position - World position of the marker.
    * @param {number} greyDelay - Milliseconds before the marker greys out (default 5 min).
    */
-  constructor(scene, position, greyDelay = 5 * 60000) {
+  constructor(scene, position, greyDelay = 5 * 60000, enableGreyOut = true) {
     // Always rendered with the text label
     super(scene, position, true);
 
@@ -21,6 +25,7 @@ export class QRMarker extends LocationMarker {
 
     this.startTime = performance.now();
     this.greyDelay = greyDelay;
+    this.enableGreyOut = enableGreyOut;
     this.isGrey = false;
     this.markerHeight = 0.8;
   }
@@ -31,38 +36,10 @@ export class QRMarker extends LocationMarker {
    * @param {THREE.Camera} camera - The active camera.
    */
   animate(time, camera) {
-    if (!this.group || !this.indicator) return;
-
-    const t = time * 0.003;
-    const markerModel = this.indicator.getObjectByName("markerModel");
-    const textLabelGroup = this.indicator.getObjectByName("textLabelGroup");
-
-    // floating effect
-    if (markerModel) {
-      markerModel.position.y = this.markerHeight + Math.sin(t*0.5) * 0.05;
-    }
-
-    // Billboarding text
-    if (textLabelGroup && camera) {
-      textLabelGroup.quaternion.copy(camera.quaternion);
-    }
-
-    if (markerModel && camera) {
-      // Create a target point at camera level, but same height as model
-      const targetPos = new THREE.Vector3();
-      camera.getWorldPosition(targetPos);
-      
-      const modelPos = new THREE.Vector3();
-      markerModel.getWorldPosition(modelPos);
-      
-      targetPos.y = modelPos.y; // Keep target at same horizontal height
-      markerModel.lookAt(targetPos);
-    }
-
-    // grey-out timer
+    // Delegates floating/billboarding to LocationMarker.animate
     super.animate(time, camera);
 
-    if (!this.isGrey && time - this.startTime > this.greyDelay) {
+    if (this.enableGreyOut && !this.isGrey && time - this.startTime > this.greyDelay) {
       this.greyOut();
     }
   }

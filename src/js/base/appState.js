@@ -21,7 +21,5 @@ export class AppState {
     this.pointerStartTime = 0;
     this.isBottomSheetOpen = false;
     this.loadedAssets = new Set();
-    this.composer = null;
-    this.outlinePass = null;
   }
 }

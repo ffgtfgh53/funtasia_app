@@ -69,10 +69,7 @@ export class Floor {
     const result = parseModel(gltf, this.id, appState.scene);
     this.attachParsedData(result.model, result.interactiveObjects, result.cameraConfig);
     
-    if (appState.outlinePass) {
-      appState.outlinePass.selectedObjects.push(...result.interactiveObjects);
-    }
-    
+    window.dispatchEvent(new CustomEvent("floorReady", { detail: { floorId: this.id } }));
     console.log(`[Floor] Parsed ${this.id}: ${result.interactiveObjects.length} interactive meshes.`);
   }
 

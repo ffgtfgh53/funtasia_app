@@ -37,9 +37,6 @@ export class Marker {
 }
 
 export class LocationMarker extends Marker {
-  // Font used to render text labels — set once before instantiation
-  static font = null;
-
   /**
    * @param {THREE.Scene} scene - Scene to add the marker group to.
    * @param {THREE.Vector3} position - World position of the marker.
@@ -87,7 +84,11 @@ export class LocationMarker extends Marker {
       const scale = 10;
       this._markerModel.scale.set(scale, scale, scale);
       this._markerModel.position.y = this.markerHeight;
-      this.group.add(this._markerModel);
+      
+      // Safety check: if the marker was cleared before the model finished loading
+      if (this.group) {
+        this.group.add(this._markerModel);
+      }
     });
 
     // ----- text label group -----
@@ -145,10 +146,12 @@ export class LocationMarker extends Marker {
   animate(time, camera) {
     if (!this.group) return;
     const t = time * 0.003;
+    // Calculate shared bobbing offset for cohesive animation
+    const bobOffset = Math.sin(t * 0.5) * 0.05;
 
     // Floating bob + horizontal look-at on the GLB model
     if (this._markerModel) {
-      this._markerModel.position.y = this.markerHeight + Math.sin(t * 0.5) * 0.05;
+      this._markerModel.position.y = this.markerHeight + bobOffset;
 
       if (camera) {
         const targetPos = new THREE.Vector3();
@@ -160,9 +163,10 @@ export class LocationMarker extends Marker {
       }
     }
 
-    // Billboarding — keep the text label facing the camera
+    // Billboarding — keep the text label facing the camera + apply bobbing
     if (this._textLabelGroup && camera) {
       this._textLabelGroup.quaternion.copy(camera.quaternion);
+      this._textLabelGroup.position.y = (this.markerHeight + 0.4) + bobOffset;
     }
   }
 }

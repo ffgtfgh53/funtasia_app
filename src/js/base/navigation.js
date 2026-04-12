@@ -19,72 +19,15 @@ export class Navigation {
     }
   }
 
-  static async switchFloor(floorId) {
-    if (Navigation.appState.currentFloor && Navigation.appState.currentFloor.id === floorId) return;
-
-    // Hide all floors first
-    Object.values(Floor.floors).forEach((floor) => floor.hide());
-
-    const targetFloor = Floor.floors[floorId];
-    if (!targetFloor) {
-      console.warn(`Floor ${floorId} not found`);
-      return;
+  static clearActiveMarkers() {
+    const appState = Navigation.appState;
+    if (appState.activeMarkers && appState.activeMarkers.length > 0) {
+      appState.activeMarkers.forEach(m => m.clear());
+      appState.activeMarkers = [];
     }
+  }
 
-    // Lazy load — fetch from jsDelivr if not yet in memory
-    if (!targetFloor.isLoaded()) {
-      const isPreloaded = Navigation.appState.loadedAssets.has(targetFloor.modelPath);
-      
-      // Only show toast if not already pre-fetched (or if user is explicitly re-triggering)
-      if (!isPreloaded) {
-        showToast(`Loading ${floorId.toUpperCase()}…`, 15000);
-      }
-      
-      try {
-        await targetFloor.load(Navigation.appState);
-        // Mark as successful for future switches
-        Navigation.appState.loadedAssets.add(targetFloor.modelPath);
-      } catch (err) {
-        console.error(`Failed to load floor ${floorId}:`, err);
-        showToast(`Error: ${floorId.toUpperCase()} failed.`);
-        return;
-      } finally {
-        hideToast();
-      }
-    }
-
-    targetFloor.activate(Navigation.appState.camera, Navigation.appState.controls);
-
-    // Update state
-    Floor.currentFloor = targetFloor;
-    Navigation.appState.interactiveObjects = targetFloor.interactiveObjects;
-    Navigation.appState.currentFloor = targetFloor;
-    Icon.setLevel(floorId);
-    console.log(`Switched to floor: ${floorId}`);
-
-    // Update UI buttons
-    document.querySelectorAll(".floor-btn").forEach((btn) => {
-      btn.classList.remove("active");
-      if (btn.dataset.floor === floorId) btn.classList.add("active");
-    });
-
-    // Clear any selected state and camera animations when swapping floors
-    if (Navigation.appState.selected) {
-      Navigation.appState.selected.material.emissive.setHex(0x000000);
-      Navigation.appState.selected = null;
-    }
-
-    if (Navigation.appState.cameraAnim) {
-      Navigation.appState.cameraAnim.active = false;
-    }
-
-    // Clear active markers
-    if (Navigation.appState.activeMarkers && Navigation.appState.activeMarkers.length > 0) {
-      Navigation.appState.activeMarkers.forEach(m => m.clear());
-      Navigation.appState.activeMarkers = [];
-    }
-
-    // Persistence: Check if we need to re-render the last scanned marker
+  static restoreLastMarker(floorId) {
     const appState = Navigation.appState;
     if (appState.lastScannedInfo && appState.lastScannedInfo.floorId === floorId) {
       const startTime = appState.lastScannedInfo.startTime;
@@ -92,17 +35,83 @@ export class Navigation {
       const now = performance.now();
       
       if (now - startTime < greyDelay) {
-        const marker = new QRMarker(appState.lastScannedInfo.pos, floorId, greyDelay);
+        const marker = new QRMarker(appState.scene, appState.lastScannedInfo.pos, greyDelay);
         marker.startTime = startTime;
         appState.activeMarkers.push(marker);
       }
     }
   }
 
-  static handleQRID(qrID) {
-    const markerInfo = QRMarker.knownMarkers[qrID];
+  static async switchFloor(floorId) {
+    const appState = Navigation.appState;
+    const isSameFloor = appState.currentFloor && appState.currentFloor.id === floorId;
+
+    if (!isSameFloor) {
+      // Clear any selected state and camera animations when starting a switch
+      if (appState.cameraAnim) {
+        appState.cameraAnim.active = false;
+      }
+
+      if (appState.selected) {
+        if (appState.selected.material && appState.selected.material.emissive) {
+            appState.selected.material.emissive.setHex(0x000000);
+        }
+        appState.selected = null;
+      }
+
+      // Hide all floors first
+      Object.values(Floor.floors).forEach((floor) => floor.hide());
+
+      const targetFloor = Floor.floors[floorId];
+      if (!targetFloor) {
+        console.warn(`Floor ${floorId} not found`);
+        return;
+      }
+
+      // Lazy load
+      if (!targetFloor.isLoaded()) {
+        const isPreloaded = appState.loadedAssets.has(targetFloor.modelPath);
+        if (!isPreloaded) showToast(`Loading ${floorId.toUpperCase()}…`, 15000);
+        
+        try {
+          await targetFloor.load(appState);
+          appState.loadedAssets.add(targetFloor.modelPath);
+        } catch (err) {
+          console.error(`Failed to load floor ${floorId}:`, err);
+          showToast(`Error: ${floorId.toUpperCase()} failed.`);
+          return;
+        } finally {
+          hideToast();
+        }
+      }
+
+      targetFloor.activate(appState.camera, appState.controls);
+
+      // Update state
+      Floor.currentFloor = targetFloor;
+      appState.interactiveObjects = targetFloor.interactiveObjects;
+      appState.currentFloor = targetFloor;
+      Icon.setLevel(floorId);
+      console.log(`Switched to floor: ${floorId}`);
+
+      // Update UI buttons
+      document.querySelectorAll(".floor-btn").forEach((btn) => {
+        btn.classList.remove("active");
+        if (btn.dataset.floor === floorId) btn.classList.add("active");
+      });
+    }
+
+    // Always handle markers (clear previous and potentially restore current)
+    Navigation.clearActiveMarkers();
+    Navigation.restoreLastMarker(floorId);
+  }
+
+  static async handleQRID(qrID, suppressWarning = false) {
+    const markerInfo = QRMarker.allMarkers[qrID];
     if (!markerInfo) {
-      console.warn(`Marker ${qrID} not found.`);
+      if (!suppressWarning) {
+        console.warn(`Marker ${qrID} not found.`);
+      }
       return false;
     }
 
@@ -114,12 +123,8 @@ export class Navigation {
       startTime: performance.now()
     };
 
-    // Trigger floor switch
-    Navigation.switchFloor(markerInfo.floorId);
-
-    // switchFloor clears activeMarkers, so we add the new one back
-    const marker = new QRMarker(markerInfo.pos, markerInfo.floorId);
-    Navigation.appState.activeMarkers = [marker]; // Ensure it's the only one
+    // Trigger floor switch and await completion to avoid "snapping" override
+    await Navigation.switchFloor(markerInfo.floorId);
 
     // Camera animation logic
     const markerCenter = markerInfo.pos.clone().add(new THREE.Vector3(0, 1, 0));
@@ -129,6 +134,13 @@ export class Navigation {
     direction.y = 0;
     if (direction.lengthSq() < 0.001) direction.set(0, 0, 1);
     direction.normalize();
+
+    // Snap direction to the closest cardinal direction (X or Z axis)
+    if (Math.abs(direction.x) > Math.abs(direction.z)) {
+        direction.set(Math.sign(direction.x), 0, 0);
+    } else {
+        direction.set(0, 0, Math.sign(direction.z));
+    }
 
     // Specific offsets for markers
     const distance = 8; 
@@ -148,14 +160,38 @@ export class Navigation {
   static handleURLQR() {
     const urlParams = new URLSearchParams(window.location.search);
     const qrID = urlParams.get("qrID");
+    
     if (qrID) {
       console.log(`URL/Popstate qrID: ${qrID}`);
-      const handled = Navigation.handleQRID(qrID);
-      if (handled) return;
+      
+      const executeAsyncCheck = async () => {
+        // Attempt immediate handle (if already in registry)
+        const handled = await Navigation.handleQRID(qrID, true);
+        if (handled) return;
 
-      // Unhandled: meaning the marker wasn't found
-      showToast(`Marker "${qrID}" not found.`);
+        // If not in registry, wait for floor load
+        const targetFloorId = qrID.slice(0, 2);
+        
+        // Setup listener which will fire during switchFloor's load()
+        const onFloorReady = async (e) => {
+          // IMPORTANT: Wait a tiny bit to ensure switchFloor's activation 
+          // doesn't stomp on the animation we're about to start.
+          setTimeout(async () => {
+            if (await Navigation.handleQRID(qrID)) {
+              window.removeEventListener("floorReady", onFloorReady);
+            }
+          }, 50);
+        };
+        window.addEventListener("floorReady", onFloorReady);
+
+        // Derive target floor from first 2 chars of qrID (e.g. "l1-...", "b2-...")
+        await Navigation.switchFloor(targetFloorId);
+      };
+      
+      executeAsyncCheck();
+      return;
     }
+    
     const defaultFloorId = "l1";
     Navigation.switchFloor(defaultFloorId);
   }

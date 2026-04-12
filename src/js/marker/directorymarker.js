@@ -10,7 +10,7 @@ export class DirectoryMarker extends LocationMarker {
     if (!this.group || !this.indicator) return;
 
     const t = time * 0.003;
-    const markerModel = this.indicator.getObjectByName("markerModel");
+    const markerModel = this.indicator.getObjectByName("markerModel"); // method to find child object by name
 
     // floating effect
     if (markerModel) {
