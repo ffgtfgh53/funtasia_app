@@ -12,7 +12,11 @@ export async function startScanner(successCallback) {
     }
     
     // As per markdown notes
-    const config = { fps: 60 };
+    const config = { 
+        fps: 60, 
+        qrbox: { width: 200, height: 200 }, // Slightly smaller than container for margin
+        aspectRatio: 1.0 
+    };
     
     try {
         await html5QrCode.start(

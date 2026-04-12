@@ -10,8 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="/src/css/onboarding.css" />
-    <link rel="icon" type="image/svg+xml" href="favicon.svg"/>  
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg"/>  
+    <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png">
 </head>
 <body class="bg-background font-body text-on-surface flex flex-col overflow-hidden" style="height:100dvh">
 
@@ -27,7 +27,7 @@
             </div>
             <button
                 x-show="current < total - 1"
-                @click="goTo('map.html')"
+                @click="goTo('map')"
                 class="text-on-surface-variant font-label text-sm font-medium hover:bg-surface-container-high px-4 py-2 rounded-full transition-colors"
             >Skip</button>
         </header>
@@ -140,7 +140,7 @@
                         <p class="slide-desc">The world is waiting. Let's start the journey.</p>
                     </div>
                     <button
-                        @click="goTo('map.html')"
+                        @click="goTo('map')"
                         class="w-full max-w-xs bg-primary text-on-primary font-headline font-bold py-4 rounded-full shadow-lg shadow-primary/20 flex items-center justify-center gap-2 active:scale-95 transition-transform"
                     >
                         Enter Map App

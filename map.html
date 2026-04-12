@@ -12,8 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <link href="/src/css/input.css" rel="stylesheet"/>
     <script type="module" src="/src/js/helper/pwa.js"></script>
-    <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico"/>
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/vnd.microsoft.icon" href="favicon/favicon.ico"/>
+    <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png">
   </head>
   <body>
     <div id="canvas-container"></div>
@@ -201,9 +201,18 @@
             <div id="qr-scanner-view" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
               <p style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-on-surface-variant); margin-bottom: 12px;">Align within frame</p>
               <!-- Scanner Placeholder Square -->
-              <div id="qrcode_scanner" style="width: 220px; height: 220px; border: 2px dashed color-mix(in srgb, var(--color-primary) 50%, transparent); border-radius: 16px; display: flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--color-surface-container-low) 50%, transparent); box-shadow: inset 0 0 20px color-mix(in srgb, var(--color-on-surface) 5%, transparent); margin-bottom: 24px;">
+              <div id="qrcode_scanner" style="width: 220px; height: 220px; border: 2px dashed color-mix(in srgb, var(--color-primary) 50%, transparent); border-radius: 16px; display: flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--color-surface-container-low) 50%, transparent); box-shadow: inset 0 0 20px color-mix(in srgb, var(--color-on-surface) 5%, transparent); margin-bottom: 24px; overflow: hidden; position: relative;">
                 <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-on-surface-variant); opacity: 0.4;">qr_code_scanner</span>
               </div>
+              
+              <style>
+                #qrcode_scanner video {
+                  width: 100% !important;
+                  height: 100% !important;
+                  object-fit: cover !important;
+                  border-radius: 16px !important;
+                }
+              </style>
               
               <button id="qr-flash-btn" style="width: 100%; max-width: 300px; padding: 14px; border-radius: 12px; background: color-mix(in srgb, var(--color-primary) 15%, transparent); color: var(--color-primary); font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 14px; border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent); display: flex; justify-content: center; align-items: center; gap: 8px; cursor: pointer; transition: background 0.2s;">
                 <span class="material-symbols-outlined text-[20px]" id="qr-flash-icon">flashlight_off</span>
@@ -224,7 +233,7 @@
                 <input class="qr-code-input" inputmode="numeric" maxlength="2" type="text" style="width: 72px; height: 56px; text-align: center; font-size: 24px; font-weight: 700; border-radius: 10px; border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent); background: var(--color-surface-container-high); color: var(--color-primary); font-family: 'JetBrains Mono', monospace; outline: none;" />
               </div>
               
-              <button style="width: 100%; max-width: 300px; padding: 14px; border-radius: 12px; background: color-mix(in srgb, var(--color-surface-container-high) 100%, transparent); color: var(--color-primary); font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 14px; border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent); display: flex; justify-content: center; align-items: center; gap: 8px; cursor: pointer; transition: background 0.2s;">
+              <button id="qr-continue-btn" style="width: 100%; max-width: 300px; padding: 14px; border-radius: 12px; background: color-mix(in srgb, var(--color-surface-container-high) 100%, transparent); color: var(--color-primary); font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 14px; border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent); display: flex; justify-content: center; align-items: center; gap: 8px; cursor: pointer; transition: background 0.2s;">
                 Continue
               </button>
             </div>
@@ -287,9 +296,21 @@
               const qrID = url.searchParams.get('qrID');
               if (qrID) {
                   stopScanner();
+                  
+                  // Update URL via pushState to avoid page reload
                   const currentUrl = new URL(window.location.href);
                   currentUrl.searchParams.set('qrID', qrID);
-                  window.location.href = currentUrl.toString();
+                  window.history.pushState({}, '', currentUrl.toString());
+                  
+                  // Dynamically import and trigger navigation
+                  import('/src/js/base/navigation.js').then(({ Navigation }) => {
+                      Navigation.handleQRID(qrID);
+                  });
+                  
+                  // Close modal
+                  document.getElementById('qr-modal-wrapper').style.display = 'none';
+                  showFabButtons();
+                  clearTextInputs();
               }
           } catch(e) {
               console.error("Invalid QR Code structure", decodedText);
@@ -399,6 +420,56 @@
           }
         });
       });
+      
+      // Continue Button Logic for manual input
+      const continueBtn = document.getElementById('qr-continue-btn');
+      if (continueBtn) {
+        continueBtn.addEventListener('click', async () => {
+          const levelVal = inputs[0].value.trim();
+          const markerVal = inputs[1].value.trim();
+          
+          if (levelVal && markerVal) {
+            // Construct the ID: l<level>-m<id>
+            const qrID = `l${levelVal}-m${markerVal}`;
+            console.log(`Manual input qrID: ${qrID}`);
+            
+            try {
+              const { QRMarker } = await import('/src/js/marker/qrmarker.js');
+              const { Navigation } = await import('/src/js/base/navigation.js');
+              const { showToast } = await import('/src/js/base/ui.js');
+              
+              let targetID = qrID;
+              
+              // Fallback: If exact match fails, check if there's a marker that counts as a "match" (e.g. l1-m2-tc)
+              // (Checking against the current floor's markers if loaded)
+              const fuzzyMatch = Object.keys(QRMarker.allMarkers).find(id => id.startsWith(qrID));
+              if (fuzzyMatch) {
+                targetID = fuzzyMatch;
+              }
+
+              if (!QRMarker.allMarkers[targetID]) {
+                showToast(`Marker ${qrID} not found.`, 2000);
+                return;
+              }
+
+              // Update URL via pushState to avoid page reload
+              const currentUrl = new URL(window.location.href);
+              currentUrl.searchParams.set('qrID', targetID);
+              window.history.pushState({}, '', currentUrl.toString());
+              
+              const success = await Navigation.handleQRID(targetID);
+              if (success) {
+                document.getElementById('qr-modal-wrapper').style.display = 'none';
+                showFabButtons();
+                stopScanner();
+              }
+              
+            } catch (err) {
+              console.error("Failed to process manual QR input:", err);
+            }
+          }
+        });
+      }
       
       // Expose for external modules if needed later
       window.openQRModal = () => openQrBtn.click();

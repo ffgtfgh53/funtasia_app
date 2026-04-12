@@ -4,15 +4,35 @@ import { VitePWA } from 'vite-plugin-pwa';
 import { fileURLToPath, URL } from 'node:url';
 import { resolve } from 'path';
 
+const base = "/funtasia_app/"
+
 export default defineConfig({
-  base:"/funtasia_app/",  
+  base:base,  
   plugins: [
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
+      manifest: {
+        name: 'Funtasia',
+        short_name: 'Funtasia',
+        description: 'Funtasia Map App',
+        theme_color: '#e0c2ff',
+        icons: [
+          {
+            src: `${base}public/icon192x192.png`,
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
+            src: `${base}public/icon512x512.png`,
+            sizes: '512x512',
+            type: 'image/png'
+          }
+        ]
+      },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,glb}']
-      }
+      },
     })
   ],
   define: {
