@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { Floor } from "@/js/floor/floor.js";
 import { QRMarker } from "@/js/marker/qrmarker.js";
 import { Icon } from "@/js/marker/icon.js";
-import { showToast, hideToast } from "@/js/base/ui.js";
+import { updateFloorUI, showToast, hideToast } from "@/js/base/ui.js";
 
 export class Navigation {
   static appState = null;
@@ -94,11 +94,7 @@ export class Navigation {
       Icon.setLevel(floorId);
       console.log(`Switched to floor: ${floorId}`);
 
-      // Update UI buttons
-      document.querySelectorAll(".floor-btn").forEach((btn) => {
-        btn.classList.remove("active");
-        if (btn.dataset.floor === floorId) btn.classList.add("active");
-      });
+      updateFloorUI(floorId);
     }
 
     // Always handle markers (clear previous and potentially restore current)

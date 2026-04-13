@@ -62,6 +62,40 @@ export function showToast(message, duration = 3000) {
   }, duration);
 }
 
+let floorSelector = null;
+let floorThumb = null;
+let floorBtns = [];
+let activeIndex = -1;
+
+export function updateFloorUI(floorId) {
+  if (!floorThumb || floorBtns.length === 0) {
+    // Retry finding elements if they aren't captured yet
+    floorSelector = document.getElementById("floor-selector");
+    floorThumb = document.getElementById("floor-thumb");
+    floorBtns = Array.from(document.querySelectorAll(".floor-btn"));
+    if (!floorThumb || floorBtns.length === 0) return;
+  }
+
+  const index = floorBtns.findIndex(btn => btn.dataset.floor === floorId);
+  if (index === -1) return;
+
+  activeIndex = index;
+  
+  // Update button classes
+  floorBtns.forEach((btn, i) => {
+    btn.classList.toggle("active", i === index);
+  });
+
+  // Update thumb position
+  const buttonHeight = floorBtns[0].offsetHeight || (window.innerWidth <= 768 ? 36 : 40);
+  const gap = 4;
+  const padding = window.innerWidth <= 768 ? 6 : 8;
+  const newTop = padding + (index * (buttonHeight + gap));
+  
+  floorThumb.style.top = `${newTop}px`;
+  floorThumb.style.opacity = "1";
+}
+
 export function setupUI(floors, appState) {
   currentAppState = appState;
   
@@ -78,13 +112,13 @@ export function setupUI(floors, appState) {
   });
 
 
-  const floorSelector = document.getElementById("floor-selector");
-  const floorThumb = document.getElementById("floor-thumb");
-  const floorBtns = Array.from(document.querySelectorAll(".floor-btn"));
+  floorSelector = document.getElementById("floor-selector");
+  floorThumb = document.getElementById("floor-thumb");
+  floorBtns = Array.from(document.querySelectorAll(".floor-btn"));
+
 
   if (floorSelector && floorThumb && floorBtns.length > 0) {
     let isDragging = false;
-    let activeIndex = 3; // Default to 'L1' which is at index 3 in the DOM
     
     function getCSSPadding() {
       return window.innerWidth <= 768 ? 6 : 8;
@@ -97,10 +131,8 @@ export function setupUI(floors, appState) {
       const gap = 4;
       const newTop = getCSSPadding() + (index * (buttonHeight + gap));
       floorThumb.style.top = `${newTop}px`;
+      floorThumb.style.opacity = "1";
     }
-
-    // Set initial position
-    updateThumbUI(activeIndex);
 
     function processInteraction(clientY) {
       const rect = floorSelector.getBoundingClientRect();
