@@ -129,7 +129,12 @@ export function parseModel(gltf, floorId, scene) {
           new Icon(normalisedRole, pos, floorId);
         }
       }
- 6
+    } else {
+      child.material = new THREE.MeshBasicMaterial({
+        color: zoneColours[child.userData.ZONE],
+      });
+      child.userData.material = child.material;
+    }
 
     if (!isInteractive) return;
     if (child.userData.ZONE === "NONE") return;
