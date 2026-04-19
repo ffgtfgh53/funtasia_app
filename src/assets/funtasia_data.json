@@ -1,770 +1,336 @@
 {
   "l1": [
     {
-      "Booth Number": "Amphi",
-      "Booth Name": "Water Dunk Tank",
-      "Zone": "Blue Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
+      "Level": "l1",
+      "Booth ID": "O1",
+      "Booth Name": "Go Kart",
+      "Tags": "Game",
+      "Zone": "Orange",
+      "Booth Description": "Feel the thrill of the track",
+      "Location": ""
     },
     {
-      "Booth Number": "S1",
-      "Booth Name": "Caricature",
-      "Zone": "Blue Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
+      "Level": "l1",
+      "Booth ID": "O2",
+      "Booth Name": "PA Busking Booth",
+      "Tags": "Performance",
+      "Zone": "Orange",
+      "Booth Description": "Show off your talent or cheer local performers",
+      "Location": ""
     },
     {
-      "Booth Number": "S2",
-      "Booth Name": "Photo Booth & Keychain Holder",
-      "Zone": "Blue Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
+      "Level": "l1",
+      "Booth ID": "O3",
+      "Booth Name": "First Aid Station 2",
+      "Tags": "",
+      "Zone": "Orange",
+      "Booth Description": "Here to help with bumps and scrapes",
+      "Location": ""
     },
     {
-      "Booth Number": "S3",
-      "Booth Name": "Shrink Keychains",
-      "Zone": "Blue Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "S4",
-      "Booth Name": "Face Gems",
-      "Zone": "Blue Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "S5",
-      "Booth Name": "Hairstyling",
-      "Zone": "Blue Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "S6",
-      "Booth Name": "Bracelet Making",
-      "Zone": "Blue Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "AB1",
-      "Booth Name": "Astro",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "AB2",
-      "Booth Name": "[Game] Soccer Dart",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "DS3",
-      "Booth Name": "Escape Room",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "Gym",
-      "Booth Name": "[Game] Laser Tag",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "ISH1",
-      "Booth Name": "[Game] Punching Machine",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "ISH2",
-      "Booth Name": "[Game] Naughty bean",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "ISH3",
-      "Booth Name": "[Game] Gladiator Dome",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "ISH4",
-      "Booth Name": "[Game] Inflatable Human Bowling Pin",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "ISH5",
-      "Booth Name": "[Game] Ball Throwing",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "ISH6",
-      "Booth Name": "First Aid Station 1",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "MPC",
-      "Booth Name": "",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "NBD1",
-      "Booth Name": "",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "NBD2",
-      "Booth Name": "Slippery Slope (Changing to Drinks Stall)",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "NBD3",
-      "Booth Name": "",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "NBD4",
-      "Booth Name": "",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "BG1",
-      "Booth Name": "Ping Pong Balls",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "BG2",
-      "Booth Name": "Human Slot Machine",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "BG3",
-      "Booth Name": "Shoot Down Tower (Nerf Gun)",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "BG4",
-      "Booth Name": "Break the Tooth",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "BG5",
-      "Booth Name": "Skeeball ",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "BG6",
+      "Level": "l1",
+      "Booth ID": "O4",
       "Booth Name": "Info Counter",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
+      "Tags": "",
+      "Zone": "Orange",
+      "Booth Description": "Your one-stop for event questions and maps",
+      "Location": ""
     },
     {
-      "Booth Number": "BG7",
+      "Level": "l1",
+      "Booth ID": "O5",
       "Booth Name": "Ticket Counter",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "CG1",
-      "Booth Name": "Nerf Gun/ Bow and Arrow/ Cup Toss",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "CG2",
-      "Booth Name": "Duck Fishing",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "CG3",
-      "Booth Name": "Triple Mini Games",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "CG4",
-      "Booth Name": "Bucket Toss",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "CG5",
-      "Booth Name": "[Games & Food] Drinks + Finger Flicking",
-      "Zone": "Green Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "C13",
-      "Booth Name": "[Live Food] Ramly Style Burger Live Station",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "C15",
-      "Booth Name": "[Takeaway] Pastries 1: Roolls, Yakun Muffins and Taiyaki\n[Takeaway] Pastries 2: Polar Cakes\n[Takeaway] Local 3: Bakery Bera",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "C14",
-      "Booth Name": "[Live Food] Local 2: Malaysia Boleh, Popsicles\n[Takeaway] Snacks 1: Eureka Popcorns, Crackers",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "C16",
-      "Booth Name": "[Live Food] Takoyaki",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "C1",
-      "Booth Name": "Big Wok",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "C2",
-      "Booth Name": "Chicken Rice",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "C3",
-      "Booth Name": "-",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "C4",
-      "Booth Name": "Western",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
+      "Tags": "",
+      "Zone": "Orange",
+      "Booth Description": "Grab your tickets here",
+      "Location": ""
     }
   ],
   "l2": [
     {
-      "Booth Number": "C5",
-      "Booth Name": "-",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "C6",
-      "Booth Name": "Hot Drinks",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "C7",
-      "Booth Name": "Cold Drinks",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "C8",
-      "Booth Name": "[Takeaway] Drinks stall : Herbal Tea (ZTP)",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "C9",
-      "Booth Name": "Noodle ",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "C10",
-      "Booth Name": "-",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "C11",
-      "Booth Name": "Mambo ",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "C12",
-      "Booth Name": "Prata Hut",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "CE1",
-      "Booth Name": "[Live Food] Heyya Duck Rice ",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "CE2",
-      "Booth Name": "[Live Food] Buldak Noodles",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "CB2",
-      "Booth Name": "[Live Food] Seaweed Fries",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "CB1",
-      "Booth Name": "[Live Food] Popcorn and Candy Floss",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "O1",
-      "Booth Name": "[Game] Go Kart",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "O2",
-      "Booth Name": "PA Busking Booth",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "O3",
-      "Booth Name": "First Aid Station 2 ",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "O4",
-      "Booth Name": "Info Counter",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "O5",
-      "Booth Name": "Ticket Counter",
-      "Zone": "Orange Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "H1",
-      "Booth Name": "Hit Ball Through Hole (Change name)",
-      "Zone": "Purple Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "H2",
-      "Booth Name": "Strings Attached",
-      "Zone": "Purple Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "H3",
+      "Level": "l2",
+      "Booth ID": "TA11",
       "Booth Name": "Just Dance",
-      "Zone": "Purple Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
+      "Tags": "Game",
+      "Zone": "Yellow",
+      "Booth Description": "Bust a move and follow the on-screen choreography",
+      "Location": ""
     },
     {
-      "Booth Number": "H4",
-      "Booth Name": "Friday Night Funkin (Change name?)",
-      "Zone": "Purple Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "H5",
-      "Booth Name": "Xylophone colours",
-      "Zone": "Purple Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "H6",
-      "Booth Name": "Basketball showdown",
-      "Zone": "Purple Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "H7",
-      "Booth Name": "Batik Kampung",
-      "Zone": "Purple Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "H8",
-      "Booth Name": "Merch ",
-      "Zone": "Purple Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "H9",
-      "Booth Name": "Nerf Gun",
-      "Zone": "Purple Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "H10",
-      "Booth Name": "Blowing paper boat to score points",
-      "Zone": "Purple Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "H11",
-      "Booth Name": "Pin Musical Note | Karaoke battle",
-      "Zone": "Purple Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "H12",
-      "Booth Name": "Throw javelins and throw balls ",
-      "Zone": "Purple Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "H13",
-      "Booth Name": "Henna",
-      "Zone": "Purple Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "H14",
-      "Booth Name": "Guessing Songs",
-      "Zone": "Purple Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "H15",
-      "Booth Name": "Bat ball into holes",
-      "Zone": "Purple Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "H16",
-      "Booth Name": "Greenlink",
-      "Zone": "Purple Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "H17",
-      "Booth Name": "Ticket Counter",
-      "Zone": "Purple Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "H18",
-      "Booth Name": "Info Counter",
-      "Zone": "Purple Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "H19",
-      "Booth Name": "Makers",
-      "Zone": "Purple Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "GO2",
-      "Booth Name": "Quiet Corner (MR3)",
-      "Zone": "Red Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "GO3",
-      "Booth Name": "Quiet Corner (Sickbay in GO)",
-      "Zone": "Red Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "GO1",
-      "Booth Name": "First Aid Station 3 ",
-      "Zone": "Red Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "AC1",
-      "Booth Name": "Nerf Gun",
-      "Zone": "Red Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "AC2",
-      "Booth Name": "Merch",
-      "Zone": "Red Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "AC3",
-      "Booth Name": "Press-on Nails, Bracelets, Shrink Keychains",
-      "Zone": "Red Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    }
-  ],
-  "l3": [
-    {
-      "Booth Number": "AC4",
-      "Booth Name": "Alumni Sheng Siong",
-      "Zone": "Red Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "AC5",
-      "Booth Name": "Alumni Sheng Siong",
-      "Zone": "Red Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "AC6",
-      "Booth Name": "Alumni Sheng Siong",
-      "Zone": "Red Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "AC7",
-      "Booth Name": "Pipecleaner Flowers",
-      "Zone": "Red Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "AC8",
-      "Booth Name": "Crochet and Keychains",
-      "Zone": "Red Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "AC9",
-      "Booth Name": "Slime and Rainbow Loom Bracelets",
-      "Zone": "Red Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "A1",
-      "Booth Name": "Info Counter",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "A2",
-      "Booth Name": "Ticket Counter",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "A3",
-      "Booth Name": "PAACT",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "A4a",
-      "Booth Name": "PAACT",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "A4b",
-      "Booth Name": "[Live Drink] Slushie",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "LT1A",
-      "Booth Name": "Balloon Sculpture",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "LT1B",
-      "Booth Name": "Slime Selling",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "LT1C",
-      "Booth Name": "Italian Bracelets",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "LT12A",
-      "Booth Name": "Peg Dolls",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "LT12B",
-      "Booth Name": "Photo Booth",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "LT5A",
-      "Booth Name": "[Merch] Gachapon",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "LT5A",
-      "Booth Name": "[Merch] Jang and Fox Postcard",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "LT5B",
-      "Booth Name": "Pipe cleaner flowers and animals",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "LT1 ",
-      "Booth Name": "Rest Zone",
-      "Zone": "Purple Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "LT5",
-      "Booth Name": "IP OH CCA Performances",
-      "Zone": "Purple Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "LB1",
-      "Booth Name": "Info Counter",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "LB2",
-      "Booth Name": "Ticket Counter",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "LIB1",
-      "Booth Name": "Central Prize Booth",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "LIB2",
-      "Booth Name": "Photo Booth (Irfan)",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "TA11",
-      "Booth Name": "Need to Change Game",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "TA12",
+      "Level": "l2",
+      "Booth ID": "TA12",
       "Booth Name": "LA Booth",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
+      "Tags": "Acad",
+      "Zone": "Yellow",
+      "Booth Description": "Discover interactive learning activities",
+      "Location": ""
     },
     {
-      "Booth Number": "TA13",
+      "Level": "l2",
+      "Booth ID": "TA13",
       "Booth Name": "Mathematics Booth",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
+      "Tags": "Acad",
+      "Zone": "Yellow",
+      "Booth Description": "Solve puzzles and number games for prizes",
+      "Location": ""
     },
     {
-      "Booth Number": "TA14",
-      "Booth Name": "Aesthetics Booth ",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
+      "Level": "l2",
+      "Booth ID": "TA14",
+      "Booth Name": "Aesthetics Booth",
+      "Tags": "Acad",
+      "Zone": "Yellow",
+      "Booth Description": "Explore art, design, and creative expression",
+      "Location": ""
     },
     {
-      "Booth Number": "TA15",
-      "Booth Name": "Humanities Booth ",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
+      "Level": "l2",
+      "Booth ID": "TA15",
+      "Booth Name": "Humanities Booth",
+      "Tags": "Acad",
+      "Zone": "Yellow",
+      "Booth Description": "Dive into history, culture, and big ideas",
+      "Location": ""
     },
     {
-      "Booth Number": "TA16",
+      "Level": "l2",
+      "Booth ID": "TA16",
       "Booth Name": "Science Booth",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
+      "Tags": "Acad",
+      "Zone": "Yellow",
+      "Booth Description": "Hands-on experiments and cool demonstrations",
+      "Location": ""
     },
     {
-      "Booth Number": "TA17",
+      "Level": "l2",
+      "Booth ID": "TA17",
       "Booth Name": "Mother Tongue Booth",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
+      "Tags": "Acad",
+      "Zone": "Yellow",
+      "Booth Description": "Celebrate languages and cultural stories",
+      "Location": ""
     },
     {
-      "Booth Number": "TA18",
-      "Booth Name": "[Merch & Food] Tattoo, Henna, Popsicles and Ice Cream (25SH09) + Bracelet Making and Drinks (25SH10)",
-      "Zone": "Yellow Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
+      "Level": "l2",
+      "Booth ID": "TA18",
+      "Booth Name": "Popsicles and Ice Cream",
+      "Tags": "Food",
+      "Zone": "Yellow",
+      "Booth Description": "Cool, sweet treats on a stick or in a cone",
+      "Location": ""
     },
     {
-      "Booth Number": "LBCP1",
-      "Booth Name": "[Live Food] Corndog Live station",
-      "Zone": "Brown Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
+      "Level": "l2",
+      "Booth ID": "TA18",
+      "Booth Name": "Bracelet Making and Drinks",
+      "Tags": [
+        "Merch",
+        " Drinks"
+      ],
+      "Zone": "Yellow",
+      "Booth Description": "Craft custom accessories and sip refreshments",
+      "Location": ""
     },
     {
-      "Booth Number": "LBCP2",
-      "Booth Name": "[Live Food] Tteokbokki",
-      "Zone": "Brown Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
+      "Level": "l2",
+      "Booth ID": "LT1A",
+      "Booth Name": "JH201 Balloonatics",
+      "Tags": "Game",
+      "Zone": "Yellow",
+      "Booth Description": "Twisted balloon art and wacky creations",
+      "Location": ""
     },
     {
-      "Booth Number": "LBCP3",
-      "Booth Name": "[Live Drinks] Each a Cup",
-      "Zone": "Brown Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
+      "Level": "l2",
+      "Booth ID": "LT1B",
+      "Booth Name": "Slime Selling",
+      "Tags": "Merch",
+      "Zone": "Yellow",
+      "Booth Description": "Gooey, stretchy slime in every color",
+      "Location": ""
     },
     {
-      "Booth Number": "LBCP4",
-      "Booth Name": "[Live Food] Ice Cream Cart",
-      "Zone": "Brown Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
+      "Level": "l2",
+      "Booth ID": "LT1C",
+      "Booth Name": "Snacks and Drinks",
+      "Tags": [
+        "Food",
+        " Drinks"
+      ],
+      "Zone": "Yellow",
+      "Booth Description": "Quick bites and beverages to fuel your day",
+      "Location": ""
     },
     {
-      "Booth Number": "LBCP5",
-      "Booth Name": "[Live Food] Crepe",
-      "Zone": "Brown Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
+      "Level": "l2",
+      "Booth ID": "LT12A",
+      "Booth Name": "Peg Dolls",
+      "Tags": "Merch",
+      "Zone": "Yellow",
+      "Booth Description": "Decorate tiny wooden peg characters",
+      "Location": ""
     },
     {
-      "Booth Number": "LBCP6",
-      "Booth Name": "[Live Food] Grilled Satay Live Station ",
-      "Zone": "Brown Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
+      "Level": "l2",
+      "Booth ID": "LT12B",
+      "Booth Name": "Photo Booth",
+      "Tags": "Photos",
+      "Zone": "Yellow",
+      "Booth Description": "Snap silly or stylish instant photos",
+      "Location": ""
     },
     {
-      "Booth Number": "LBCP7",
-      "Booth Name": "[Live Food] Taiwanese-style Fried Chicken Chop ",
-      "Zone": "Brown Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
+      "Level": "l2",
+      "Booth ID": "LT5A",
+      "Booth Name": "Gachapon",
+      "Tags": "Merch",
+      "Zone": "Yellow",
+      "Booth Description": "Twist for a surprise capsule toy",
+      "Location": ""
     },
     {
-      "Booth Number": "LBCP8",
+      "Level": "l2",
+      "Booth ID": "LT5A",
+      "Booth Name": "Jang and Fox Postcard",
+      "Tags": "Merch",
+      "Zone": "Yellow",
+      "Booth Description": "Adorable illustrated postcards to send or keep",
+      "Location": ""
+    },
+    {
+      "Level": "l2",
+      "Booth ID": "LT5B",
+      "Booth Name": "Pipe cleaner flowers and animals",
+      "Tags": "Merch",
+      "Zone": "Yellow",
+      "Booth Description": "Bend and twist into fuzzy crafts",
+      "Location": ""
+    },
+    {
+      "Level": "l2",
+      "Booth ID": "LT1",
+      "Booth Name": "Rest Zone",
+      "Tags": "",
+      "Zone": "Yellow",
+      "Booth Description": "Quiet area to sit, recharge, and relax",
+      "Location": ""
+    },
+    {
+      "Level": "l2",
+      "Booth ID": "LT5",
+      "Booth Name": "IP OH CCA Performances",
+      "Tags": "Performance",
+      "Zone": "Yellow",
+      "Booth Description": "Student showcases of music, dance, and drama",
+      "Location": ""
+    },
+    {
+      "Level": "l2",
+      "Booth ID": "LB1",
+      "Booth Name": "Info Counter",
+      "Tags": "",
+      "Zone": "Yellow",
+      "Booth Description": "Your one-stop for event questions and maps",
+      "Location": ""
+    },
+    {
+      "Level": "l2",
+      "Booth ID": "LB2",
+      "Booth Name": "Ticket Counter",
+      "Tags": "",
+      "Zone": "Yellow",
+      "Booth Description": "Grab your tickets here",
+      "Location": ""
+    },
+    {
+      "Level": "l2",
+      "Booth ID": "LIB1",
+      "Booth Name": "Central Prize Booth",
+      "Tags": "",
+      "Zone": "Yellow",
+      "Booth Description": "Exchange stamps for awesome prizes",
+      "Location": ""
+    },
+    {
+      "Level": "l2",
+      "Booth ID": "LIB2",
+      "Booth Name": "Photo Booth",
+      "Tags": "Game",
+      "Zone": "Yellow",
+      "Booth Description": "Freeze fun moments with props and prints",
+      "Location": ""
+    },
+    {
+      "Level": "l2",
+      "Booth ID": "LBCP1",
+      "Booth Name": "Corndog Live station",
+      "Tags": "Food",
+      "Zone": "Brown",
+      "Booth Description": "Hot, crispy corndogs made fresh on the spot",
+      "Location": ""
+    },
+    {
+      "Level": "l2",
+      "Booth ID": "LBCP2",
+      "Booth Name": "Tteokbokki",
+      "Tags": "Food",
+      "Zone": "Brown",
+      "Booth Description": "Spicy Korean rice cakes in rich gochujang sauce",
+      "Location": ""
+    },
+    {
+      "Level": "l2",
+      "Booth ID": "LBCP3",
+      "Booth Name": "Each a Cup",
+      "Tags": "Drinks",
+      "Zone": "Brown",
+      "Booth Description": "Build-your-own dessert cups with toppings",
+      "Location": ""
+    },
+    {
+      "Level": "l2",
+      "Booth ID": "LBCP4",
+      "Booth Name": "Ice Cream Cart",
+      "Tags": "Food",
+      "Zone": "Brown",
+      "Booth Description": "Rolling refreshment with classic ice cream treats",
+      "Location": ""
+    },
+    {
+      "Level": "l2",
+      "Booth ID": "LBCP5",
+      "Booth Name": "Crepe",
+      "Tags": "Food",
+      "Zone": "Brown",
+      "Booth Description": "Thin, warm French-style crepes with fillings",
+      "Location": ""
+    },
+    {
+      "Level": "l2",
+      "Booth ID": "LBCP6",
+      "Booth Name": "Grilled Satay Live Station",
+      "Tags": "Food",
+      "Zone": "Brown",
+      "Booth Description": "Smoky skewers of meat with peanut sauce",
+      "Location": ""
+    },
+    {
+      "Level": "l2",
+      "Booth ID": "LBCP7",
+      "Booth Name": "Taiwanese-style Fried Chicken Chop",
+      "Tags": "Food",
+      "Zone": "Brown",
+      "Booth Description": "Crispy, juicy chicken cutlet with seasoning",
+      "Location": ""
+    },
+    {
+      "Level": "l2",
+      "Booth ID": "LBCP8910",
       "Booth Name": "Old Chang Kee Food Truck",
-      "Zone": "Brown Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "LBCP9",
-      "Booth Name": "Old Chang Kee Food Truck",
-      "Zone": "Brown Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
-    },
-    {
-      "Booth Number": "LBCP10",
-      "Booth Name": "Old Chang Kee Food Truck",
-      "Zone": "Brown Zone ",
-      "Booth Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur lectus magna, lacinia congue metus sodales sit amet."
+      "Tags": "Food",
+      "Zone": "Brown",
+      "Booth Description": "Famous curry puffs and hot snacks on wheels",
+      "Location": ""
     }
   ]
 }
