@@ -73,15 +73,10 @@ export function parseModel(gltf, floorId, scene) {
   const objects = [];
   model.traverse((child) => {
     if (!child.isMesh) return;
-    console.log(child.name,child.userData);
-    if (Array.isArray(child.material)) {
-      console.log(child.material.length);
-    } else {
-      console.log(1); // only one material
-    }
+
     // IDK if the following 2 lines are needed
-    child.castShadow = false;
-    child.receiveShadow = false;
+    // child.castShadow = false;
+    // child.receiveShadow = false;
     if (child.userData.ROLE === undefined){
       console.log("Undefined role:",child.name)
     };
@@ -92,8 +87,8 @@ export function parseModel(gltf, floorId, scene) {
       const colorVal = miscColours[child.userData.ROLE] !== undefined ? miscColours[child.userData.ROLE] : 0xc1c3c7; // default
       child.material = new THREE.MeshBasicMaterial({
         color: colorVal,
-        transparent: false,
-        opacity: isGrey ? 0 : 1,
+        transparent: isGrey ? true : false,
+        opacity:isGrey ? 0 : 1,
       });
 
       // Register Markers globally
@@ -151,3 +146,4 @@ export function parseModel(gltf, floorId, scene) {
   
   return { model, interactiveObjects: objects, cameraConfig };
 }
+atriu ghoy tr                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      gityitmzmkvgit add .status
