@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <link href="/src/css/input.css" rel="stylesheet"/>
     <script type="module" src="/src/js/helper/pwa.js"></script>
-    <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon/favicon.ico"/>
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg"/>  
     <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">
   </head>
   <body>
@@ -122,53 +122,52 @@
           </div>
           <!-- Content Area -->
           <div class="modal-content">
-            <!-- Section: IP Open House -->
-            <div class="px-4 mb-6">
+            <!-- Search -->
+            <div class="px-4 mb-4">
               <div class="modal-search-wrapper">
                 <div class="modal-search-icon-wrapper">
                   <span class="modal-search-icon">search</span>
                 </div>
-                <input class="modal-search-input" placeholder="Search for a location..." type="text"/>
+                <input id="directory-search-input" class="modal-search-input" placeholder="Search for a location..." type="text"/>
               </div>
             </div>
+
+            <!-- Filter Section (always visible) -->
+            <div class="filter-section" id="directory-filter-section">
+              <div class="filter-header">
+                <span class="filter-label">Filters</span>
+                <button class="filter-clear-btn" id="filter-clear-all-btn">Clear All</button>
+              </div>
+              <!-- Level & Zone dropdowns -->
+              <div class="filter-row">
+                <select id="filter-level" class="filter-dropdown">
+                  <option value="">All Levels</option>
+                  <option value="b3">B3</option>
+                  <option value="b2">B2</option>
+                  <option value="b1">B1</option>
+                  <option value="l1">L1</option>
+                  <option value="l2">L2</option>
+                </select>
+                <select id="filter-zone" class="filter-dropdown">
+                  <option value="">All Zones</option>
+                  <option value="Yellow">Yellow</option>
+                  <option value="Green">Green</option>
+                  <option value="Blue">Blue</option>
+                  <option value="Red">Red</option>
+                  <option value="Purple">Purple</option>
+                  <option value="Orange">Orange</option>
+                  <option value="Brown">Brown</option>
+                </select>
+              </div>
+              <!-- Tag chips (dynamically populated) -->
+              <div class="filter-chips-container" id="filter-tags-container">
+                <!-- Chips inserted by directory.js -->
+              </div>
+            </div>
+            <div class="filter-divider"></div>
+
+            <!-- Section: Funtasia Directory -->
             <section>
-              <div class="px-4 mb-4">
-                <h2 class="modal-section-title">IP Open House</h2>
-              </div>
-              <div class="space-y-3">
-                <!-- Creative Lab Item -->
-                <div class="modal-list-item">
-                  <div class="modal-item-icon-wrapper bg-blue-50 text-blue-600">
-                    <span class="material-symbols-outlined" data-icon="science">science</span>
-                  </div>
-                  <!-- Accent Bar -->
-                  <div class="modal-item-accent-bar bg-blue-500"></div>
-                  <div class="modal-item-content">
-                    <h3 class="modal-item-title">Creative Lab</h3>
-                    <p class="modal-item-subtitle">Interactive prototyping and design</p>
-                  </div>
-                  <span class="modal-item-chevron">chevron_right</span>
-                </div>
-                <!-- VR Garden Item -->
-                <div class="modal-list-item">
-                  <div class="modal-item-icon-wrapper bg-purple-50 text-purple-600">
-                    <span class="material-symbols-outlined" data-icon="vr_panoramic">vrpano</span>
-                  </div>
-                  <!-- Accent Bar -->
-                  <div class="modal-item-accent-bar bg-purple-500"></div>
-                  <div class="modal-item-content">
-                    <h3 class="modal-item-title">VR Garden</h3>
-                    <p class="modal-item-subtitle">Immersive digital flora experience</p>
-                  </div>
-                  <span class="modal-item-chevron">chevron_right</span>
-                </div>
-              </div>
-            </section>
-            <!-- Section: Funtasia -->
-            <section>
-              <div class="px-2 mb-4">
-                <h2 class="modal-section-title">Funtasia</h2>
-              </div>
               <div id="funtasia-directory-list" class="space-y-6">
                 <!-- Dynamically populated via directory.js -->
               </div>
