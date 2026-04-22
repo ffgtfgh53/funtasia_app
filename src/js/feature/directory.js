@@ -174,7 +174,7 @@ function renderDirectory(container, funtasiaData) {
     levelSection.className = "mb-8";
 
     const levelHeader = document.createElement("h3");
-    levelHeader.className = "font-headline font-extrabold text-xl text-primary mb-4 px-4 tracking-tight border-b-2 border-primary/20 pb-2";
+    levelHeader.className = "modal-section-title text-primary";
     levelHeader.textContent = `Level ${level.replace("l", "").replace("b", "B")}`;
     levelSection.appendChild(levelHeader);
 

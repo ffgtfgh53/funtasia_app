@@ -20,7 +20,7 @@
         box-shadow: 0 32px 64px color-mix(in srgb, var(--color-on-surface) 8%, transparent);
     }
     .modal-header {
-        @apply px-6 pt-6 pb-4 flex justify-between items-start sticky top-0 z-10 bg-ctp-mantle; 
+        @apply px-6 pt-6 pb-4 flex justify-between items-start sticky top-0 z-10 bg-ctp-crust; 
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
     }
@@ -34,7 +34,7 @@
         @apply text-ctp-subtext1 hover:text-ctp-text transition-colors active:scale-90;
     }
     .modal-content {
-        @apply px-2 pt-4 pb-8 overflow-y-auto hide-scrollbar space-y-8;
+        @apply px-2 py-4 overflow-y-auto hide-scrollbar space-y-8;
     }
     .modal-search-wrapper {
         @apply relative flex items-center rounded-2xl;
@@ -60,8 +60,9 @@
         @apply bg-ctp-surface0
     }
     .modal-section-title {
-        @apply font-headline font-bold text-sm text-ctp-subtext1 uppercase;
-        letter-spacing: 0.05em;
+        @apply font-headline font-extrabold text-xl my-4 px-4 tracking-tight border-b-2 pb-2
+        /* @apply font-headline font-bold text-sm text-ctp-subtext1 uppercase;
+        letter-spacing: 0.05em; */
     }
     /* List items — tonal layering, no dividers per §5 */
     .modal-list-item {
@@ -91,7 +92,7 @@
 
     /* ── Filter Section ────────────────────────── */
     .filter-section {
-        @apply px-4 pb-2;
+        @apply px-4;
     }
     .filter-header {
         @apply flex items-center justify-between mb-3;
