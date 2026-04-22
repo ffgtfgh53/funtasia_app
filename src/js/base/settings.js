@@ -14,9 +14,6 @@ export class SettingsController {
         // Add spacing between sections but not above the first
         sectionDiv.className = 'mt-6 first:mt-2';
         
-        // const headerDiv = document.createElement('div');
-        // headerDiv.className = 'py-4 px-4 bg-ctp-surface0 rounded-t-2xl';
-        // headerDiv.innerHTML = `<h3 class="modal-section-title">${title}</h3>`;
         const headerTitle = document.createElement('h3')
         headerTitle.className = 'modal-section-title'
         headerTitle.innerHTML = title

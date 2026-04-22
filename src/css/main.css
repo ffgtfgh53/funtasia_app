@@ -119,7 +119,6 @@ body {
 #sheet-handle {
   width: 40px;
   height: 4px;
-  /* background: color-mix(in srgb, var(--color-on-surface) 20%, transparent); */
   @apply bg-ctp-text;
   border-radius: 2px;
   margin: 12px auto 0;

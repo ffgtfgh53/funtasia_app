@@ -61,8 +61,6 @@
     }
     .modal-section-title {
         @apply font-headline font-extrabold text-xl my-4 px-4 tracking-tight border-b-2 pb-2
-        /* @apply font-headline font-bold text-sm text-ctp-subtext1 uppercase;
-        letter-spacing: 0.05em; */
     }
     /* List items — tonal layering, no dividers per §5 */
     .modal-list-item {
