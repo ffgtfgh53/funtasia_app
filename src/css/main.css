@@ -302,8 +302,8 @@ body {
   z-index: 1;
 }
 
-.floor-btn:active {
-  transform: scale(0.9);
+.floor-btn.active {
+  color: var(--color-ctp-base);
 }
 
 @media (max-width: 768px) {
@@ -432,8 +432,7 @@ body {
   flex: 1; 
   padding: 10px; 
   border-radius: 8px; 
-  font-weight: 700; 
-  font-family: 'JetBrains Mono', monospace; 
+  font-weight: 600; 
   font-size: 13px; 
   display: flex; 
   align-items: center; 
@@ -489,7 +488,7 @@ body {
   padding: 14px; 
   border-radius: 12px; 
   background: var(--color-ctp-mauve-950);
-  color: var(--color-ctp-text); 
+  color: var(--color-ctp-base); 
   font-weight: 700; 
   font-size: 14px; 
   display: flex; 

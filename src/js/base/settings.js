@@ -12,14 +12,14 @@ export class SettingsController {
         
         const sectionDiv = document.createElement('section');
         // Add spacing between sections but not above the first
-        sectionDiv.className = 'mt-6 first:mt-0';
+        sectionDiv.className = 'mt-6 first:mt-2';
         
         const headerDiv = document.createElement('div');
-        headerDiv.className = 'pt-4 mb-4 px-4';
+        headerDiv.className = 'py-4 px-4 bg-ctp-surface0 rounded-t-2xl';
         headerDiv.innerHTML = `<h2 class="modal-section-title">${title}</h2>`;
         
         const contentDiv = document.createElement('div');
-        contentDiv.className = 'bg-ctp-surface1 rounded-xl overflow-hidden';
+        contentDiv.className = 'overflow-hidden bg-ctp-mantle rounded-b-2xl';
         
         sectionDiv.appendChild(headerDiv);
         sectionDiv.appendChild(contentDiv);
