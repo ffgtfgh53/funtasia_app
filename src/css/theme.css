@@ -30,12 +30,12 @@
   --color-outline-variant:           #c5c8d4;
 
   /* Primary — Mauve Accent (DESIGN.md §2) */
-  --color-primary:                   #8839ef;
+  --color-ctp-mauve:                   #8839ef;
   --color-on-primary:                #ffffff;
-  --color-primary-container:         #e0c2ff;
+  --color-ctp-mauve-container:         #e0c2ff;
   --color-on-primary-container:      #300063;
-  --color-primary-fixed:             #e0c2ff;
-  --color-primary-fixed-dim:         #cba6f7;
+  --color-ctp-mauve-fixed:             #e0c2ff;
+  --color-ctp-mauve-fixed-dim:         #cba6f7;
   --color-on-primary-fixed:          #300063;
   --color-on-primary-fixed-variant:  #460073;
 
@@ -97,12 +97,12 @@
   --color-outline-variant:           #45475a;
 
   /* Primary — Mauve Accent */
-  --color-primary:                   #cba6f7;
-  --color-on-primary:                #0d0d1c;
-  --color-primary-container:         #4f355e;
+  --color-ctp-mauve:                   #cba6f7;
+  --color-on-primary:                #11111b;
+  --color-ctp-mauve-container:         #45475a;
   --color-on-primary-container:      #f5c2e7;
-  --color-primary-fixed:             #f5c2e7;
-  --color-primary-fixed-dim:         #cba6f7;
+  --color-ctp-mauve-fixed:             #f5c2e7;
+  --color-ctp-mauve-fixed-dim:         #cba6f7;
   --color-on-primary-fixed:          #1a1030;
   --color-on-primary-fixed-variant:  #3d2d5e;
 

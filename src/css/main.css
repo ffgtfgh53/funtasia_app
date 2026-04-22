@@ -6,6 +6,7 @@
    - Glassmorphism for floating elements (§2 "Glass & Gradient")
    - xl (1.5rem) roundedness (§5)
    ============================================================= */
+@import "@catppuccin/tailwindcss/mocha.css";
 
 * {
   box-sizing: border-box;
@@ -84,10 +85,10 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
-  background: color-mix(in srgb, var(--color-surface-container) 80%, transparent);
+  /* background: color-mix(in srgb, var(--color-surface-container) 80%, transparent); */
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  color: var(--color-on-surface);
+  /* color: var(--color-on-surface); */
   padding: 24px 20px;
   padding-bottom: max(24px, env(safe-area-inset-bottom));
   border-top-left-radius: 1.5rem;
@@ -132,7 +133,7 @@ body {
 #bottom-sheet h2 {
   margin: 0 0 12px;
   margin-right: 40px;
-  color: var(--color-primary);
+  color: var(--color-ctp-mauve);
   font-size: 1.5em;
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -189,8 +190,8 @@ body {
 
 #close-btn:hover,
 #close-btn:active {
-  color: var(--color-primary);
-  background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  color: var(--color-ctp-mauve);
+  background: color-mix(in srgb, var(--color-ctp-mauve) 10%, transparent);
 }
 
 @media (max-width: 768px) {
@@ -213,7 +214,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  background: color-mix(in srgb, var(--color-surface-container-low) 70%, transparent);
+  /* background: color-mix(in srgb, var(--color-surface-container-low) 70%, transparent); */
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   padding: 8px;
@@ -231,7 +232,7 @@ body {
   left: 8px;
   width: 40px;
   height: 40px;
-  background: var(--color-primary);
+  background: var(--color-ctp-mauve);
   border-radius: 50%;
   z-index: -1;
   opacity: 0;
@@ -240,13 +241,13 @@ body {
               opacity 0.3s ease,
               background 0.3s ease;
   /* Ambient glow */
-  box-shadow: 0 4px 24px color-mix(in srgb, var(--color-primary) 25%, transparent);
+  box-shadow: 0 4px 24px color-mix(in srgb, var(--color-ctp-mauve) 25%, transparent);
 }
 
 .floor-btn {
   background: transparent;
   border: none;
-  color: var(--color-on-surface);
+  color: var(--catppuccin-color-text);
   padding: 0;
   border-radius: 50%;
   cursor: pointer;
@@ -313,10 +314,12 @@ body {
   align-items: center;
   justify-content: center;
   padding: 6px;
+  @apply bg-ctp-mauve-700 text-ctp-text;
   /* Solid CTA (§2 update) */
-  background: var(--color-primary);
+  /* background: var(--catppuccin-color-surface1);
+  color: var(--catppuccin-color-mauve); */
   /* Ambient shadow (§4) */
-  box-shadow: 0 8px 32px color-mix(in srgb, var(--color-on-surface) 12%, transparent);
+  box-shadow: 0 8px 32px color-mix(in srgb, var(--catppuccin-color-text) 12%, transparent);
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
 }
 
@@ -359,7 +362,7 @@ body {
   left: 50%;
   transform: translateX(-50%) translateY(100px);
   background: color-mix(in srgb, var(--color-toast-brand) 30%, var(--color-surface-container-high));
-  color: var(--color-on-surface);
+  color: var(--catppuccin-color-text);
   padding: 12px 24px;
   border-radius: 1.5rem;
   font-family: "JetBrains Mono", monospace;

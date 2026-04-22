@@ -146,9 +146,9 @@ function renderDirectory(container, funtasiaData) {
   if (filtered.length === 0) {
     container.innerHTML = `
       <div class="flex flex-col items-center justify-center py-12 text-center px-6">
-        <span class="material-symbols-outlined text-[40px] text-on-surface-variant/30 mb-3">search_off</span>
-        <p class="font-headline font-bold text-on-surface-variant/50 text-sm">No results found</p>
-        <p class="text-on-surface-variant/40 text-xs mt-1">Try adjusting your filters or search term</p>
+        <span class="material-symbols-outlined text-[40px] text-ctp-subtext1 mb-3">search_off</span>
+        <p class="font-headline font-bold text-ctp-text text-sm">No results found</p>
+        <p class="text-ctp-subtext1 text-xs mt-1">Try adjusting your filters or search term</p>
       </div>`;
     return;
   }

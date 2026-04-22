@@ -59,7 +59,7 @@ div.slide-icon span.material-symbols-outlined {
 }
 .dot.active {
     width: 24px;
-    background: var(--color-primary);
+    background: var(--color-ctp-mauve);
 }
 
 /* Swipe hint */
@@ -103,11 +103,11 @@ div.slide-icon span.material-symbols-outlined {
     align-items: center;
     justify-content: center;
     z-index: 100;
-    background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+    background: color-mix(in srgb, var(--color-ctp-mauve) 12%, transparent);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid color-mix(in srgb, var(--color-primary) 15%, transparent);
-    color: var(--color-primary);
+    border: 1px solid color-mix(in srgb, var(--color-ctp-mauve) 15%, transparent);
+    color: var(--color-ctp-mauve);
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 8px 32px color-mix(in srgb, var(--color-on-surface) 6%, transparent);
@@ -118,7 +118,7 @@ div.slide-icon span.material-symbols-outlined {
 }
 
 .nav-btn:hover {
-    background: color-mix(in srgb, var(--color-primary) 20%, transparent);
+    background: color-mix(in srgb, var(--color-ctp-mauve) 20%, transparent);
     transform: scale(1.08);
 }
 

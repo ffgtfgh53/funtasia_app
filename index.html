@@ -14,7 +14,7 @@
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg"/>  
     <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">
 </head>
-<body class="bg-background font-body text-on-surface flex flex-col overflow-hidden" style="height:100dvh">
+<body class="bg-ctp-base font-body text-ctp-text flex flex-col overflow-hidden" style="height:100dvh">
 
     <div
         x-data="onboarding"
@@ -29,7 +29,7 @@
             <button
                 x-show="current < total - 1"
                 @click="goTo('map')"
-                class="text-on-surface-variant font-label text-sm font-medium hover:bg-surface-container-high px-4 py-2 rounded-full transition-colors"
+                class="text-ctp-text font-label text-sm font-medium hover:bg-surface-container-high px-4 py-2 rounded-full transition-colors"
             >Skip</button>
         </header>
 

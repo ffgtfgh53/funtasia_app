@@ -241,9 +241,9 @@ export async function startScanner(successCallback) {
             qrFlashBtn.style.padding = "8px";
             qrFlashBtn.disabled = true;
         } else {
-            qrFlashBtn.style.background = 'color-mix(in srgb, var(--color-primary) 15%, transparent)';
-            qrFlashBtn.style.border = '1px solid color-mix(in srgb, var(--color-primary) 30%, transparent)';
-            qrFlashBtn.style.color = 'var(--color-primary)';
+            qrFlashBtn.style.background = 'color-mix(in srgb, var(--color-ctp-mauve) 15%, transparent)';
+            qrFlashBtn.style.border = '1px solid color-mix(in srgb, var(--color-ctp-mauve) 30%, transparent)';
+            qrFlashBtn.style.color = 'var(--color-ctp-mauve)';
             qrFlashBtn.style.cursor = 'pointer';
             qrFlashBtn.style.fontSize = '14px';
             qrFlashBtn.style.padding = "14px";
@@ -285,7 +285,7 @@ export async function startScanner(successCallback) {
                 if (torchOn && torchSupported && qrFlashBtn) {
                     const icon = document.getElementById('qr-flash-icon');
                     if (icon) icon.textContent = 'flashlight_on';
-                    qrFlashBtn.style.background = 'color-mix(in srgb, var(--color-primary) 30%, transparent)';
+                    qrFlashBtn.style.background = 'color-mix(in srgb, var(--color-ctp-mauve) 30%, transparent)';
                 }
 
                 track.addEventListener('mute', () => {
@@ -293,7 +293,7 @@ export async function startScanner(successCallback) {
                     if (torchSupported && qrFlashBtn) {
                         const icon = document.getElementById('qr-flash-icon');
                         if (icon) icon.textContent = 'flashlight_off';
-                        qrFlashBtn.style.background = 'color-mix(in srgb, var(--color-primary) 15%, transparent)';
+                        qrFlashBtn.style.background = 'color-mix(in srgb, var(--color-ctp-mauve) 15%, transparent)';
                     }
                 });
             }
@@ -352,7 +352,7 @@ export async function stopScanner() {
     if (qrFlashBtn && torchSupported) {
         const qrFlashIcon = document.getElementById('qr-flash-icon');
         if (qrFlashIcon) qrFlashIcon.textContent = 'flashlight_off';
-        qrFlashBtn.style.background = 'color-mix(in srgb, var(--color-primary) 15%, transparent)';
+        qrFlashBtn.style.background = 'color-mix(in srgb, var(--color-ctp-mauve) 15%, transparent)';
     }
 
     const scannerDiv = document.getElementById('qrcode_scanner');
@@ -386,10 +386,10 @@ export async function toggleTorch(buttonElement, iconElement) {
 
         if (torchOn) {
             iconElement.textContent = 'flashlight_on';
-            buttonElement.style.background = 'color-mix(in srgb, var(--color-primary) 30%, transparent)';
+            buttonElement.style.background = 'color-mix(in srgb, var(--color-ctp-mauve) 30%, transparent)';
         } else {
             iconElement.textContent = 'flashlight_off';
-            buttonElement.style.background = 'color-mix(in srgb, var(--color-primary) 15%, transparent)';
+            buttonElement.style.background = 'color-mix(in srgb, var(--color-ctp-mauve) 15%, transparent)';
         }
 
         if (!hasStaleSettingsBug()) {

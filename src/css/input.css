@@ -2,7 +2,8 @@
 @plugin "@tailwindcss/forms";
 @plugin "@tailwindcss/container-queries";
 
-@import "./theme.css";
+/* @import "./theme.css"; */
+@import "@catppuccin/tailwindcss/mocha.css";
 @import "./modal.css";
 
 @utility hide-scrollbar {
@@ -24,13 +25,16 @@
   white-space: nowrap;
   word-wrap: normal;
   direction: ltr;
+  font-feature-settings: "liga";
   -moz-font-feature-settings: 'liga';
   -moz-osx-font-smoothing: grayscale;
   font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
 }
 
+/* Following code SHOULD by right be depreceated */
+
 /*
- * Tailwind v4 @theme — values reference CSS custom properties from theme.css
+ * Tailwind v4 @ theme — values reference CSS custom properties from theme.css
  * so utilities auto-switch between Latte (light) and Mocha (dark).
  *
  * The actual hex values here are the LIGHT defaults. When data-theme="dark"
@@ -39,37 +43,37 @@
  */
 @theme {
   /* ── Primary ───────────────────────────────── */
-  --color-primary:                   var(--color-primary);
+  /* --color-ctp-mauve:                   var(--color-ctp-mauve);
   --color-on-primary:                var(--color-on-primary);
-  --color-primary-container:         var(--color-primary-container);
+  --color-ctp-mauve-container:         var(--color-ctp-mauve-container);
   --color-on-primary-container:      var(--color-on-primary-container);
-  --color-primary-fixed:             var(--color-primary-fixed);
-  --color-primary-fixed-dim:         var(--color-primary-fixed-dim);
+  --color-ctp-mauve-fixed:             var(--color-ctp-mauve-fixed);
+  --color-ctp-mauve-fixed-dim:         var(--color-ctp-mauve-fixed-dim);
   --color-on-primary-fixed:          var(--color-on-primary-fixed);
-  --color-on-primary-fixed-variant:  var(--color-on-primary-fixed-variant);
+  --color-on-primary-fixed-variant:  var(--color-on-primary-fixed-variant); */
 
   /* ── Secondary (Mauve) ─────────────────────── */
-  --color-secondary:                 var(--color-secondary);
+  /* --color-secondary:                 var(--color-secondary);
   --color-on-secondary:              var(--color-on-secondary);
   --color-secondary-container:       var(--color-secondary-container);
   --color-on-secondary-container:    var(--color-on-secondary-container);
   --color-secondary-fixed:           var(--color-secondary-fixed);
   --color-secondary-fixed-dim:       var(--color-secondary-fixed-dim);
   --color-on-secondary-fixed:        var(--color-on-secondary-fixed);
-  --color-on-secondary-fixed-variant:var(--color-on-secondary-fixed-variant);
+  --color-on-secondary-fixed-variant:var(--color-on-secondary-fixed-variant); */
 
   /* ── Tertiary (Peach) ──────────────────────── */
-  --color-tertiary:                  var(--color-tertiary);
+  /* --color-tertiary:                  var(--color-tertiary);
   --color-on-tertiary:               var(--color-on-tertiary);
   --color-tertiary-container:        var(--color-tertiary-container);
   --color-on-tertiary-container:     var(--color-on-tertiary-container);
   --color-tertiary-fixed:            var(--color-tertiary-fixed);
   --color-tertiary-fixed-dim:        var(--color-tertiary-fixed-dim);
   --color-on-tertiary-fixed:         var(--color-on-tertiary-fixed);
-  --color-on-tertiary-fixed-variant: var(--color-on-tertiary-fixed-variant);
+  --color-on-tertiary-fixed-variant: var(--color-on-tertiary-fixed-variant); */
 
   /* ── Surface Hierarchy ─────────────────────── */
-  --color-background:                var(--color-background);
+  /* --color-background:                var(--color-background);
   --color-on-background:             var(--color-on-background);
   --color-surface:                   var(--color-surface);
   --color-surface-dim:               var(--color-surface-dim);
@@ -82,7 +86,7 @@
   --color-surface-container-high:    var(--color-surface-container-high);
   --color-surface-container-highest: var(--color-surface-container-highest);
   --color-on-surface:                var(--color-on-surface);
-  --color-on-surface-variant:        var(--color-on-surface-variant);
+  --color-on-surface-variant:        var(--color-on-surface-variant); */
 
   /* ── Outline ───────────────────────────────── */
   --color-outline:                   var(--color-outline);

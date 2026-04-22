@@ -23,7 +23,7 @@
     <div id="canvas-container"></div>
     <div id="info">Hover over the model</div>
 
-    <div id="floor-selector">
+    <div id="floor-selector" class="bg-ctp-surface1 text-ctp-text ">
       <div id="floor-thumb"></div>
       <button class="floor-btn" data-floor="l4">L4</button>
       <button class="floor-btn" data-floor="l3">L3</button>
@@ -34,15 +34,15 @@
       <button class="floor-btn" data-floor="b3">B3</button>
     </div>
 
-    <div id="bottom-sheet">
+    <div id="bottom-sheet" class="bg-ctp-surface0 text-ctp-text">
       <div id="sheet-handle"></div>
       <button id="close-btn">&times;</button>
       <h2 id="sheet-title">Location Title</h2>
       <p id="sheet-desc">Location description will appear here.</p>
-      <button id="enter-child-btn" style="display:none; width:100%; padding: 14px; margin-top: 20px; border-radius: 12px; background: color-mix(in srgb, var(--color-primary) 15%, transparent); color: var(--color-primary); font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 14px; border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent); cursor: pointer; transition: background 0.2s;">Enter Level</button>
+      <button class="bg-ctp-surface1 text-ctp-text" id="enter-child-btn" style="display:none; width:100%; padding: 14px; margin-top: 20px; border-radius: 12px; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 14px; border: 1px solid color-mix(in srgb, var(--color-ctp-mauve) 30%, transparent); cursor: pointer; transition: background 0.2s;">Enter Level</button>
     </div>
 
-    <button id="exit-child-btn" style="display:none; position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 200; padding: 12px 24px; border-radius: 24px; background: var(--color-surface-container-highest); color: var(--color-on-surface); font-weight: bold; font-family: 'JetBrains Mono', monospace; font-size: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border: 1px solid color-mix(in srgb, var(--color-on-surface) 10%, transparent); align-items: center; justify-content: center; gap: 8px; cursor: pointer;">
+    <button class="bg-ctp-surface1 text-ctp-text" id="exit-child-btn" style="display:none; position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 200; padding: 12px 24px; border-radius: 24px; font-weight: bold; font-family: 'JetBrains Mono', monospace; font-size: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border: 1px solid color-mix(in srgb, var(--color-on-surface) 10%, transparent); align-items: center; justify-content: center; gap: 8px; cursor: pointer;">
       <span class="material-symbols-outlined text-[18px]">logout</span> Exit Level
     </button>
 
@@ -180,7 +180,7 @@
             
             <!-- Toggle Buttons -->
             <div style="display: flex; width: 100%; max-width: 300px; background: color-mix(in srgb, var(--color-surface-container) 100%, transparent); padding: 6px; border-radius: 12px; margin-bottom: 32px; border: 1px solid color-mix(in srgb, var(--color-on-surface) 10%, transparent);">
-              <button id="qr-toggle-btn" style="flex: 1; padding: 10px; border-radius: 8px; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--color-primary); color: var(--color-on-surface); border: none; transition: all 0.2s;">
+              <button id="qr-toggle-btn" style="flex: 1; padding: 10px; border-radius: 8px; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--color-ctp-mauve); color: var(--color-on-surface); border: none; transition: all 0.2s;">
                 <span class="material-symbols-outlined text-[18px]">qr_code_scanner</span>
                 QR Code
               </button>
@@ -194,7 +194,7 @@
             <div id="qr-scanner-view" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
               <p style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-on-surface-variant); margin-bottom: 12px;">Align within frame</p>
               <!-- Scanner Placeholder Square -->
-              <div id="qrcode_scanner" style="width: 220px; height: 220px; border: 2px dashed color-mix(in srgb, var(--color-primary) 50%, transparent); border-radius: 16px; display: flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--color-surface-container-low) 50%, transparent); box-shadow: inset 0 0 20px color-mix(in srgb, var(--color-on-surface) 5%, transparent); margin-bottom: 24px; overflow: hidden; position: relative;">
+              <div id="qrcode_scanner" style="width: 220px; height: 220px; border: 2px dashed color-mix(in srgb, var(--color-ctp-mauve) 50%, transparent); border-radius: 16px; display: flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--color-surface-container-low) 50%, transparent); box-shadow: inset 0 0 20px color-mix(in srgb, var(--color-on-surface) 5%, transparent); margin-bottom: 24px; overflow: hidden; position: relative;">
                 <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-on-surface-variant); opacity: 0.4;">qr_code_scanner</span>
               </div>
               
@@ -207,7 +207,7 @@
                 }
               </style>
               
-              <button id="qr-flash-btn" style="width: 100%; max-width: 300px; padding: 14px; border-radius: 12px; background: color-mix(in srgb, var(--color-primary) 15%, transparent); color: var(--color-primary); font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 14px; border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent); display: flex; justify-content: center; align-items: center; gap: 8px; cursor: pointer; transition: background 0.2s;">
+              <button id="qr-flash-btn" style="width: 100%; max-width: 300px; padding: 14px; border-radius: 12px; background: color-mix(in srgb, var(--color-ctp-mauve) 15%, transparent); color: var(--color-ctp-mauve); font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 14px; border: 1px solid color-mix(in srgb, var(--color-ctp-mauve) 30%, transparent); display: flex; justify-content: center; align-items: center; gap: 8px; cursor: pointer; transition: background 0.2s;">
                 <span class="material-symbols-outlined text-[20px]" id="qr-flash-icon">flashlight_off</span>
                 Toggle Flash
               </button>
@@ -219,12 +219,12 @@
               
               <!-- Funtasia Input Fields -->
               <div style="display: flex; gap: 8px; margin-bottom: 32px; justify-content: center; width: 100%; align-items: center;">
-                <input class="qr-code-input" inputmode="numeric" maxlength="2" type="text" placeholder="00" style="width: 72px; height: 56px; text-align: center; font-size: 24px; font-weight: 700; border-radius: 10px; border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent); background: var(--color-surface-container-high); color: var(--color-primary); font-family: 'JetBrains Mono', monospace; outline: none;" />
+                <input class="qr-code-input" inputmode="numeric" maxlength="2" type="text" placeholder="00" style="width: 72px; height: 56px; text-align: center; font-size: 24px; font-weight: 700; border-radius: 10px; border: 1px solid color-mix(in srgb, var(--color-ctp-mauve) 30%, transparent); background: var(--color-surface-container-high); color: var(--color-ctp-mauve); font-family: 'JetBrains Mono', monospace; outline: none;" />
                 <span style="font-size: 24px; color: var(--color-on-surface-variant); font-weight: 700; margin: 0 4px;">-</span>
-                <input class="qr-code-input" inputmode="numeric" maxlength="2" type="text" placeholder="00" style="width: 72px; height: 56px; text-align: center; font-size: 24px; font-weight: 700; border-radius: 10px; border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent); background: var(--color-surface-container-high); color: var(--color-primary); font-family: 'JetBrains Mono', monospace; outline: none;" />
+                <input class="qr-code-input" inputmode="numeric" maxlength="2" type="text" placeholder="00" style="width: 72px; height: 56px; text-align: center; font-size: 24px; font-weight: 700; border-radius: 10px; border: 1px solid color-mix(in srgb, var(--color-ctp-mauve) 30%, transparent); background: var(--color-surface-container-high); color: var(--color-ctp-mauve); font-family: 'JetBrains Mono', monospace; outline: none;" />
               </div>
               
-              <button id="qr-continue-btn" style="width: 100%; max-width: 300px; padding: 14px; border-radius: 12px; background: color-mix(in srgb, var(--color-surface-container-high) 100%, transparent); color: var(--color-primary); font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 14px; border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent); display: flex; justify-content: center; align-items: center; gap: 8px; cursor: pointer; transition: background 0.2s;">
+              <button id="qr-continue-btn" style="width: 100%; max-width: 300px; padding: 14px; border-radius: 12px; background: color-mix(in srgb, var(--color-surface-container-high) 100%, transparent); color: var(--color-ctp-mauve); font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 14px; border: 1px solid color-mix(in srgb, var(--color-ctp-mauve) 30%, transparent); display: flex; justify-content: center; align-items: center; gap: 8px; cursor: pointer; transition: background 0.2s;">
                 Continue
               </button>
             </div>
@@ -361,7 +361,7 @@
         qrScannerView.style.display = 'flex';
         textInputView.style.display = 'none';
         
-        qrToggleBtn.style.background = 'var(--color-primary)';
+        qrToggleBtn.style.background = 'var(--color-ctp-mauve)';
         qrToggleBtn.style.color = 'var(--color-on-surface)';
         qrToggleBtn.style.fontWeight = '700';
 
@@ -377,7 +377,7 @@
         qrScannerView.style.display = 'none';
         textInputView.style.display = 'flex';
 
-        textToggleBtn.style.background = 'var(--color-primary)';
+        textToggleBtn.style.background = 'var(--color-ctp-mauve)';
         textToggleBtn.style.color = 'var(--color-on-surface)';
         textToggleBtn.style.fontWeight = '700';
 
