@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" class="latte">
   <head>
     <script>
       // Immediate theme sync to avoid flashing
-      const savedTheme = localStorage.getItem('funtasia-theme');
-      if (savedTheme) {
-        document.documentElement.dataset.theme = savedTheme;
-      }
+      const savedTheme = localStorage.getItem('funtasia-theme') || 'mocha'; // Default to mocha
+      document.documentElement.classList.remove('mocha');
+      document.documentElement.classList.remove('latte');
+      document.documentElement.classList.add(savedTheme);
     </script>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>

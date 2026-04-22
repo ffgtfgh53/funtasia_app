@@ -96,10 +96,18 @@ async function initApp() {
       'Dark Mode',
       'Toggle dark mode',
       (isDark) => {
-        document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
-        localStorage.setItem('funtasia-theme', isDark ? 'dark' : 'light');
-      },
-      document.documentElement.dataset.theme === 'dark'
+          const root = document.documentElement;
+          if (isDark) {
+            root.classList.add('mocha');
+            root.classList.remove('latte');
+            localStorage.setItem('funtasia-theme', 'mocha');
+          } else {
+            root.classList.add('latte');
+            root.classList.remove('mocha');
+            localStorage.setItem('funtasia-theme', 'latte');
+          }
+        },
+        document.documentElement.classList.contains('mocha') // Check if current mode is mocha
     );
   }
   if (controlsSection) {
