@@ -49,6 +49,7 @@ export function showBottomSheet(objectName, childFloorId = null) {
 export function hideBottomSheet() {
   sheet.classList.remove("show");
   if (currentAppState) currentAppState.isBottomSheetOpen = false;
+  window.dispatchEvent(new Event('bottomsheetclose'));
 }
 
 export function hideToast() {

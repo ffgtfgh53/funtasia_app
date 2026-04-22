@@ -117,9 +117,7 @@ export function handleInteraction(event, appState) {
   }
 
   const targetObject = performRaycast(appState);
-  if (!targetObject) {
-    applySelection(null, appState);
-  } else {
+  if (targetObject) {
     focusOnObject(targetObject, appState);
   }
 }
