@@ -16,11 +16,7 @@
 </head>
 <body class="bg-background font-body text-on-surface flex flex-col overflow-hidden" style="height:100dvh">
 
-    <div
-        x-data="onboarding"
-        class="flex flex-col h-full"
-    >
-        <!-- Header -->
+    <div x-data="onboarding" class="flex flex-col h-full">
         <header class="flex-shrink-0 flex items-center justify-between px-6 h-16">
             <div class="flex items-center gap-2">
                 <span class="material-symbols-outlined text-primary">map</span>
@@ -47,37 +43,33 @@
             @mouseup.window="onMouseUp($event)"
         >
             <!-- Navigation Buttons -->
-            <button
+            <button class="nav-btn nav-btn--back"
                 x-show="current > 0"
                 @click="prev"
-                class="nav-btn nav-btn--back"
                 aria-label="Previous slide"
             >
                 <span class="material-symbols-outlined">chevron_left</span>
             </button>
-            <button
+            <button class="nav-btn nav-btn--next"
                 x-show="current < total - 1"
                 @click="next"
-                class="nav-btn nav-btn--next"
                 aria-label="Next slide"
             >
                 <span class="material-symbols-outlined">chevron_right</span>
             </button>
 
-            <div
-                class="slide-track h-full"
+            <div class="slide-track h-full"
                 :style="`transform: translateX(calc(-${current * 100}% + ${dragX}px))`"
                 :class="dragging ? 'transition-none' : ''"
             >
                 <!-- Card 1 -->
                 <div class="slide-card relative">
                     <!-- Swipe hint — shown on first card until first swipe -->
-                    <div
+                    <div class="swipe-hint pointer-events-none absolute right-4 top-1/4 -translate-y-1/2 z-20 flex flex-col items-center gap-2"
                         x-show="current === 0 && showHint"
                         x-transition:leave="transition ease-in duration-300"
                         x-transition:leave-start="opacity-100"
                         x-transition:leave-end="opacity-0"
-                        class="swipe-hint pointer-events-none absolute right-4 top-1/4 -translate-y-1/2 z-20 flex flex-col items-center gap-2"
                     >
                         <div class="swipe-hint-inner flex flex-col items-center gap-1.5 shadow-lg">
                             <div class="swipe-hint-hand">
