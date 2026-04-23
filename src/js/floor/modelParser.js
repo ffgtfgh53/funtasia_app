@@ -2,27 +2,39 @@ import * as THREE from "three";
 import { Icon } from "@/js/marker/icon.js";
 import { Floor } from "@/js/floor/floor.js";
 import { QRMarker } from "@/js/marker/qrmarker.js";
+
+const documentStyle = getComputedStyle(document.documentElement)
+
+function getColor(colorName, defaultColor) {
+  let colorString = documentStyle.getPropertyValue(colorName)
+  if (colorString) {
+    return Number("0x" + colorString.slice(1))
+  } else {
+    return defaultColor
+  }
+}
+
 const miscColours = {
-  "BASE": 0x6e7176,
-  "DRIVE": 0xa5ccd1,
-  "FOOT":  0xE6c19f,
-  "GRASS": 0x9dcb6f,
-  "NONOBJECT": 0xc1c3c7,
-  "FTOILET": 0xff8afe  ,
-  "MTOILET": 0x1b17eb,
-  "ATOILET": 0x5ce1e6,
-  "LIFT": 0xb0b0b0,
-  "MARKER":0xffffff,
+  "BASE": getColor('--color-ctp-base', 0x1e1e2e),
+  "DRIVE": getColor('--color-ctp-surface2', 0xa5ccd1),
+  "FOOT":  getColor('--color-ctp-flamingo', 0xe6c19f),
+  "GRASS": getColor('--color-ctp-green-900', 0x9dcb6f),
+  "NONOBJECT": getColor('--color-ctp-flamingo-950', 0xc1c3c7),
+  "FTOILET": getColor('--color-ctp-pink', 0xff8afe),
+  "MTOILET": getColor('--color-ctp-lavender', 0x1b17eb),
+  "ATOILET": getColor('--color-ctp-sky', 0x5ce1e6),
+  "LIFT": getColor('--colot-ctp-overlay1', 0xb0b0b0),
+  "MARKER": 0xffffff,
   "STAIRCASE":0xffffff
 };
 export const zoneColours = {
-  "NONE": 0xffe5e7,
-  "GREEN": 0x00ff00,
-  "BLUE": 0x0066ff,
-  "ORANGE":  0xfab387,
-  "PURPLE": 0x9900ff,
-  "YELLOW": 0xf9e2af,
-  "RED": 0xf38ba8,
+  "NONE": getColor('--color-ctp-rosewater-700', 0xffe5e7),
+  "GREEN": getColor('--color-ctp-green-300', 0x00ff00),
+  "BLUE": getColor('--color-ctp-blue-600', 0x0066ff),
+  "ORANGE": getColor('--color-ctp-peach-400', 0xfab387),
+  "PURPLE": getColor('--color-ctp-mauve', 0x9900ff),
+  "YELLOW": getColor('--color-ctp-yellow', 0xf9e2af),
+  "RED": getColor('--color-ctp-red', 0xf38ba8),
 };
 
 let skybox = null;
