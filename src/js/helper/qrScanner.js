@@ -353,7 +353,7 @@ export async function stopScanner() {
 
     const scannerDiv = document.getElementById('qrcode_scanner');
     if (scannerDiv && !scannerDiv.innerHTML.includes('qr_code_scanner')) {
-        scannerDiv.innerHTML = '<span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-on-surface-variant); opacity: 0.4;">qr_code_scanner</span>';
+        scannerDiv.innerHTML = '<span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-ctp-subtext1); opacity: 0.4;">qr_code_scanner</span>';
     }
 }
 

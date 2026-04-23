@@ -127,7 +127,7 @@ export async function startScanner(successCallback) {
             qrFlashBtn.innerHTML = "Flash is unavailable";
             qrFlashBtn.style.background = "transparent";
             qrFlashBtn.style.border = "none";
-            qrFlashBtn.style.color = "var(--color-on-surface-variant)";
+            qrFlashBtn.style.color = "var(--color-ctp-text)";
             qrFlashBtn.style.cursor = "default";
             qrFlashBtn.style.fontSize = "12px";
             qrFlashBtn.style.padding = "8px";
@@ -248,7 +248,7 @@ export async function stopScanner() {
     // Attempt to restore placeholder if it was cleared
     const scannerDiv = document.getElementById('qrcode_scanner');
     if (scannerDiv && !scannerDiv.innerHTML.includes('qr_code_scanner')) {
-        scannerDiv.innerHTML = '<span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-on-surface-variant); opacity: 0.4;">qr_code_scanner</span>';
+        scannerDiv.innerHTML = '<span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-ctp-text); opacity: 0.4;">qr_code_scanner</span>';
     }
 }
 

@@ -20,7 +20,7 @@
         /* Ghost border per §4 — outline-variant at 15% opacity */
         border: 1px solid color-mix(in srgb, var(--color-outline-variant) 15%, transparent);
         /* Ambient diffusion shadow (§4) — 30-60px blur, on-surface tinted */
-        box-shadow: 0 32px 64px color-mix(in srgb, var(--color-on-surface) 8%, transparent);
+        box-shadow: 0 32px 64px color-mix(in srgb, var(--color-ctp-text) 8%, transparent);
     }
     .modal-header {
         @apply px-6 pt-6 pb-4 flex justify-between items-start sticky top-0 z-10 bg-ctp-crust; 
