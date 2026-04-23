@@ -218,7 +218,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  background: var(--color-ctp-surface1);
+  background: var(--color-ctp-surface0);
   color: var(--color-ctp-text);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);

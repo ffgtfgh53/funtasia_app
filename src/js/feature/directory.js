@@ -3,30 +3,29 @@ import { hideBottomSheet } from "@/js/ui_ux/ui.js";
 import * as THREE from "three";
 
 let cachedFuntasiaData = null;
-let dataLoadingPromise = null;
 
 /* ── Color Maps ──────────────────────────────────────────── */
 
 /** Zone → accent colors for icon bg, text, bar */
 const zoneColorMap = {
-  blue:   { bg: "bg-blue-50",   text: "text-blue-600",   bar: "bg-blue-500"   },
-  green:  { bg: "bg-green-50",  text: "text-green-600",  bar: "bg-green-500"  },
-  orange: { bg: "bg-orange-50", text: "text-orange-600", bar: "bg-orange-500" },
-  purple: { bg: "bg-purple-50", text: "text-purple-600", bar: "bg-purple-500" },
-  red:    { bg: "bg-red-50",    text: "text-red-600",    bar: "bg-red-500"    },
-  yellow: { bg: "bg-yellow-50", text: "text-yellow-600", bar: "bg-yellow-500" },
-  brown:  { bg: "bg-amber-50",  text: "text-amber-800",  bar: "bg-amber-600"  },
+  blue:   { bg: "bg-ctp-blue-50",   text: "text-ctp-blue",   bar: "bg-ctp-blue-500"  },
+  green:  { bg: "bg-ctp-green-50",  text: "text-ctp-green",  bar: "bg-ctp-green-500" },
+  orange: { bg: "bg-orange-50",     text: "text-orange-600", bar: "bg-orange-500"    },
+  purple: { bg: "bg-ctp-mauve-50",  text: "text-ctp-mauve",  bar: "bg-ctp-mauve-500" },
+  red:    { bg: "bg-ctp-red-50",    text: "text-ctp-red",    bar: "bg-ctp-red-500"   },
+  yellow: { bg: "bg-yellow-50",     text: "text-yellow-600", bar: "bg-yellow-500"    },
+  brown:  { bg: "bg-amber-50",      text: "text-amber-800",  bar: "bg-amber-600"     },
 };
 
 /** Tag → pill/chip hex color */
 const tagColorMap = {
-  Game:        "#2563eb", // blue-600
-  Performance: "#7c3aed", // violet-600
-  Acad:        "#0d9488", // teal-600
-  Food:        "#dc2626", // red-600
-  Drinks:      "#0ea5e9", // sky-500
-  Merch:       "#d97706", // amber-600
-  Photos:      "#db2777", // pink-600
+  Game:        "var(--color-ctp-blue)",
+  Performance: "var(--color-ctp-mauve)", 
+  Acad:        "var(--color-ctp-teal",
+  Food:        "var(--color-ctp-red)", 
+  Drinks:      "var(--color-ctp-sky)",
+  Merch:       "var(--color-ctp-peach)", 
+  Photos:      "var(--color-ctp-pink)", 
 };
 
 const fallbackTagColor = "#6b7280"; // gray-500
@@ -109,12 +108,12 @@ function collectAllTags(funtasiaData) {
 /* ── Zone Color Helper ───────────────────────────────────── */
 
 function getZoneColors(zoneName) {
-  if (!zoneName) return { bg: "bg-gray-50", text: "text-gray-600", bar: "bg-gray-500" };
+  if (!zoneName) return { bg: "bg-ctp-surface1", text: "text-ctp-text", bar: "bg-ctp-surface0" };
   const lower = zoneName.toLowerCase();
   for (const [key, colors] of Object.entries(zoneColorMap)) {
     if (lower.includes(key)) return colors;
   }
-  return { bg: "bg-surface-variant", text: "text-on-surface-variant", bar: "bg-outline" };
+  return { bg: "bg-ctp-surface1", text: "text-ctp-text", bar: "color-ctp-mauve" };
 }
 
 /* ── Filtering ───────────────────────────────────────────── */
