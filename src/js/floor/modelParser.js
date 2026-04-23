@@ -74,10 +74,12 @@ export function applyThemeToScene(appState) {
         colorVal = miscColours[role] !== undefined ? miscColours[role] : 0xc1c3c7;
       }
 
-      if (child.userData.material) child.userData.material.color.set(colorVal);
-      
+      if (child.userData.material) {
+        child.userData.material.color.set(colorVal);
+      }
+
       if (child.material) {
-        if (child.material === child.userData.material) {
+        if (!child.userData.material || (child.material === child.userData.material)) {
           child.material.color.set(colorVal);
         } else {
           // If currently highlighted, update the highlight color as well
