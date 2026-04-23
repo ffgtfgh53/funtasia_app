@@ -66,7 +66,7 @@
       <span class="material-symbols-outlined text-[20px]">info_i</span>
     </button>
 
-    <div id="settings-modal-wrapper" style="display: none; position: fixed; inset: 0; z-index: 200;">
+    <div id="settings-modal-wrapper" class="modal-wrapper">
       <div class="modal-container" style="position: fixed; inset: 0;">
         <div class="modal-backdrop" id="settings-modal-backdrop"></div>
         <div class="modal-card">
@@ -88,7 +88,7 @@
       </div>
     </div>
 
-    <div id="directory-modal-wrapper" style="display: none; position: fixed; inset: 0; z-index: 200;">
+    <div id="directory-modal-wrapper" class="modal-wrapper">
       <div class="modal-container" style="position: fixed; inset: 0;">
         <div class="modal-backdrop" id="directory-modal-backdrop"></div>
         <div class="modal-card">
@@ -161,8 +161,8 @@
       </div>
     </div>
 
-    <div id="qr-modal-wrapper" style="display: none; position: fixed; inset: 0; z-index: 200;">
-      <div class="modal-container" style="position: fixed; inset: 0;">
+    <div id="qr-modal-wrapper" class="modal-wrapper">
+      <div class="modal-container fixed inset-0">
         <div class="modal-backdrop" id="qr-modal-backdrop"></div>
         <div class="modal-card">
           <!-- Header Section -->
@@ -176,11 +176,11 @@
             </button>
           </div>
           <!-- Content Area -->
-          <div class="modal-content" style="display: flex; flex-direction: column; align-items: center; padding: 24px;">
+          <div class="modal-content flex flex-col items-center p-6">
             
             <!-- Toggle Buttons -->
             <div id="qr-toggle-selector-container">
-              <button id="qr-toggle-btn" class="qr-toggle-selector" style="background: var(--color-ctp-mauve);">
+              <button id="qr-toggle-btn" class="qr-toggle-selector" style="background: var(--color-ctp-mauve); color: var(--color-ctp-base)">
                 <span class="material-symbols-outlined text-[18px]">qr_code_scanner</span>
                 QR Code
               </button>
@@ -195,7 +195,7 @@
               <p>Align within frame</p>
               <!-- Scanner Placeholder Square -->
               <div id="qrcode_scanner">
-                <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-on-surface-variant); opacity: 0.4;">qr_code_scanner</span>
+                <span class="material-symbols-outlined" style="font-size: 48px; opacity: 0.4;">qr_code_scanner</span>
               </div>
               <button id="qr-flash-btn">
                 <span class="material-symbols-outlined text-[20px]" id="qr-flash-icon">flashlight_off</span>
@@ -204,18 +204,18 @@
             </div>
 
             <!-- Text Input View (Hidden by default) -->
-            <div id="text-input-view" style="width: 100%; display: none; flex-direction: column; align-items: center;">
-              <p style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-on-surface-variant); margin-bottom: 20px;">Enter location code</p>
+            <div id="text-input-view" class="hidden flex-col items-center" style="width: 100%;">
+              <p class="uppercase font-bold mb-5" style="font-size: 11px; letter-spacing: 0.1em;">Enter location code</p>
               
-              <!-- Funtasia Input Fields -->
-              <div style="display: flex; gap: 8px; margin-bottom: 32px; justify-content: center; width: 100%; align-items: center;">
-                <input class="qr-code-input" inputmode="numeric" maxlength="2" type="text" placeholder="00" style="width: 72px; height: 56px; text-align: center; font-size: 24px; font-weight: 700; border-radius: 10px; border: 1px solid color-mix(in srgb, var(--color-ctp-mauve) 30%, transparent); background: var(--color-surface-container-high); color: var(--color-ctp-mauve); font-family: 'JetBrains Mono', monospace; outline: none;" />
-                <span style="font-size: 24px; color: var(--color-on-surface-variant); font-weight: 700; margin: 0 4px;">-</span>
-                <input class="qr-code-input" inputmode="numeric" maxlength="2" type="text" placeholder="00" style="width: 72px; height: 56px; text-align: center; font-size: 24px; font-weight: 700; border-radius: 10px; border: 1px solid color-mix(in srgb, var(--color-ctp-mauve) 30%, transparent); background: var(--color-surface-container-high); color: var(--color-ctp-mauve); font-family: 'JetBrains Mono', monospace; outline: none;" />
+              <!-- Location Code Input Fields -->
+              <div class="flex mb-8 gap-2 justify-center items-center" style="width: 100%;">
+                <input class="qr-code-input" inputmode="numeric" maxlength="2" type="text" placeholder="00"/>
+                <span class="font-bold" style="font-size: 24px;">-</span>
+                <input class="qr-code-input" inputmode="numeric" maxlength="2" type="text" placeholder="00"/>
               </div>
               
-              <button id="qr-continue-btn" style="width: 100%; max-width: 300px; padding: 14px; border-radius: 12px; background: color-mix(in srgb, var(--color-surface-container-high) 100%, transparent); color: var(--color-ctp-mauve); font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 14px; border: 1px solid color-mix(in srgb, var(--color-ctp-mauve) 30%, transparent); display: flex; justify-content: center; align-items: center; gap: 8px; cursor: pointer; transition: background 0.2s;">
-                Continue
+              <button id="qr-go-btn">
+                Go to location
               </button>
             </div>
 
@@ -305,11 +305,11 @@
         hideFabButtons();
       });
       closeDirBtn.addEventListener('click', () => {
-        dirModal.style.display = 'none';
+        dirModal.style.removeProperty('display');
         showFabButtons();
       });
       dirBackdrop.addEventListener('click', () => {
-        dirModal.style.display = 'none';
+        dirModal.style.removeProperty('display');
         showFabButtons();
       });
 
@@ -318,11 +318,11 @@
         hideFabButtons();
       });
       closeSettingsBtn.addEventListener('click', () => {
-        settingsModal.style.display = 'none';
+        settingsModal.style.removeProperty('display');
         showFabButtons();
       });
       settingsBackdrop.addEventListener('click', () => {
-        settingsModal.style.display = 'none';
+        settingsModal.style.removeProperty('display');
         showFabButtons();
       });
 
@@ -334,13 +334,13 @@
         }
       });
       closeQrBtn.addEventListener('click', () => {
-        qrModal.style.display = 'none';
+        qrModal.style.removeProperty('display');
         showFabButtons();
         stopScanner();
         clearTextInputs();
       });
       qrBackdrop.addEventListener('click', () => {
-        qrModal.style.display = 'none';
+        qrModal.style.removeProperty('display');
         showFabButtons();
         stopScanner();
         clearTextInputs();
@@ -352,8 +352,10 @@
         textInputView.style.display = 'none';
         
         qrToggleBtn.style.background = 'var(--color-ctp-mauve)';
+        qrToggleBtn.style.color = 'var(--color-ctp-base)';
 
         textToggleBtn.style.background = 'transparent';
+        textToggleBtn.style.color = 'var(--color-ctp-text)';
         startScanner(handleQRSuccess);
         clearTextInputs();
       });
@@ -363,8 +365,10 @@
         textInputView.style.display = 'flex';
 
         textToggleBtn.style.background = 'var(--color-ctp-mauve)';
+        textToggleBtn.style.color = 'var(--color-ctp-base)';
 
         qrToggleBtn.style.background = 'transparent';
+        qrToggleBtn.style.color = 'var(--color-ctp-text)';
         stopScanner();
       });
       
@@ -394,7 +398,7 @@
       });
       
       // Continue Button Logic for manual input
-      const continueBtn = document.getElementById('qr-continue-btn');
+      const continueBtn = document.getElementById('qr-go-btn');
       if (continueBtn) {
         continueBtn.addEventListener('click', async () => {
           const firstVal = inputs[0].value.trim();
