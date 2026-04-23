@@ -365,24 +365,29 @@ body {
   object-fit: contain;
 }
 
-.fab-btn--directory {
+#open-directory-btn {
   bottom: 20px;
   right: 16px;
 }
 
-.fab-btn--settings {
+#open-settings-btn {
   bottom: 74px;
   right: 16px;
 }
 
-.fab-btn--qr {
+#open-qr-btn {
   bottom: 128px;
   right: 16px;
 }
 
-.fab-btn--info {
+#open-info-btn {
   top: 20px;
   right: 16px;
+}
+
+#clear-directory-marker-btn {
+  top: 16px;
+  left: 16px
 }
 
 /* === Toast Notification (Greyish Blue §2 update) === */
