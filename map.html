@@ -92,6 +92,29 @@
       </div>
     </div>
 
+    <div id="info-modal-wrapper" class="modal-wrapper">
+      <div class="modal-container" style="position: fixed; inset: 0;">
+        <div class="modal-backdrop" id="info-modal-backdrop"></div>
+        <div class="modal-card">
+          <!-- Header Section -->
+          <div class="modal-header">
+            <div>
+              <h1 class="modal-title">Information</h1>
+              <p class="modal-subtitle">How to use this web app</p>
+            </div>
+            <button class="modal-close-btn" id="close-info-btn">
+              <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+          </div>
+          <!-- Content Area -->
+          <div class="modal-content" id="info-content-area">
+            <p>Uhh honestly idk man, try it out yourself or go back to onboarding</p>
+          </div>
+          <div class="modal-footer-fade"></div>
+        </div>
+      </div>
+    </div>
+
     <div id="directory-modal-wrapper" class="modal-wrapper">
       <div class="modal-container" style="position: fixed; inset: 0;">
         <div class="modal-backdrop" id="directory-modal-backdrop"></div>
@@ -241,12 +264,15 @@
       const settingsModal = document.getElementById('settings-modal-wrapper');
       const settingsBackdrop = document.getElementById('settings-modal-backdrop');
 
-      const openQrBtn = document.getElementById('open-qr-btn');
       const openInfoBtn = document.getElementById('open-info-btn');
+      const closeInfoBtn = document.getElementById('close-info-btn');
+      const infoModal = document.getElementById('info-modal-wrapper');
+      const infoBackdrop = document.getElementById('info-modal-backdrop');
 
+      const openQrBtn = document.getElementById('open-qr-btn');
+      const closeQrBtn = document.getElementById('close-qr-btn');
       const qrModal = document.getElementById('qr-modal-wrapper');
       const qrBackdrop = document.getElementById('qr-modal-backdrop');
-      const closeQrBtn = document.getElementById('close-qr-btn');
 
       const qrToggleBtn = document.getElementById('qr-toggle-btn');
       const textToggleBtn = document.getElementById('text-toggle-btn');
@@ -324,6 +350,19 @@
       });
       settingsBackdrop.addEventListener('click', () => {
         settingsModal.style.removeProperty('display');
+        showFabButtons();
+      });
+
+      openInfoBtn.addEventListener('click', () => {
+        infoModal.style.display = 'block';
+        hideFabButtons();
+      });
+      closeInfoBtn.addEventListener('click', () => {
+        infoModal.style.removeProperty('display');
+        showFabButtons();
+      });
+      infoBackdrop.addEventListener('click', () => {
+        infoModal.style.removeProperty('display');
         showFabButtons();
       });
 
