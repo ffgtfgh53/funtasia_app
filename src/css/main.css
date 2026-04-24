@@ -353,6 +353,11 @@ body {
   right: 16px;
 }
 
+#open-events-btn {
+  top: 74px;
+  right: 16px
+}
+
 #clear-directory-marker-btn {
   top: 16px;
   left: 16px
