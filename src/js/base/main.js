@@ -24,17 +24,15 @@ const { scene, camera, renderer, controls } = setupScene();
 // Register all floors with their relative CDN paths (no static imports needed).
 // Models are fetched lazily from jsDelivr on first switchFloor() call.
 const floorDefs = {
-  l4: "models/v2-31-3/njc-l4-v2-31-3.glb",
-  l3: "models/v2-31-3/njc-l3-v2-31-3.glb",
-  l2: "models/v3-11-4/njc-l2-v3-11-4.glb",
-  l1: "models/v3-11-4/njc-l1-v3-11-4.glb",
-  b1: "models/v2-31-3/njc-b1-v2-31-3.glb",
-  b2: "models/v2-31-3/njc-b2-v2-31-3.glb",
-  b3: "models/v2-31-3/njc-b3-v2-31-3.glb",
+  l2: `models/${VERSION}/njc-l2-${VERSION}.glb`,
+  l1: `models/${VERSION}/njc-l1-${VERSION}.glb`,
+  b1: `models/${VERSION}/njc-b1-${VERSION}.glb`,
+  b2: `models/${VERSION}/njc-b2-${VERSION}.glb`,
+  b3: `models/${VERSION}/njc-b3-${VERSION}.glb`,
 };
 
 const childModelDefs = {
-  canteen: "models/v2-31-3/njc-l1-canteen.glb",
+  canteen: `models/${VERSION}/njc-l1-canteen-${VERSION}.glb`,
 };
 
 // Instantiate Floor objects — they self-register into Floor.floors
