@@ -1,0 +1,6 @@
+[submodule "funtasia_assets"]
+	path = funtasia_assets
+	url = https://github.com/garethlearnscoding/funtasia_assets.git
+[submodule "funtasia-3d-files"]
+	path = funtasia-3d-files
+	url = https://github.com/garethlearnscoding/funtasia-3d-files.git
