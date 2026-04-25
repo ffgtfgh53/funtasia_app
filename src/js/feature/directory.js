@@ -201,7 +201,7 @@ function renderDirectory(container, funtasiaData) {
 
     const levelHeader = document.createElement("h3");
     levelHeader.className = "modal-section-title text-primary";
-    levelHeader.textContent = `Level ${level.replace("l", "").replace("b", "B")}`;
+    levelHeader.textContent = level;
     levelSection.appendChild(levelHeader);
 
     for (const [zone, items] of Object.entries(grouped[level])) {
