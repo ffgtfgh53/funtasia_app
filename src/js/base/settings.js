@@ -12,16 +12,16 @@ export class SettingsController {
         
         const sectionDiv = document.createElement('section');
         // Add spacing between sections but not above the first
-        sectionDiv.className = 'mt-6 first:mt-0';
+        sectionDiv.className = 'mt-6 first:mt-2';
         
-        const headerDiv = document.createElement('div');
-        headerDiv.className = 'pt-4 mb-4 px-4';
-        headerDiv.innerHTML = `<h2 class="modal-section-title">${title}</h2>`;
-        
+        const headerTitle = document.createElement('h3')
+        headerTitle.className = 'modal-section-title'
+        headerTitle.innerHTML = title
+
         const contentDiv = document.createElement('div');
-        contentDiv.className = 'bg-surface rounded-xl border border-outline-variant/30 overflow-hidden';
+        contentDiv.className = 'overflow-hidden bg-ctp-mantle rounded-2xl';
         
-        sectionDiv.appendChild(headerDiv);
+        sectionDiv.appendChild(headerTitle);
         sectionDiv.appendChild(contentDiv);
         this.container.appendChild(sectionDiv);
         
@@ -34,14 +34,14 @@ export class SettingsController {
         
         const wrapper = document.createElement('div');
         // Adding Funtasia's clean modular styling to the row
-        wrapper.className = "flex items-center justify-between p-4 border-b border-outline-variant/20 last:border-0 cursor-pointer active:bg-surface-variant/50 transition-colors";
+        wrapper.className = "flex items-center justify-between p-4 cursor-pointer active:bg-surface-variant/50 transition-colors";
         
         // Setup toggle label content
         const contentDiv = document.createElement('div');
         contentDiv.className = "flex-1 pr-4";
         contentDiv.innerHTML = `
-            <h3 class="text-on-surface font-semibold text-[15px] leading-tight">${label}</h3>
-            ${description ? `<p class="text-on-surface-variant text-sm mt-1 leading-snug">${description}</p>` : ''}
+            <h3 class="text-ctp-text font-semibold text-[15px] leading-tight">${label}</h3>
+            ${description ? `<p class="text-ctp-subtext1 text-sm mt-1 leading-snug">${description}</p>` : ''}
         `;
         
         // Setup toggle switch
@@ -55,7 +55,7 @@ export class SettingsController {
         
         const slider = document.createElement('div');
         // Smooth toggle animation styling utilizing Funtasia's 'primary' color
-        slider.className = "w-11 h-6 bg-outline/40 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all after:duration-300 peer-checked:bg-primary transition-colors duration-300";
+        slider.className = "w-11 h-6 bg-ctp-surface2 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all after:duration-300 peer-checked:bg-ctp-mauve transition-colors duration-300";
         
         switchLabel.appendChild(input);
         switchLabel.appendChild(slider);

@@ -6,6 +6,7 @@
    - Glassmorphism for floating elements (§2 "Glass & Gradient")
    - xl (1.5rem) roundedness (§5)
    ============================================================= */
+@import "@catppuccin/tailwindcss/mocha.css";
 
 * {
   box-sizing: border-box;
@@ -24,9 +25,9 @@ body {
 }
 
 body {
-  background: var(--color-background);
+  background: var(--color-ctp-base);
   font-family: "JetBrains Mono", monospace;
-  color: var(--color-on-surface);
+  color: var(--color-ctp-text);
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   touch-action: none;
@@ -48,52 +49,22 @@ body {
   height: 100% !important;
 }
 
-/* === Info Label (Floating — Glassmorphism per §2) === */
-#info {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  color: var(--color-on-surface);
-  font-family: "JetBrains Mono", monospace;
-  background: color-mix(in srgb, var(--color-surface-container-high) 80%, transparent);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  padding: 8px 12px;
-  border-radius: 1.5rem;
-  z-index: 5;
-  font-size: 14px;
-  max-width: calc(100vw - 20px);
-  word-wrap: break-word;
-  /* Ambient shadow per §4 — 30-60px blur, 4-8% opacity, on-surface tint */
-  box-shadow: 0 8px 40px color-mix(in srgb, var(--color-on-surface) 6%, transparent);
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-@media (max-width: 768px) {
-  #info {
-    font-size: 12px;
-    padding: 6px 10px;
-    top: 8px;
-    left: 8px;
-  }
-}
-
 /* === Bottom Sheet (Floating — Glassmorphism per §2) === */
 #bottom-sheet {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  background: color-mix(in srgb, var(--color-surface-container) 80%, transparent);
+  background: var(--color-ctp-surface0);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  color: var(--color-on-surface);
+  color: var(--color-ctp-text);
   padding: 24px 20px;
   padding-bottom: max(24px, env(safe-area-inset-bottom));
   border-top-left-radius: 1.5rem;
   border-top-right-radius: 1.5rem;
   /* Ambient shadow (§4) */
-  box-shadow: 0 -8px 48px color-mix(in srgb, var(--color-on-surface) 6%, transparent);
+  box-shadow: 0 -8px 48px color-mix(in srgb, var(--color-ctp-text) 6%, transparent);
   transform: translateY(100%);
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               background 0.3s ease;
@@ -112,13 +83,13 @@ body {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   /* Use a slightly more opaque background to compensate for lost blur */
-  background: color-mix(in srgb, var(--color-surface-container) 95%, transparent) !important;
+  background: var(--color-ctp-surface1) !important;
 }
 
 #sheet-handle {
   width: 40px;
   height: 4px;
-  background: color-mix(in srgb, var(--color-on-surface) 20%, transparent);
+  @apply bg-ctp-text;
   border-radius: 2px;
   margin: 12px auto 0;
   cursor: grab;
@@ -132,7 +103,7 @@ body {
 #bottom-sheet h2 {
   margin: 0 0 12px;
   margin-right: 40px;
-  color: var(--color-primary);
+  color: var(--color-ctp-mauve);
   font-size: 1.5em;
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -141,7 +112,7 @@ body {
 #bottom-sheet p {
   margin: 0;
   font-size: 1em;
-  color: var(--color-on-surface-variant);
+  color: var(--color-ctp-subtext1);
   line-height: 1.5;
 }
 
@@ -171,7 +142,7 @@ body {
   top: 20px;
   background: none;
   border: none;
-  color: var(--color-on-surface);
+  color: var(--color-ctp-text);
   font-size: 1.8em;
   cursor: pointer;
   transition: color 0.2s, background 0.2s;
@@ -189,8 +160,8 @@ body {
 
 #close-btn:hover,
 #close-btn:active {
-  color: var(--color-primary);
-  background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  color: var(--color-ctp-mauve);
+  background: color-mix(in srgb, var(--color-ctp-mauve) 10%, transparent);
 }
 
 @media (max-width: 768px) {
@@ -203,6 +174,40 @@ body {
   }
 }
 
+/* === Enter and Exit Child Buttons === */
+#enter-child-btn {
+  display:none; 
+  width:100%; 
+  padding: 14px; 
+  margin-top: 20px; 
+  border-radius: 12px; 
+  font-weight: 700; 
+  font-family: 'JetBrains Mono', monospace; 
+  font-size: 14px; 
+  border: 1px solid color-mix(in srgb, var(--color-ctp-mauve) 30%, transparent); 
+  cursor: pointer; 
+  transition: background 0.2s;
+}
+#exit-child-btn {
+  display:none; 
+  position: fixed; 
+  bottom: 32px; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  z-index: 200; 
+  padding: 12px 24px; 
+  border-radius: 24px; 
+  font-weight: bold; 
+  font-family: 'JetBrains Mono', monospace; 
+  font-size: 14px; 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
+  border: 1px solid color-mix(in srgb, var(--color-ctp-text) 10%, transparent); 
+  align-items: center; 
+  justify-content: center; 
+  gap: 8px; 
+  cursor: pointer;
+}
+
 /* === Floor Selector UI (Floating — Glassmorphism per §2) === */
 #floor-selector {
   position: fixed;
@@ -213,13 +218,14 @@ body {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  background: color-mix(in srgb, var(--color-surface-container-low) 70%, transparent);
+  background: var(--color-ctp-surface0);
+  color: var(--color-ctp-text);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   padding: 8px;
   border-radius: 1.5rem;
   /* Ambient shadow (§4) */
-  box-shadow: 0 8px 40px color-mix(in srgb, var(--color-on-surface) 6%, transparent);
+  box-shadow: 0 8px 40px color-mix(in srgb, var(--color-ctp-text) 6%, transparent);
   touch-action: none;
   user-select: none;
   transition: background 0.3s ease;
@@ -231,7 +237,7 @@ body {
   left: 8px;
   width: 40px;
   height: 40px;
-  background: var(--color-primary);
+  background: var(--color-ctp-mauve-600);
   border-radius: 50%;
   z-index: -1;
   opacity: 0;
@@ -240,13 +246,13 @@ body {
               opacity 0.3s ease,
               background 0.3s ease;
   /* Ambient glow */
-  box-shadow: 0 4px 24px color-mix(in srgb, var(--color-primary) 25%, transparent);
+  box-shadow: 0 4px 24px color-mix(in srgb, var(--color-ctp-mauve) 25%, transparent);
 }
 
 .floor-btn {
   background: transparent;
   border: none;
-  color: var(--color-on-surface);
+  color: var(--color-ctp-text);
   padding: 0;
   border-radius: 50%;
   cursor: pointer;
@@ -265,8 +271,8 @@ body {
   z-index: 1;
 }
 
-.floor-btn:active {
-  transform: scale(0.9);
+.floor-btn.active {
+  color: var(--color-ctp-base);
 }
 
 @media (max-width: 768px) {
@@ -313,10 +319,9 @@ body {
   align-items: center;
   justify-content: center;
   padding: 6px;
-  /* Solid CTA (§2 update) */
-  background: var(--color-primary);
+  @apply bg-ctp-mauve text-ctp-base;
   /* Ambient shadow (§4) */
-  box-shadow: 0 8px 32px color-mix(in srgb, var(--color-on-surface) 12%, transparent);
+  box-shadow: 0 8px 32px color-mix(in srgb, var(--color-ctp-text) 12%, transparent);
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
 }
 
@@ -324,32 +329,33 @@ body {
   transform: scale(0.92);
 }
 
-.fab-btn img {
-  width: 80%;
-  height: 80%;
-  object-fit: contain;
-  /* Ensure icon is visible on both light and dark gradient */
-  filter: brightness(0) invert(1);
+.fab-btn span {
+  font-size: 24px;
 }
 
-.fab-btn--directory {
+#open-directory-btn {
   bottom: 20px;
   right: 16px;
 }
 
-.fab-btn--settings {
+#open-settings-btn {
   bottom: 74px;
   right: 16px;
 }
 
-.fab-btn--qr {
+#open-qr-btn {
   bottom: 128px;
   right: 16px;
 }
 
-.fab-btn--info {
+#open-info-btn {
   top: 20px;
   right: 16px;
+}
+
+#clear-directory-marker-btn {
+  top: 16px;
+  left: 16px
 }
 
 /* === Toast Notification (Greyish Blue §2 update) === */
@@ -359,7 +365,7 @@ body {
   left: 50%;
   transform: translateX(-50%) translateY(100px);
   background: color-mix(in srgb, var(--color-toast-brand) 30%, var(--color-surface-container-high));
-  color: var(--color-on-surface);
+  color: var(--color-ctp-text);
   padding: 12px 24px;
   border-radius: 1.5rem;
   font-family: "JetBrains Mono", monospace;
@@ -368,7 +374,7 @@ body {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   /* Ambient tinted shadow */
-  box-shadow: 0 8px 40px color-mix(in srgb, var(--color-on-surface) 10%, transparent);
+  box-shadow: 0 8px 40px color-mix(in srgb, var(--color-ctp-text) 10%, transparent);
   z-index: 1000;
   opacity: 0;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -381,4 +387,117 @@ body {
 .toast.show {
   transform: translateX(-50%) translateY(0);
   opacity: 1;
+}
+
+#qr-toggle-selector-container {
+  display: flex; 
+  width: 100%; 
+  max-width: 300px; 
+  background: var(--color-ctp-surface0); 
+  padding: 6px; 
+  border-radius: 12px; 
+  margin-bottom: 32px; 
+  border: 1px solid var(--color-ctp-surface0);
+}
+
+.qr-toggle-selector {
+  flex: 1; 
+  padding: 10px; 
+  border-radius: 8px; 
+  font-weight: 600; 
+  font-size: 13px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  gap: 8px; 
+  background: transparent; 
+  color: var(--color-ctp-text); 
+  border: none; 
+  transition: all 0.2s;
+}
+
+#qr-scanner-view {
+  width: 100%; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center;
+}
+
+#qr-scanner-view p {
+  font-size: 11px; 
+  font-weight: 700; 
+  text-transform: uppercase; 
+  letter-spacing: 0.1em; 
+  color: var(--color-ctp-text); 
+  margin-bottom: 12px;
+}
+
+#qrcode_scanner {
+  width: 220px; 
+  height: 220px; 
+  border: 2px dashed color-mix(in srgb, var(--color-ctp-mauve) 50%, transparent); 
+  border-radius: 16px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  background: var(--color-ctp-surface0); 
+  box-shadow: var(--color-ctp-surface0); 
+  margin-bottom: 24px; 
+  overflow: hidden; 
+  position: relative;
+}
+
+#qrcode_scanner video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: 16px !important;
+}
+
+#qr-flash-btn {
+  width: 100%; 
+  max-width: 300px; 
+  padding: 14px; 
+  border-radius: 12px; 
+  background: var(--color-ctp-mauve-950);
+  color: var(--color-ctp-base); 
+  font-weight: 700; 
+  font-size: 14px; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  gap: 8px; 
+  cursor: pointer; 
+  transition: background 0.2s;
+}
+
+.qr-code-input {
+  width: 72px; 
+  height: 56px; 
+  text-align: center; 
+  font-size: 24px; 
+  font-weight: 700; 
+  border-radius: 10px; 
+  border: 2px solid var(--color-ctp-mauve-950); 
+  background: var(--color-ctp-surface0); 
+  color: var(--color-ctp-mauve); 
+  outline: none;
+}
+
+#qr-go-btn {
+  width: 100%; 
+  max-width: 300px; 
+  padding: 14px; 
+  border-radius: 12px; 
+  background: var(--color-ctp-surface0); 
+  color: var(--color-ctp-mauve); 
+  font-weight: 700; 
+  font-size: 14px; 
+  border: 1px solid var(--color-ctp-mauve-950); 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  gap: 8px; 
+  cursor: pointer; 
+  transition: background 0.2s;
 }

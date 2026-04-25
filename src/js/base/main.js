@@ -11,13 +11,8 @@ import { Icon } from "@/js/marker/icon.js";
 import { AppState } from "@/js/base/appState.js";
 import { SettingsController } from "@/js/base/settings.js";
 import { Navigation } from "@/js/events/navigation.js";
+import { applyThemeToScene } from "@/js/floor/modelParser.js";
 import { initDirectory, fetchDirectoryData, setDirectoryData } from "@/js/feature/directory.js";
-
-// Initialize theme from localStorage on page load
-const savedTheme = localStorage.getItem('funtasia-theme');
-if (savedTheme) {
-  document.documentElement.dataset.theme = savedTheme;
-}
 
 const { scene, camera, renderer, controls } = setupScene();
 
@@ -42,8 +37,6 @@ Object.entries(childModelDefs).forEach(([id, path]) => new Floor(id, path));
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
-export const infoLabel = document.getElementById("info");
-
 const appState = new AppState(  );
 appState.scene = scene;
 appState.camera = camera;
@@ -51,9 +44,6 @@ appState.renderer = renderer;
 appState.controls = controls;
 appState.raycaster = raycaster;
 appState.mouse = mouse;
-appState.infoLabel = infoLabel;
-appState.mouse = mouse;
-appState.infoLabel = infoLabel;
 
 Marker.appState = appState;
 Floor.appState = appState;
@@ -107,10 +97,19 @@ async function initApp() {
       'Dark Mode',
       'Toggle dark mode',
       (isDark) => {
-        document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
-        localStorage.setItem('funtasia-theme', isDark ? 'dark' : 'light');
-      },
-      document.documentElement.dataset.theme === 'dark'
+          const root = document.documentElement;
+          if (isDark) {
+            root.classList.add('mocha');
+            root.classList.remove('latte');
+            localStorage.setItem('funtasia-theme', 'mocha');
+          } else {
+            root.classList.add('latte');
+            root.classList.remove('mocha');
+            localStorage.setItem('funtasia-theme', 'latte');
+          };
+          applyThemeToScene(appState); // update scene
+        },
+        document.documentElement.classList.contains('mocha') // Check if current mode is mocha
     );
   }
   if (controlsSection) {

@@ -2,28 +2,94 @@ import * as THREE from "three";
 import { Icon } from "@/js/marker/icon.js";
 import { Floor } from "@/js/floor/floor.js";
 import { QRMarker } from "@/js/marker/qrmarker.js";
-const miscColours = {
-  "BASE": 0x6e7176,
-  "DRIVE": 0xa5ccd1,
-  "FOOT":  0xE6c19f,
-  "GRASS": 0x9dcb6f,
-  "NONOBJECT": 0xc1c3c7,
-  "FTOILET": 0xff8afe  ,
-  "MTOILET": 0x1b17eb,
-  "ATOILET": 0x5ce1e6,
-  "LIFT": 0xb0b0b0,
-  "MARKER":0xffffff,
-  "STAIRCASE":0xffffff
+
+function getColor(colorName) {
+  const documentStyle = getComputedStyle(document.documentElement);
+  let colorString = documentStyle.getPropertyValue(colorName);
+  return Number("0x" + colorString.slice(1))
+}
+
+const miscSchema = {
+  "BASE":      '--color-ctp-surface0',
+  "DRIVE":     '--color-ctp-surface2',
+  "FOOT":      '--color-ctp-flamingo',
+  "GRASS":     '--color-ctp-green-900',
+  "NONOBJECT": '--color-ctp-flamingo-950',
+  "FTOILET":   '--color-ctp-pink',
+  "MTOILET":   '--color-ctp-lavender',
+  "ATOILET":   '--color-ctp-sky',
+  "LIFT":      '--colot-ctp-overlay1',
 };
-export const zoneColours = {
-  "NONE": 0xffe5e7,
-  "GREEN": 0x00ff00,
-  "BLUE": 0x0066ff,
-  "ORANGE":  0xfab387,
-  "PURPLE": 0x9900ff,
-  "YELLOW": 0xf9e2af,
-  "RED": 0xf38ba8,
+
+const zoneSchema = {
+  "NONE":   '--color-ctp-overlay2',
+  "GREEN":  '--color-ctp-green-300',
+  "BLUE":   '--color-ctp-blue-600',
+  "ORANGE": '--color-ctp-peach-400',
+  "PURPLE": '--color-ctp-mauve',
+  "YELLOW": '--color-ctp-yellow',
+  "RED":    '--color-ctp-red',
 };
+
+// Maps for runtime color lookup, initialized with static colors.
+export const miscColours = { "MARKER": 0xffffff, "STAIRCASE": 0xffffff };
+export const zoneColours = {};
+
+// Helper to update color maps from schemas.
+function refreshPalette(target, schema) {
+  for (const [key, cssVar] of Object.entries(schema)) {
+    target[key] = getColor(cssVar);
+  }
+}
+
+// Re-reads CSS variables and updates the color dictionaries.
+export function updateThemeColors() {
+  refreshPalette(miscColours, miscSchema);
+  refreshPalette(zoneColours, zoneSchema);
+}
+
+// Update theme colors immediately on module load
+updateThemeColors();
+
+// Updates the Three.js scene background and all mesh materials to match the current theme.
+export function applyThemeToScene(appState) {
+  updateThemeColors();
+
+  const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--color-ctp-base');
+  if (bgColor && appState.scene) appState.scene.background.set(bgColor);
+
+  appState.scene.traverse((child) => {
+    if (child.isMesh && child.userData.ROLE) {
+      const role = child.userData.ROLE;
+      let colorVal;
+
+      if (role === "OBJECT") {
+        colorVal = zoneColours[child.userData.ZONE || "NONE"];
+        if (child.name.endsWith("_2")) {
+          const c = new THREE.Color(colorVal);
+          c.multiplyScalar(1.2);
+          colorVal = c.getHex();
+        }
+      } else {
+        colorVal = miscColours[role] !== undefined ? miscColours[role] : 0xc1c3c7;
+      }
+
+      if (child.userData.material) {
+        child.userData.material.color.set(colorVal);
+      }
+
+      if (child.material) {
+        if (!child.userData.material || (child.material === child.userData.material)) {
+          child.material.color.set(colorVal);
+        } else {
+          // If currently highlighted, update the highlight color as well
+          const highlightColor = new THREE.Color(colorVal).multiplyScalar(2);
+          child.material.color.copy(highlightColor);
+        }
+      }
+    }
+  });
+}
 
 let skybox = null;
 let maxRadius = 0;

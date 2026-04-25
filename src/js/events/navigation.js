@@ -53,6 +53,7 @@ export class Navigation {
     const isSameFloor = appState.currentFloor && appState.currentFloor.id === floorId;
 
     if (!isSameFloor) {
+      updateFloorUI(floorId); // update UI first to prevent desync between thumb and text color invert
       // Store the active selected object to enable deep-back resuming
       const savedSelection = appState.selected;
 
@@ -134,8 +135,6 @@ export class Navigation {
       appState.currentFloor = targetFloor;
       Icon.setLevel(floorId);
       console.log(`Switched to floor: ${floorId}`);
-
-      updateFloorUI(floorId);
     }
 
     // Always handle markers (clear previous and potentially restore current)

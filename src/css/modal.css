@@ -5,71 +5,69 @@
    - Tonal layering for depth (§4)
    - xl (1.5rem) roundedness (§5) */
 @layer components {
+    .modal-wrapper {
+        @apply fixed inset-0 z-200 hidden
+    }
     .modal-container {
         @apply relative z-50 flex flex-col h-full items-center justify-center p-4;
     }
     .modal-backdrop {
-        @apply fixed inset-0 backdrop-blur-[4px];
-        background: color-mix(in srgb, var(--color-on-surface) 40%, transparent);
+        @apply fixed inset-0 backdrop-blur-xs;
     }
     .modal-card {
-        @apply relative w-[85vw] h-[90vh] backdrop-blur-[20px] overflow-hidden flex flex-col;
-        background: color-mix(in srgb, var(--color-surface-container) 92%, transparent);
+        @apply relative w-[85vw] h-[90vh] backdrop-blur-[20px] overflow-hidden flex flex-col bg-ctp-base text-ctp-text;
         border-radius: 2rem;
         /* Ghost border per §4 — outline-variant at 15% opacity */
         border: 1px solid color-mix(in srgb, var(--color-outline-variant) 15%, transparent);
         /* Ambient diffusion shadow (§4) — 30-60px blur, on-surface tinted */
-        box-shadow: 0 32px 64px color-mix(in srgb, var(--color-on-surface) 8%, transparent);
+        box-shadow: 0 32px 64px color-mix(in srgb, var(--color-ctp-text) 8%, transparent);
     }
     .modal-header {
-        @apply px-6 pt-6 pb-4 flex justify-between items-start sticky top-0 z-10;
-        background: color-mix(in srgb, var(--color-surface-container-low) 60%, transparent);
+        @apply px-6 pt-6 pb-4 flex justify-between items-start sticky top-0 z-10 bg-ctp-crust; 
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
     }
     .modal-title {
-        @apply font-headline font-extrabold text-2xl tracking-tight text-primary;
+        @apply font-headline font-extrabold text-2xl tracking-tight text-ctp-mauve;
     }
     .modal-subtitle {
-        @apply text-on-surface-variant/70 text-sm font-medium;
+        @apply text-ctp-subtext1 text-sm font-medium;
     }
     .modal-close-btn {
-        @apply text-on-surface-variant hover:text-on-surface transition-colors active:scale-90;
+        @apply text-ctp-subtext1 hover:text-ctp-text transition-colors active:scale-90;
     }
     .modal-content {
-        @apply px-2 pt-4 pb-8 overflow-y-auto hide-scrollbar space-y-8;
+        @apply px-2 py-4 overflow-y-auto hide-scrollbar space-y-8;
     }
     .modal-search-wrapper {
-        @apply relative flex items-center;
+        @apply relative flex items-center rounded-2xl;
     }
     .modal-search-icon-wrapper {
         @apply absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none;
     }
     .modal-search-icon {
-        @apply material-symbols-outlined text-on-surface-variant/50 text-[20px];
+        @apply material-symbols-outlined text-ctp-subtext1 text-[20px];
     }
     /* Input field per §5 — surface-container-highest bg, no border, primary bottom accent on focus */
     .modal-search-input {
-        @apply block w-full pl-10 pr-3 py-3.5 border-none text-sm font-medium text-on-surface outline-none;
-        background: var(--color-surface-container-highest);
+        @apply block w-full pl-10 pr-3 py-3.5 border-none text-sm font-medium text-ctp-text outline-none bg-ctp-mantle;
         border-radius: 1rem;
         transition: background 0.2s ease, box-shadow 0.2s ease;
     }
     .modal-search-input::placeholder {
-        color: color-mix(in srgb, var(--color-on-surface-variant) 40%, transparent);
+        @apply text-ctp-subtext0
     }
     .modal-search-input:focus {
         /* Focus per §5 — subtle 2px bottom-accent in primary, 5% brighter bg */
-        box-shadow: 0 2px 0 0 var(--color-primary);
-        background: color-mix(in srgb, var(--color-surface-container-highest) 95%, white);
+        box-shadow: 0 2px 0 0 var(--color-ctp-mauve);
+        @apply bg-ctp-surface0
     }
     .modal-section-title {
-        @apply font-headline font-bold text-sm text-on-surface-variant/60 uppercase;
-        letter-spacing: 0.05em;
+        @apply font-headline font-extrabold text-xl my-4 px-4 tracking-tight border-b-2 pb-2
     }
     /* List items — tonal layering, no dividers per §5 */
     .modal-list-item {
-        @apply flex items-center p-4 bg-surface-container-lowest rounded-2xl hover:bg-surface-container transition-all cursor-pointer;
+        @apply flex items-center p-4 bg-ctp-mantle rounded-2xl hover:bg-ctp-surface1 transition-all cursor-pointer;
     }
     .modal-item-icon-wrapper {
         @apply w-10 h-10 flex items-center justify-center rounded-xl;
@@ -81,13 +79,13 @@
         @apply flex-1;
     }
     .modal-item-title {
-        @apply font-headline font-bold text-on-surface;
+        @apply font-headline font-bold text-ctp-text;
     }
     .modal-item-subtitle {
-        @apply text-on-surface-variant text-xs leading-relaxed;
+        @apply text-ctp-subtext1 text-xs leading-relaxed;
     }
     .modal-item-chevron {
-        @apply material-symbols-outlined text-on-surface-variant/30 text-[18px];
+        @apply material-symbols-outlined text-ctp-subtext1 text-[18px];
     }
     .modal-footer-fade {
         @apply absolute bottom-0 left-0 right-0 h-12 pointer-events-none;
@@ -95,23 +93,21 @@
 
     /* ── Filter Section ────────────────────────── */
     .filter-section {
-        @apply px-4 pb-2;
+        @apply px-4;
     }
     .filter-header {
         @apply flex items-center justify-between mb-3;
     }
     .filter-label {
-        @apply font-headline font-bold text-xs text-on-surface-variant/60 uppercase;
+        @apply font-headline font-bold text-xs text-ctp-mauve uppercase;
         letter-spacing: 0.08em;
     }
     .filter-clear-btn {
-        @apply text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-lg transition-all cursor-pointer;
-        color: var(--color-primary);
-        background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+        @apply text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-lg transition-all cursor-pointer text-ctp-base bg-ctp-red-900;
         border: none;
     }
     .filter-clear-btn:hover {
-        background: color-mix(in srgb, var(--color-primary) 18%, transparent);
+        @apply text-ctp-red bg-ctp-red-950;
     }
     .filter-clear-btn:active {
         transform: scale(0.95);
@@ -122,21 +118,19 @@
 
     /* ── Dropdown ───────────────────────────────── */
     .filter-dropdown {
-        @apply text-xs font-bold py-2 px-3 rounded-xl outline-none cursor-pointer transition-all;
-        background: var(--color-surface-container-highest);
-        color: var(--color-on-surface);
+        @apply text-xs font-bold py-2 px-3 rounded-xl outline-none cursor-pointer transition-all bg-ctp-surface0 text-ctp-text;
         border: 1px solid color-mix(in srgb, var(--color-outline-variant) 25%, transparent);
         appearance: none;
         -webkit-appearance: none;
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236c7086' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
         background-repeat: no-repeat;
-        background-position: right 10px center;
+        background-position: right 8px center;
         padding-right: 28px;
-        min-width: 90px;
+        min-width: 167px; /*Ah yes arbitrary number*/
     }
     .filter-dropdown:focus {
-        border-color: var(--color-primary);
-        box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 15%, transparent);
+        border-color: var(--color-ctp-mauve);
+        box-shadow: 0 0 0 2px var(--color-ctp-mauve-700);
     }
 
     /* ── Tag Chips ──────────────────────────────── */
@@ -144,29 +138,27 @@
         @apply flex flex-wrap gap-2;
     }
     .filter-chip {
-        @apply inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider cursor-pointer transition-all select-none;
-        border: 1px solid color-mix(in srgb, var(--color-outline-variant) 30%, transparent);
-        background: var(--color-surface-container-lowest);
-        color: var(--color-on-surface-variant);
+        @apply inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider cursor-pointer transition-all select-none bg-ctp-surface0;
+        border: 1px solid color-mix(in srgb, var(--color-ctp-surface0) 60%, transparent);
     }
     .filter-chip:hover {
-        background: var(--color-surface-container);
-        border-color: color-mix(in srgb, var(--color-outline-variant) 50%, transparent);
+        @apply bg-ctp-surface2;
+        border-color: var(--color-ctp-subtext0);
     }
     .filter-chip.active {
-        border-color: var(--chip-color, var(--color-primary));
-        background: color-mix(in srgb, var(--chip-color, var(--color-primary)) 15%, transparent);
-        color: var(--chip-color, var(--color-primary));
+        border-color: var(--chip-color, var(--color-ctp-mauve));
+        background: color-mix(in srgb, var(--chip-color, var(--color-ctp-mauve)) 15%, transparent);
+        color: var(--chip-color, var(--color-ctp-mauve));
     }
     .filter-chip.active:hover {
-        background: color-mix(in srgb, var(--chip-color, var(--color-primary)) 22%, transparent);
+        background: color-mix(in srgb, var(--chip-color, var(--color-ctp-mauve)) 32%, transparent);
     }
 
     /* ── Tag Pills (inline in list items) ──────── */
     .tag-pill {
         @apply inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider;
-        background: color-mix(in srgb, var(--pill-color, var(--color-primary)) 12%, transparent);
-        color: var(--pill-color, var(--color-primary));
+        background: color-mix(in srgb, var(--pill-color, var(--color-ctp-mauve)) 12%, transparent);
+        color: var(--pill-color, var(--color-ctp-mauve));
     }
 
     /* ── Divider between filter and list ────────── */

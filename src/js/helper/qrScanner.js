@@ -204,6 +204,9 @@ async function findBestCamera() {
 //   + facingMode fallback uses 'ideal' not 'exact' (avoids hard-fail on desktop)
 // ─────────────────────────────────────────────────────────────────────────────
 
+const torchOnColor = 'var(--color-ctp-mauve-700)'
+const torchOffColor = 'var(--color-ctp-mauve-950)'
+
 export async function startScanner(successCallback) {
     if (!html5QrCode) {
         html5QrCode = new Html5Qrcode("qrcode_scanner");
@@ -235,18 +238,11 @@ export async function startScanner(successCallback) {
             qrFlashBtn.innerHTML = "Flash is unavailable";
             qrFlashBtn.style.background = "transparent";
             qrFlashBtn.style.border = "none";
-            qrFlashBtn.style.color = "var(--color-on-surface-variant)";
             qrFlashBtn.style.cursor = "default";
             qrFlashBtn.style.fontSize = "12px";
             qrFlashBtn.style.padding = "8px";
             qrFlashBtn.disabled = true;
         } else {
-            qrFlashBtn.style.background = 'color-mix(in srgb, var(--color-primary) 15%, transparent)';
-            qrFlashBtn.style.border = '1px solid color-mix(in srgb, var(--color-primary) 30%, transparent)';
-            qrFlashBtn.style.color = 'var(--color-primary)';
-            qrFlashBtn.style.cursor = 'pointer';
-            qrFlashBtn.style.fontSize = '14px';
-            qrFlashBtn.style.padding = "14px";
             qrFlashBtn.disabled = false;
             qrFlashBtn.innerHTML = `<span class="material-symbols-outlined text-[20px]" id="qr-flash-icon">flashlight_off</span> Toggle Flash`;
         }
@@ -285,7 +281,7 @@ export async function startScanner(successCallback) {
                 if (torchOn && torchSupported && qrFlashBtn) {
                     const icon = document.getElementById('qr-flash-icon');
                     if (icon) icon.textContent = 'flashlight_on';
-                    qrFlashBtn.style.background = 'color-mix(in srgb, var(--color-primary) 30%, transparent)';
+                    qrFlashBtn.style.background = torchOnColor;
                 }
 
                 track.addEventListener('mute', () => {
@@ -293,7 +289,7 @@ export async function startScanner(successCallback) {
                     if (torchSupported && qrFlashBtn) {
                         const icon = document.getElementById('qr-flash-icon');
                         if (icon) icon.textContent = 'flashlight_off';
-                        qrFlashBtn.style.background = 'color-mix(in srgb, var(--color-primary) 15%, transparent)';
+                        qrFlashBtn.style.background = torchOffColor;
                     }
                 });
             }
@@ -352,12 +348,12 @@ export async function stopScanner() {
     if (qrFlashBtn && torchSupported) {
         const qrFlashIcon = document.getElementById('qr-flash-icon');
         if (qrFlashIcon) qrFlashIcon.textContent = 'flashlight_off';
-        qrFlashBtn.style.background = 'color-mix(in srgb, var(--color-primary) 15%, transparent)';
+        qrFlashBtn.style.background = torchOffColor;
     }
 
     const scannerDiv = document.getElementById('qrcode_scanner');
     if (scannerDiv && !scannerDiv.innerHTML.includes('qr_code_scanner')) {
-        scannerDiv.innerHTML = '<span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-on-surface-variant); opacity: 0.4;">qr_code_scanner</span>';
+        scannerDiv.innerHTML = '<span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-ctp-subtext1); opacity: 0.4;">qr_code_scanner</span>';
     }
 }
 
@@ -386,10 +382,10 @@ export async function toggleTorch(buttonElement, iconElement) {
 
         if (torchOn) {
             iconElement.textContent = 'flashlight_on';
-            buttonElement.style.background = 'color-mix(in srgb, var(--color-primary) 30%, transparent)';
+            buttonElement.style.background = torchOnColor;
         } else {
             iconElement.textContent = 'flashlight_off';
-            buttonElement.style.background = 'color-mix(in srgb, var(--color-primary) 15%, transparent)';
+            buttonElement.style.background = torchOffColor;
         }
 
         if (!hasStaleSettingsBug()) {

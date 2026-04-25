@@ -14,11 +14,12 @@ export function getViewportSize() {
   };
 }
 
-
 export function setupScene() {
   const container = document.getElementById("canvas-container");
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color("#dce8ff"); // Fixed light accent blue per user request
+  let bgColor = getComputedStyle(document.documentElement).getPropertyValue('--color-ctp-base')
+  console.log("background: ", bgColor) // for debug, can remove
+  scene.background = new THREE.Color(bgColor); 
 
   const viewportSize = getViewportSize();
   const camera = new THREE.PerspectiveCamera(
@@ -37,7 +38,7 @@ export function setupScene() {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.setClearColor(0,1);
   renderer.toneMapping = THREE.NoToneMapping;
-  renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   container.appendChild(renderer.domElement);
