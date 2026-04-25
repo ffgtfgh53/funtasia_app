@@ -229,7 +229,7 @@ export function parseModel(gltf, floorId, scene, funtasiaData) {
 
     if (!isInteractive) return;
     if (child.userData.ZONE === "NONE") return;
-
+    console.log(funtasiaData)
     if (!logicalNode.name || logicalNode.name === "") {
       logicalNode.name = `${floorId}_Object_${objects.length + 1}`;
     }
