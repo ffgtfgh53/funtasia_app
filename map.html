@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en" class="mocha"> <!--Default to dark theme which follows the script-->
+<html lang="en">
   <head>
     <script>
       // Immediate theme sync to avoid flashing
-      const savedTheme = localStorage.getItem('funtasia-theme') || 'mocha'; // Default to mocha
+      const savedTheme = localStorage.getItem('funtasia-theme') || 'latte'; // Default to latte
       document.documentElement.classList.remove('mocha');
       document.documentElement.classList.remove('latte');
       document.documentElement.classList.add(savedTheme);
@@ -36,11 +36,11 @@
       <button id="close-btn">&times;</button>
       <h2 id="sheet-title">Location Title</h2>
       <p id="sheet-desc">Location description will appear here.</p>
-      <button class="bg-ctp-surface1 text-ctp-text" id="enter-child-btn">Enter Level</button>
+      <button class="bg-ctp-surface1 text-ctp-text" id="enter-child-btn">Enter Area</button>
     </div>
 
     <button class="bg-ctp-surface1 text-ctp-text" id="exit-child-btn">
-      <span class="material-symbols-outlined text-[18px]">logout</span> Exit Level
+      <span class="material-symbols-outlined text-[18px]">logout</span>Exit Area
     </button>
 
     <div id="toast-popup" class="toast">
