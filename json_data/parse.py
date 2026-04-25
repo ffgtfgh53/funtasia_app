@@ -20,4 +20,3 @@ for i in data:
 
 with open("funtasia_data.json", "w") as file:
     json.dump(json_data, file, indent=2)
-k
