@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import { Icon } from "@/js/marker/icon.js";
 import { loadModel } from "@/js/floor/modelLoader.js";
 import { parseModel } from "@/js/floor/modelParser.js";
 

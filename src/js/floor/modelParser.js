@@ -230,12 +230,14 @@ export function parseModel(gltf, floorId, scene, funtasiaData) {
     if (!isInteractive) return;
     if (child.userData.ZONE === "NONE") return;
     console.log(funtasiaData)
+    console.log(floorId)
+    const lookupName = logicalNode.name;
     if (!logicalNode.name || logicalNode.name === "") {
       logicalNode.name = `${floorId}_Object_${objects.length + 1}`;
     }
 
-    if (funtasiaData && funtasiaData[floorId] && funtasiaData[floorId][logicalNode.name]) {
-        const entry = funtasiaData[floorId][logicalNode.name];
+    if (funtasiaData && funtasiaData[floorId] && funtasiaData[floorId][lookupName]) {
+        const entry = funtasiaData[floorId][lookupName];
         if (entry["Booth Name"] && entry["Booth Name"] !== "-") {
             logicalNode.name = entry["Booth Name"];
         }
