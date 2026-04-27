@@ -13,6 +13,7 @@ import { SettingsController } from "@/js/base/settings.js";
 import { Navigation } from "@/js/events/navigation.js";
 import { applyThemeToScene } from "@/js/floor/modelParser.js";
 import { initDirectory, fetchDirectoryData, setDirectoryData } from "@/js/feature/directory.js";
+import { switchEventCategory } from "@/js/base/events.js";
 
 const { scene, camera, renderer, controls } = setupScene();
 
@@ -167,3 +168,15 @@ window.printCurrentFloorInfo = function () {
 window.printAllMarkers = function () {
   console.log(QRMarker.allMarkers);
 };
+
+const ccaToggleBtn = document.getElementById('events-cca-toggle-btn');
+const dunklistToggleBtn = document.getElementById('events-dunklist-toggle-btn');
+const pabuskingToggleBtn = document.getElementById('events-pabusking-toggle-btn');
+
+ccaToggleBtn.addEventListener('click', () => switchEventCategory('cca'));
+dunklistToggleBtn.addEventListener('click', () => switchEventCategory('dunklist'));
+pabuskingToggleBtn.addEventListener('click', () => switchEventCategory('pabusking'));
+
+console.log("not a snowman")
+switchEventCategory('cca');
+console.log("yes a snowman")

@@ -2,6 +2,7 @@ import { Navigation } from "@/js/events/navigation.js";
 import { hideBottomSheet, clearStoredBottomSheet } from "@/js/ui_ux/ui.js";
 import * as THREE from "three";
 import { Floor } from "@/js/floor/floor.js";
+import { mod } from "three/tsl";
 
 let cachedFuntasiaData = null;
 
@@ -163,6 +164,114 @@ function getFilteredData(funtasiaData) {
   return results;
 }
 
+/**
+ * Orchestrates navigation, marker placement, and camera focus for a specific booth.
+ * Can be called from the directory, event schedule, or external links.
+ */
+export async function focusOnBooth(boothNum, levelHint = null) {
+  if (!cachedFuntasiaData || !appStateRef) return;
+
+  let level = levelHint;
+  let item = null;
+
+  // Find the item and its level in the cached data
+  if (level && cachedFuntasiaData[level] && cachedFuntasiaData[level][boothNum]) {
+    item = cachedFuntasiaData[level][boothNum];
+  } else {
+    // Search all levels if hint is missing or incorrect
+    for (const l of Object.keys(cachedFuntasiaData)) {
+      if (cachedFuntasiaData[l] && cachedFuntasiaData[l][boothNum]) {
+        item = cachedFuntasiaData[l][boothNum];
+        level = l;
+        break;
+      }
+    }
+  }
+
+  if (!item || !level) {
+    console.warn(`Booth ${boothNum} not found in directory data.`);
+    return;
+  }
+
+  const boothName = item["Booth Name"] || boothNum;
+  const boothDesc = item["Booth Description"] || "No description available.";
+
+  // 1. Navigation Logic
+  let targetFloorId = level;
+  if (Floor.childModels[level] && Floor.childModels[level][boothName]) {
+    targetFloorId = Floor.childModels[level][boothName];
+  }
+
+  await Navigation.switchFloor(targetFloorId);
+  clearStoredBottomSheet();
+  hideBottomSheet();
+
+  // 2. Clear previous markers
+  if (appStateRef.activeDirectoryMarker) {
+    appStateRef.activeDirectoryMarker.clear();
+    appStateRef.activeDirectoryMarker = null;
+  }
+
+  // 3. Marker and Camera Logic
+  // Re-fetch to ensure we have any runtime-injected data (like Location coordinates)
+  const latestItem = cachedFuntasiaData[level][boothNum] || item;
+
+  if (latestItem["Location"]) {
+    const { DirectoryMarker } = await import('@/js/marker/directorymarker.js');
+    const marker = new DirectoryMarker(latestItem["Location"], level);
+    appStateRef.activeDirectoryMarker = marker;
+    appStateRef.activeMarkers.push(marker);
+
+    // Camera animation setup
+    const objectCenter = latestItem["Location"].clone().add(new THREE.Vector3(0, 1, 0));
+    const camPos = appStateRef.camera.position.clone();
+    const controlsTarget = appStateRef.controls.target.clone();
+
+    const direction = new THREE.Vector3().subVectors(camPos, controlsTarget);
+    direction.y = 0;
+    if (direction.lengthSq() < 0.001) direction.set(0, 0, 1);
+    direction.normalize();
+
+    // Cardinal snapping
+    if (Math.abs(direction.x) > Math.abs(direction.z)) {
+      direction.set(Math.sign(direction.x), 0, 0);
+    } else {
+      direction.set(0, 0, Math.sign(direction.z));
+    }
+
+    const distance = 8;
+    const heightOffset = 6;
+    const newCamPos = objectCenter.clone()
+      .add(direction.multiplyScalar(distance))
+      .add(new THREE.Vector3(0, heightOffset, 0));
+
+    appStateRef.cameraAnim.controlsTarget.copy(objectCenter);
+    appStateRef.cameraAnim.cameraTarget.copy(newCamPos);
+    appStateRef.cameraAnim.active = true;
+  }
+
+  // 4. Interaction messaging
+  window.parent.postMessage({ type: 'selectPOI', id: boothNum, floor: level }, '*');
+
+  // 5. UI Cleanup/Update
+  document.querySelectorAll(".modal-wrapper").forEach(mod_wrapp => {
+    mod_wrapp.style.display = 'none';
+  });
+  // const dirModalOuter = document.getElementById("directory-modal-wrapper");
+  // dirModalOuter.style.display = 'none';
+
+  ['open-directory-btn', 'open-settings-btn', 'open-qr-btn', 'open-info-btn', 'open-events-btn'].forEach(id => {
+    const btn = document.getElementById(id)
+    if (btn) btn.style.display = 'flex';
+  });
+
+  const { showBottomSheet: showBS } = await import('@/js/ui_ux/ui.js');
+  showBS(boothName, null, boothDesc);
+
+  const dismissBtn = document.getElementById('clear-directory-marker-btn');
+  if (dismissBtn) dismissBtn.style.display = 'flex';
+}
+
 /* ── Rendering ───────────────────────────────────────────── */
 
 function renderDirectory(container, funtasiaData) {
@@ -234,95 +343,7 @@ function renderDirectory(container, funtasiaData) {
           return `<span class="tag-pill" style="--pill-color: ${color};">${tag}</span>`;
         }).join("");
 
-        itemEl.onclick = async () => {
-          // Navigation
-          let targetFloorId = level;
-          const boothName = item["Booth Name"];
-
-          // Centralized Redirect: If this booth has a child model, go straight to it
-          if (Floor.childModels[level] && Floor.childModels[level][boothName]) {
-            targetFloorId = Floor.childModels[level][boothName];
-          }
-
-          await Navigation.switchFloor(targetFloorId);
-          clearStoredBottomSheet();
-          hideBottomSheet();
-
-          // Clear previous directory marker if it exists
-          if (appStateRef && appStateRef.activeDirectoryMarker) {
-             appStateRef.activeDirectoryMarker.clear();
-             appStateRef.activeDirectoryMarker = null;
-          }
-
-          // Get latest item data directly from cache to ensure Location is populated
-          // This is critical because switchFloor may have just loaded the floor and injected the Location.
-          const latestItem = cachedFuntasiaData[level][boothNum] || item;
-
-          // Spawn new directory marker
-          if (appStateRef && latestItem["Location"]) {
-            import('@/js/marker/directorymarker.js').then(({ DirectoryMarker }) => {
-              const marker = new DirectoryMarker(latestItem["Location"], level);
-              appStateRef.activeDirectoryMarker = marker;
-              appStateRef.activeMarkers.push(marker);
-
-              // Setup camera animation
-              const objectCenter = latestItem["Location"].clone().add(new THREE.Vector3(0, 1, 0));
-              const camPos = appStateRef.camera.position.clone();
-              const controlsTarget = appStateRef.controls.target.clone();
-
-              const direction = new THREE.Vector3().subVectors(camPos, controlsTarget);
-              direction.y = 0; // maintain horizontal direction
-              if (direction.lengthSq() < 0.001) {
-                  direction.set(0, 0, 1); // fallback direction
-              }
-              direction.normalize();
-
-              // Snap direction to the closest cardinal direction (X or Z axis)
-              if (Math.abs(direction.x) > Math.abs(direction.z)) {
-                  direction.set(Math.sign(direction.x), 0, 0);
-              } else {
-                  direction.set(0, 0, Math.sign(direction.z));
-              }
-
-              const distance = 8;
-              const heightOffset = 6;
-              const newCamPos = objectCenter.clone()
-                .add(direction.multiplyScalar(distance))
-                .add(new THREE.Vector3(0, heightOffset, 0));
-
-              appStateRef.cameraAnim.controlsTarget.copy(objectCenter);
-              appStateRef.cameraAnim.cameraTarget.copy(newCamPos);
-              appStateRef.cameraAnim.active = true;
-            });
-          }
-
-          // Trigger interaction
-          window.parent.postMessage({ type: 'selectPOI', id: boothNum, floor: level }, '*');
-
-          // UI updates
-          const dirModalOuter = document.getElementById("directory-modal-wrapper");
-          if(dirModalOuter) dirModalOuter.style.display = 'none';
-
-          const openDirBtn = document.getElementById('open-directory-btn');
-          const openSettingsBtn = document.getElementById('open-settings-btn');
-          const openQrBtn = document.getElementById('open-qr-btn');
-          const openInfoBtn = document.getElementById('open-info-btn');
-          const openEventsBtn = document.getElementById('open-events-btn');
-          
-          openDirBtn.style.display = 'flex';
-          openSettingsBtn.style.display = 'flex';
-          openQrBtn.style.display = 'flex';
-          openInfoBtn.style.display = 'flex';
-          openEventsBtn.style.display = 'flex';
-
-          import('@/js/ui_ux/ui.js').then(({ showBottomSheet }) => {
-             showBottomSheet(boothName, null, boothDesc);
-          });
-          
-          // Show dismiss button
-          const dismissBtn = document.getElementById('clear-directory-marker-btn');
-          if (dismissBtn) dismissBtn.style.display = 'flex';
-        };
+        itemEl.onclick = () => focusOnBooth(boothNum, level);
 
         itemEl.innerHTML = `
           <div class="modal-item-icon-wrapper ${zoneColors.bg} ${zoneColors.text}">

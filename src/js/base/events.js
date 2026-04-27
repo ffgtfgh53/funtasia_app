@@ -1,3 +1,5 @@
+import { focusOnBooth } from "@/js/feature/directory.js";
+
 const ccaToggleBtn = document.getElementById('events-cca-toggle-btn');
 const dunklistToggleBtn = document.getElementById('events-dunklist-toggle-btn');
 const pabuskingToggleBtn = document.getElementById('events-pabusking-toggle-btn');
@@ -19,7 +21,8 @@ if (period.toUpperCase() === 'AM' && hours === 12) hours = 0;
 return hours * 60 + minutes;
 }
 
-async function switchEventCategory(category) {
+export async function switchEventCategory(category) {
+    console.log("hi i am a snowman")
     // Update Buttons
     Object.entries(eventCategories).forEach(([key, btn]) => {
         if (key === category) {
@@ -46,8 +49,13 @@ async function switchEventCategory(category) {
 
         let html = `
         <header class="mb-8 w-full text-left">
-            <h1 class="font-headline text-2xl font-bold tracking-tight text-ctp-text leading-none mb-1">Schedule</h1>
-            <p class="text-ctp-subtext0 font-body text-sm">${data.subtitle || ''}</p>
+            <div class="flex flex-row mb-1 justify-items-center">
+                <h1 class="font-headline text-3xl font-bold tracking-tight text-ctp-text leading-none mr-2">Schedule</h1>
+                <span class="events-location cursor-pointer hover:opacity-70 transition-opacity active:scale-95" data-booth-id="${data.location}">
+                    <span class="material-symbols-outlined text-[12px]">location_on</span>${data.location}
+                </span>
+            </div>
+            <p class="text-ctp-subtext0 font-body text-sm">${data.subtitle || ''}</p>            
         </header>
         <div id="events-timeline">
         `;
@@ -103,14 +111,12 @@ async function switchEventCategory(category) {
             }
             
             let tagsHtml = '';
-            if (ev.location) {
-                tagsHtml += `
-                    <span class="events-location">
-                    <span class="material-symbols-outlined text-[12px]">location_on</span>
-                    ${ev.location}
-                    </span>
-                `;
-            }
+            // if (ev.location) {
+            //     tagsHtml += `
+            //         <span class="events-location">
+            //         <span class="material-symbols-outlined text-[12px]">location_on</span>${ev.location}</span>
+            //     `;
+            // }
             if (ev.tags) {
                 ev.tags.forEach(tag => {
                     tagsHtml += `
@@ -165,10 +171,13 @@ async function switchEventCategory(category) {
         console.error("Error rendering timeline:", err);
         eventsListContainer.innerHTML = '<p class="text-center text-ctp-red py-10">Failed to load events. Please try again later.</p>';
     }
+
+    // Delegate click events for locations
+    eventsListContainer.addEventListener('click', (e) => {
+        const locationTag = e.target.closest('.events-location');
+        if (locationTag && locationTag.dataset.boothId) {
+            const boothId = locationTag.dataset.boothId.trim();
+            if (boothId && boothId !== "-") focusOnBooth(boothId);
+        }
+    });
 }
-
-ccaToggleBtn.addEventListener('click', () => switchEventCategory('cca'));
-dunklistToggleBtn.addEventListener('click', () => switchEventCategory('dunklist'));
-pabuskingToggleBtn.addEventListener('click', () => switchEventCategory('pabusking'));
-
-switchEventCategory('cca');
