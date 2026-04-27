@@ -77,7 +77,7 @@ export async function switchEventCategory(category) {
                     </span>
                 </div>
                 <p class="text-ctp-subtext0 font-body text-sm w-full">${data.subtitle || '<br>'}</p>
-                <div class="absolute left-[-6px] top-[-32px] w-[calc(100%+12px)] bg-ctp-base -z-10 h-28"></div> 
+                <div class="absolute -left-4 -top-8 w-[calc(100%+var(--spacing)*8)] bg-ctp-base -z-10 h-28"></div> 
             </header>
             <div class="events-timeline">
             `;
