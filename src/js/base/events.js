@@ -46,7 +46,7 @@ async function switchEventCategory(category) {
 
         let html = `
         <header class="mb-8 w-full text-left">
-            <h3 class="modal-section-title">Schedule</h1>
+            <h1 class="font-headline text-2xl font-bold tracking-tight text-ctp-text leading-none mb-1">Schedule</h1>
             <p class="text-ctp-subtext0 font-body text-sm">${data.subtitle || ''}</p>
         </header>
         <div id="events-timeline">

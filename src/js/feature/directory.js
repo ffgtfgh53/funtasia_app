@@ -307,11 +307,13 @@ function renderDirectory(container, funtasiaData) {
           const openSettingsBtn = document.getElementById('open-settings-btn');
           const openQrBtn = document.getElementById('open-qr-btn');
           const openInfoBtn = document.getElementById('open-info-btn');
+          const openEventsBtn = document.getElementById('open-events-btn');
           
-          if(openDirBtn) openDirBtn.style.display = 'flex';
-          if(openSettingsBtn) openSettingsBtn.style.display = 'flex';
-          if(openQrBtn) openQrBtn.style.display = 'flex';
-          if(openInfoBtn) openInfoBtn.style.display = 'flex';
+          openDirBtn.style.display = 'flex';
+          openSettingsBtn.style.display = 'flex';
+          openQrBtn.style.display = 'flex';
+          openInfoBtn.style.display = 'flex';
+          openEventsBtn.style.display = 'flex';
 
           import('@/js/ui_ux/ui.js').then(({ showBottomSheet }) => {
              showBottomSheet(boothName, null, boothDesc);
