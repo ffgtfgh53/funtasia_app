@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite';
 import tailwindcss from '@tailwindcss/vite';
-import { VitePWA } from 'vite-plugin-pwa';
 import { fileURLToPath, URL } from 'node:url';
 import { resolve } from 'path';
 
@@ -10,46 +9,6 @@ export default defineConfig({
   base:base,  
   plugins: [
     tailwindcss(),
-    VitePWA({
-      registerType: 'autoUpdate',
-      manifest: {
-        name: 'Funtasia',
-        short_name: 'Funtasia',
-        description: 'Funtasia Map App',
-        theme_color: '#e0c2ff',
-        icons: [
-          {
-            src: `${base}public/icon192x192.png`,
-            sizes: '192x192',
-            type: 'image/png'
-          },
-          {
-            src: `${base}public/icon512x512.png`,
-            sizes: '512x512',
-            type: 'image/png'
-          }
-        ]
-      },
-      workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,glb}'],
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/cdn\.jsdelivr\.net\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'jsdelivr-cdn',
-              expiration: {
-                maxEntries: 20,
-                maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
-              },
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
-            },
-          },
-        ],
-      },
-    })
   ],
   define: {
     ASSETS_BASE_URL: JSON.stringify('https://cdn.jsdelivr.net/gh/garethlearnscoding/funtasia_assets@main'),
