@@ -197,8 +197,20 @@ export async function focusOnBooth(boothNum, levelHint = null) {
 
   // 1. Navigation Logic
   let targetFloorId = level;
-  if (Floor.childModels[level] && Floor.childModels[level][boothName]) {
-    targetFloorId = Floor.childModels[level][boothName];
+  const children = Floor.childModels[level] || {};
+  
+  // Try exact match first (e.g. if booth name is "Canteen")
+  if (children[boothName]) {
+    targetFloorId = children[boothName];
+  } else {
+    // Check if booth ID starts with child ID (ish -> ISH1) or node name prefix (C -> Canteen)
+    for (const [nodeName, childId] of Object.entries(children)) {
+        if (boothNum.toLowerCase().startsWith(childId.toLowerCase()) || 
+            (nodeName.length > 0 && boothNum.toLowerCase().startsWith(nodeName[0].toLowerCase()))) {
+          targetFloorId = childId;
+          break;
+        }
+    }
   }
 
   await Navigation.switchFloor(targetFloorId);
@@ -217,7 +229,7 @@ export async function focusOnBooth(boothNum, levelHint = null) {
 
   if (latestItem["Location"]) {
     const { DirectoryMarker } = await import('@/js/marker/directorymarker.js');
-    const marker = new DirectoryMarker(latestItem["Location"], level);
+    const marker = new DirectoryMarker(latestItem["Location"], targetFloorId);
     appStateRef.activeDirectoryMarker = marker;
     appStateRef.activeMarkers.push(marker);
 

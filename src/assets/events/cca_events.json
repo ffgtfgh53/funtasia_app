@@ -4,34 +4,34 @@
   "location": "LT5",
   "events": [
     {
-      "time": "04:00 PM",
+      "time": "1600",
       "title": "Emcee Opening",
       "isSessionHeader": true
     },
     {
-      "time": "04:05 PM",
+      "time": "1605",
       "title": "Malay Dance"
     },
     {
-      "time": "04:10 PM",
+      "time": "1610",
       "title": "Chinese Dance"
     },
     {
-      "time": "04:15 PM",
+      "time": "1615",
       "title": "Indian Dance"
     },
     {
-      "time": "04:20 PM",
+      "time": "1620",
       "title": "Western Dance"
     },
     {
-      "time": "04:25 PM",
+      "time": "1625",
       "title": "Choir"
     },
     {
-      "time": "04:35 PM",
+      "time": "1635",
       "title": "String Orchestra",
-      "endTime": "04:45 PM"
+      "endTime": "1645"
     }
   ]
 }

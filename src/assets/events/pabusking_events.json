@@ -4,27 +4,27 @@
   "location": "O2",
   "events": [
     {
-      "time": "10:30 AM",
+      "time": "1030",
       "title": "Morning Acoustic Set",
       "description": "Relaxing tunes to start the day.",
       "isSessionHeader": true
     },
     {
-      "time": "10:45 AM",
+      "time": "1045",
       "title": "Pop Covers",
       "description": "Acoustic covers of popular hits."
     },
     {
-      "time": "01:30 PM",
+      "time": "1330",
       "title": "Afternoon Jazz",
       "description": "Smooth jazz performances.",
       "isSessionHeader": true
     },
     {
-      "time": "01:45 PM",
+      "time": "1345",
       "title": "Jazz Duo",
       "description": "Saxophone and guitar duo.",
-      "endTime": "02:30 PM"
+      "endTime": "1430"
     }
   ]
 }
