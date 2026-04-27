@@ -11,14 +11,33 @@ const eventCategories = {
     pabusking: pabuskingToggleBtn
 };
 
-function parseTimeToMinutes(timeStr) {
-if (!timeStr) return 0;
-const [time, period] = timeStr.split(' ');
-if (!time || !period) return 0;
-let [hours, minutes] = time.split(':').map(Number);
-if (period.toUpperCase() === 'PM' && hours !== 12) hours += 12;
-if (period.toUpperCase() === 'AM' && hours === 12) hours = 0;
-return hours * 60 + minutes;
+function parseTimeToMinutes(timeInput) {
+    if (!timeInput) return 0;
+    const timeStr = String(timeInput);
+
+    // Strictly handle 24h 4-digit string format (e.g. "1330" or "0930")
+    if (/^\d{4}$/.test(timeStr)) {
+        const hours = Number(timeStr.slice(0, 2));
+        const minutes = Number(timeStr.slice(2, 4));
+        return hours * 60 + minutes;
+    }
+
+    return 0;
+}
+
+function formatTime(timeInput) {
+    if (!timeInput) return "";
+    const timeStr = String(timeInput);
+    // Format 4-digit 24h string (e.g., "1330") to 12h string (e.g., "1:30 PM")
+    if (/^\d{4}$/.test(timeStr)) {
+        let hours = Number(timeStr.slice(0, 2));
+        const minutes = timeStr.slice(2, 4);
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        return `${hours}:${minutes} ${ampm}`;
+    }
+    return timeStr;
 }
 
 export async function switchEventCategory(category) {
@@ -132,7 +151,7 @@ export async function switchEventCategory(category) {
                     <div class="${nodeColor} events-item-dots"></div>
                 
                     <div class="flex flex-col gap-1 mb-3">
-                        <span class="${timeColor} events-item-time">${ev.time}</span>
+                        <span class="${timeColor} events-item-time">${formatTime(ev.time)}</span>
                         <h3 class="${titleColor} events-item-title">${ev.title}</h3>
                     </div>
             `;
