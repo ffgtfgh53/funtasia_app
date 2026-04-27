@@ -1,0 +1,37 @@
+@layer events {
+    #events-timeline {
+        @apply w-full text-left relative pl-6 md:pl-8 before:content-[''] before:absolute before:left-0 before:top-2 before:bottom-2 before:w-[2px] before:bg-ctp-surface2;
+    }
+
+    .events-item-container {
+        @apply relative mb-8 w-full;
+    }
+
+    .events-item-dots {
+        @apply absolute left-[-29px] md:left-[-37px] top-1 w-3 h-3 rounded-full ring-4 ring-ctp-base z-10 transition-all duration-300;
+    }
+
+    span.events-location {
+        @apply bg-ctp-blue/20 text-ctp-blue px-3 py-1 rounded-full font-label text-[10px] uppercase tracking-widest flex items-center gap-1 w-fit;
+    }
+
+    .events-tag {
+        @apply border border-ctp-surface2 px-3 py-1 rounded-full font-label text-[10px] uppercase tracking-widest flex items-center gap-1 w-fit;
+    }
+
+    .events-item-time {
+        @apply font-label text-[10px] uppercase tracking-widest transition-colors;
+    }
+
+    .events-item-title {
+        @apply font-headline text-lg transition-colors;
+    }
+
+    .events-item-body {
+        @apply p-5 rounded-xl relative overflow-hidden transition-all duration-300;
+    }
+
+    .events-item-description {
+        @apply font-body text-sm mb-4 leading-relaxed;
+    }
+}

@@ -46,10 +46,10 @@ async function switchEventCategory(category) {
 
         let html = `
         <header class="mb-8 w-full text-left">
-            <h1 class="font-headline text-2xl font-bold tracking-tight text-ctp-text leading-none mb-1">Schedule</h1>
+            <h3 class="modal-section-title">Schedule</h1>
             <p class="text-ctp-subtext0 font-body text-sm">${data.subtitle || ''}</p>
         </header>
-        <div class="w-full text-left relative pl-6 md:pl-8 before:content-[''] before:absolute before:left-0 before:top-2 before:bottom-2 before:w-[2px] before:bg-ctp-surface2">
+        <div id="events-timeline">
         `;
 
         const now = new Date();
@@ -58,93 +58,93 @@ async function switchEventCategory(category) {
         let isAllPast = true;
 
         data.events.forEach((ev, index) => {
-        const evMins = parseTimeToMinutes(ev.time);
-        let nextEvMins = Infinity;
-        
-        if (ev.endTime) {
-            nextEvMins = parseTimeToMinutes(ev.endTime);
-        } else {
-            for (let i = index + 1; i < data.events.length; i++) {
-                if (data.events[i].time) {
-                    nextEvMins = parseTimeToMinutes(data.events[i].time);
-                    break;
+            const evMins = parseTimeToMinutes(ev.time);
+            let nextEvMins = Infinity;
+            
+            if (ev.endTime) {
+                nextEvMins = parseTimeToMinutes(ev.endTime);
+            } else {
+                for (let i = index + 1; i < data.events.length; i++) {
+                    if (data.events[i].time) {
+                        nextEvMins = parseTimeToMinutes(data.events[i].time);
+                        break;
+                    }
                 }
             }
-        }
 
-        let status = 'future';
-        if (currentMinutes >= nextEvMins) {
-            status = 'past';
-        } else if (currentMinutes >= evMins && currentMinutes < nextEvMins) {
-            status = 'current';
-            isAllPast = false;
-        } else {
-            status = 'future';
-            isAllPast = false;
-        }
+            let status = 'future';
+            if (currentMinutes >= nextEvMins) {
+                status = 'past';
+            } else if (currentMinutes >= evMins && currentMinutes < nextEvMins) {
+                status = 'current';
+                isAllPast = false;
+            } else {
+                status = 'future';
+                isAllPast = false;
+            }
 
-        let nodeColor, timeColor, titleColor, boxClass;
+            let nodeColor, timeColor, titleColor, boxClass;
 
-        if (status === 'past') {
-            nodeColor = 'bg-ctp-surface2';
-            timeColor = 'text-ctp-subtext0';
-            titleColor = 'text-ctp-subtext0';
-            boxClass = 'bg-ctp-surface0/50 opacity-50 ring-1 ring-ctp-surface1';
-        } else if (status === 'current') {
-            nodeColor = 'bg-ctp-mauve shadow-[0_0_10px_var(--color-ctp-mauve)]';
-            timeColor = 'text-ctp-mauve font-bold';
-            titleColor = 'text-ctp-text font-bold';
-            boxClass = 'bg-ctp-surface0 ring-1 ring-ctp-mauve/70 shadow-lg shadow-ctp-mauve/10';
-        } else { // future
-            nodeColor = 'bg-ctp-surface2 group-hover:bg-ctp-mauve';
-            timeColor = 'text-ctp-subtext0';
-            titleColor = 'text-ctp-text'; // "white"
-            boxClass = 'bg-ctp-surface0 ring-1 ring-ctp-surface1 hover:bg-ctp-surface1';
-        }
-        
-        let tagsHtml = '';
-        if (ev.location) {
-            tagsHtml += `
-                <span class="bg-ctp-blue/20 text-ctp-blue px-3 py-1 rounded-full font-label text-[10px] uppercase tracking-widest flex items-center gap-1 w-fit">
-                <span class="material-symbols-outlined text-[12px]">location_on</span>
-                ${ev.location}
-                </span>
-            `;
-        }
-        if (ev.tags) {
-            ev.tags.forEach(tag => {
-                tagsHtml += `
-                <span class="border border-ctp-surface2 ${status === 'past' ? 'text-ctp-subtext0' : 'text-ctp-subtext1'} px-3 py-1 rounded-full font-label text-[10px] uppercase tracking-widest flex items-center gap-1 w-fit">
-                ${tag.icon ? `<span class="material-symbols-outlined text-[12px]">${tag.icon}</span>` : ''}
-                ${tag.text}
-                </span>
-                `;
-            });
-        }
-
-        html += `
-            <div class="relative mb-8 group w-full">
-            <div class="absolute left-[-29px] md:left-[-37px] top-1 w-3 h-3 ${nodeColor} rounded-full ring-4 ring-ctp-base z-10 transition-all duration-300"></div>
+            if (status === 'past') {
+                nodeColor = 'bg-ctp-surface2';
+                timeColor = 'text-ctp-subtext0';
+                titleColor = 'text-ctp-subtext0';
+                boxClass = 'bg-ctp-surface0/50 opacity-50 ring-1 ring-ctp-surface1';
+            } else if (status === 'current') {
+                nodeColor = 'bg-ctp-mauve shadow-[0_0_10px_var(--color-ctp-mauve)]';
+                timeColor = 'text-ctp-mauve font-bold';
+                titleColor = 'text-ctp-text font-bold';
+                boxClass = 'bg-ctp-surface0 ring-1 ring-ctp-mauve/70 shadow-lg shadow-ctp-mauve/10';
+            } else { // future
+                nodeColor = 'bg-ctp-surface2 group-hover:bg-ctp-mauve';
+                timeColor = 'text-ctp-subtext0';
+                titleColor = 'text-ctp-text';
+                boxClass = 'bg-ctp-surface0 ring-1 ring-ctp-surface1 hover:bg-ctp-surface1';
+            }
             
-            <div class="flex flex-col gap-1 mb-3">
-                <span class="font-label ${timeColor} text-[10px] uppercase tracking-widest transition-colors">${ev.time}</span>
-                <h3 class="font-headline text-lg ${titleColor} transition-colors">${ev.title}</h3>
-            </div>
-        `;
+            let tagsHtml = '';
+            if (ev.location) {
+                tagsHtml += `
+                    <span class="events-location">
+                    <span class="material-symbols-outlined text-[12px]">location_on</span>
+                    ${ev.location}
+                    </span>
+                `;
+            }
+            if (ev.tags) {
+                ev.tags.forEach(tag => {
+                    tagsHtml += `
+                    <span class="events-tag ${status === 'past' ? 'text-ctp-subtext0' : 'text-ctp-subtext1'} ">
+                    ${tag.icon ? `<span class="material-symbols-outlined text-[12px]">${tag.icon}</span>` : ''}
+                    ${tag.text}
+                    </span>
+                    `;
+                });
+            }
 
-        if (!ev.isSessionHeader) {
             html += `
-            <div class="${boxClass} p-5 rounded-xl relative overflow-hidden transition-all duration-300">
-                ${ev.description ? `<p class="font-body text-sm ${status === 'past' ? 'text-ctp-subtext0' : 'text-ctp-subtext1'} mb-4 leading-relaxed">${ev.description}</p>` : ''}
+                <div class="events-item-container group">
+                    <div class="${nodeColor} events-item-dots"></div>
                 
-                <div class="flex items-center gap-2 flex-wrap">
-                ${tagsHtml}
-                </div>
-            </div>
+                    <div class="flex flex-col gap-1 mb-3">
+                        <span class="${timeColor} events-item-time">${ev.time}</span>
+                        <h3 class="${titleColor} events-item-title">${ev.title}</h3>
+                    </div>
             `;
-        }
 
-        html += `</div>`; // Close timeline item
+            if (!ev.isSessionHeader) {
+                html += `
+                <div class="${boxClass} events-item-body">
+                    ${ev.description ? `<p class="${status === 'past' ? 'text-ctp-subtext0' : 'text-ctp-subtext1'} events-item-description">${ev.description}</p>` : ''}
+                    
+                    <div class="flex items-center gap-2 flex-wrap">
+                    ${tagsHtml}
+                    </div>
+                </div>
+                `;
+            }
+
+            html += `</div>`; // Close timeline item
         });
 
         // End Node
@@ -153,8 +153,8 @@ async function switchEventCategory(category) {
         
         html += `
             <div class="relative w-full">
-            <div class="absolute left-[-29px] md:left-[-37px] top-1 w-3 h-3 ${endNodeColor} rounded-full ring-4 ring-ctp-base z-10 transition-colors duration-300"></div>
-            <span class="font-label ${endTextColor} text-[10px] uppercase tracking-widest block pt-0.5 transition-colors">${data.endText || 'End of Schedule'}</span>
+            <div class="${endNodeColor} events-item-dots"></div>
+            <span class="font-label ${endTextColor} events-item-time block pt-0.5 ">${data.endText || 'End of Schedule'}</span>
             </div>
         </div>
         `;

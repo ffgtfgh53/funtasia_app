@@ -4,6 +4,7 @@
 
 @import "@catppuccin/tailwindcss/mocha.css";
 @import "./modal.css";
+@import "./events.css";
 
 @utility hide-scrollbar {
   &::-webkit-scrollbar {
