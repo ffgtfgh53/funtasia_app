@@ -2,10 +2,8 @@
 
 set -e  # exit on any error
 
-VERSION=$1
-
-if [ -z "$VERSION" ]; then
-  echo "Usage: ./deploy.sh <version>"
+if [ -z "$1" ]; then
+  echo "Usage: ./deploy.sh <message> <re-commit?>"
   exit 1
 fi
 
@@ -15,20 +13,25 @@ git checkout main
 
 npm run build
 
-git add .
-git commit -m "release v$VERSION"
-git push origin main
+if [ -z "$2" ]; then
+  echo "commiting and pushing all current changes"
+  git add .
+  git commit -m "$1"
+  git push origin main
+fi
 
 git checkout gh-pages
 
-git rm -rf .
+git rm -r .
+rm -r node_modules
+rm package-lock.json
 
 mv dist/* .
 
 git add .
-git commit -m "deploy v$VERSION"
+git commit -m "$1"
 git push origin gh-pages
 
 git checkout main
 
-echo "Deployed v$VERSION"
+echo "Commited with message: $1"
