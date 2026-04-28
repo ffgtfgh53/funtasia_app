@@ -23,8 +23,6 @@ fi
 git checkout gh-pages
 
 git rm -r .
-rm -r node_modules
-rm package-lock.json
 
 mv dist/* .
 
@@ -32,9 +30,9 @@ git add .
 git commit -m "$1"
 git push origin gh-pages
 
-git checkout main
+# remove new untracked objects
+rm -r .vite/
 
-# since node_modules was deleted
-npm install
+git checkout main
 
 echo "Commited with message: $1"
