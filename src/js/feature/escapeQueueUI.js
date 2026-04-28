@@ -1,4 +1,4 @@
-import * as escapeQueue from '@/js/queue/escapeQueue.js';
+import * as escapeQueue from '@/js/helper/escapeQueue.js';
 import { startScanner, stopScanner } from '@/js/helper/qrScanner.js';
 import { showToast } from '@/js/ui_ux/ui.js';
 

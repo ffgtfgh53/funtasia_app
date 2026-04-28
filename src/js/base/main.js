@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { AppState } from "@/js/base/appState.js";
-import { switchEventCategory } from "@/js/base/events.js";
+import { switchEventCategory } from "@/js/feature/events.js";
 import { setupScene } from "@/js/base/sceneSetup.js";
 import { SettingsController } from "@/js/base/settings.js";
 import { setupEventListeners } from "@/js/events/event.js";
