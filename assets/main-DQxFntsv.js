@@ -1,4 +1,4 @@
-import"./input-BmlOoLVm.js";import{m as i}from"./vendor-CMrZzyQn.js";const a=`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+import"./input-CdxU2wUN.js";import{m as i}from"./vendor-CMrZzyQn.js";const a=`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
    version="1.1"
    width="1389"
