@@ -3,6 +3,7 @@ Function: animate() -> Main animation loop
 */
 
 import { Icon } from "@/js/marker/icon.js";
+import { TextMarker } from "@/js/marker/textmarker.js";
 
 export function startAnimationLoop(appState) {
   /**
@@ -50,6 +51,11 @@ export function startAnimationLoop(appState) {
     Object.values(Icon.iconsByLevel).forEach(levelIcons => {
       levelIcons.forEach(icon => icon.animate(time, appState.camera));
     });
+
+    /*
+    Animate text markers
+    */
+    TextMarker.allTextMarkers.forEach(marker => marker.animate(time, appState.camera));
     
     appState.renderer.render(appState.scene, appState.camera);
   }
