@@ -25,8 +25,8 @@ git add .
 git commit -m "$DEPLOY_COMMIT_MESSAGE"
 git push origin gh-pages
 
-# remove new untracked objects
-rm -r .vite/
+# remove new untracked objects?? (actl not untracked)
+rm -r .vite/ 2>/dev/null || :
 
 git checkout main
 
