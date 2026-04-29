@@ -2,12 +2,15 @@
 
 set -e  # exit on any error
 
-DEPLOY_COMMIT_MESSAGE=$1
-
-if [ -z "$DEPLOY_COMMIT_MESSAGE" ]; then
-  DEPLOY_COMMIT_MESSAGE="build: deploy"
-  echo "No arguments supplied, using generic commit message '$DEPLOY_COMMIT_MESSAGE'"
+if [[ -z "$@" ]]; then
+  set -- -m "build: deploy"
+  echo "No arguments supplied, using generic arguments '${@}'"
 fi
+
+# for elem in "${@}"
+# do
+#   echo $elem
+# done
 
 cd "$(git rev-parse --show-toplevel)"
 
@@ -22,7 +25,7 @@ git rm -r .
 mv dist/* .
 
 git add .
-git commit -m "$DEPLOY_COMMIT_MESSAGE"
+git commit "${@}"
 git push origin gh-pages
 
 # remove new untracked objects?? (actl not untracked)
@@ -30,4 +33,4 @@ rm -r .vite/ 2>/dev/null || :
 
 git checkout main
 
-echo "Commited with message: $DEPLOY_COMMIT_MESSAGE"
+echo "Commited with arguments: ${@}"
