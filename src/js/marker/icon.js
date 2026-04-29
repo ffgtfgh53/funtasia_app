@@ -50,7 +50,7 @@ export class Icon extends Marker {
     });
 
     this.indicator = new THREE.Sprite(this.material);
-    this.baseScale = 0.8;
+    this.baseScale = 0.6;
     this.indicator.scale.set(this.baseScale, this.baseScale, this.baseScale);
     
     // Elevate icon slightly above floor level
