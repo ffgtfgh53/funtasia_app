@@ -2,6 +2,18 @@ import * as THREE from "three";
 import { Floor } from "@/js/floor/floor.js";
 import { Icon } from "@/js/marker/icon.js";
 import { QRMarker } from "@/js/marker/qrmarker.js";
+import { TextMarker } from "@/js/marker/textmarker.js";
+
+export const textMarkerMap = {
+  l1:{
+    "Canteen": "Canteen",
+    "Amphi": "Amphitheatre",
+  },
+  l2:{
+  "None":"Field",
+  }
+  // Add names of interactive objects here to display a TextMarker above them
+};
 
 function getColor(colorName) {
   const documentStyle = getComputedStyle(document.documentElement);
@@ -151,11 +163,27 @@ export function parseModel(gltf, floorId, scene, funtasiaData, dataFloorId = flo
         Object.assign(child.userData, logicalNode.userData);
       }
       child.userData.logicalParent = logicalNode;
+    } else {
+      console.log("Hello")
+      if (logicalNode.name in textMarkerMap[floorId]) {
+        const box = new THREE.Box3().setFromObject(child);
+        // const size = box.getSize(new THREE.Vector3());
+        const pos = child.getWorldPosition(new THREE.Vector3());
+        pos.y = (0);
+        new TextMarker(scene, pos, textMarkerMap[floorId][child.name]);
+      };
     }
 
     if (child.userData.ROLE === undefined) return;
 
-    const isInteractive = child.userData?.ROLE === "OBJECT";
+    // Add TextMarker if the logical node's name is in the textMarkerList
+    console.log(child.name)
+    
+    const role = child.userData?.ROLE;
+    const isObject = role === "OBJECT" || role === "NONE";
+
+    
+    const isInteractive = role === "OBJECT";
     if (child.userData.ZONE == undefined) { child.userData.ZONE = "NONE"; }
 
     if (!isInteractive) {
@@ -225,9 +253,9 @@ export function parseModel(gltf, floorId, scene, funtasiaData, dataFloorId = flo
         });
         child.userData.material = child.material;
       }
-    }
+      return
+    };
 
-    if (!isInteractive) return;
     if (child.userData.ZONE === "NONE") return;
     const lookupName = logicalNode.name;
     if (!logicalNode.name || logicalNode.name === "") {

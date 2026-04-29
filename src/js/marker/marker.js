@@ -1,9 +1,12 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { Text } from "troika-three-text";
+import { Text, preloadFont } from "troika-three-text";
 
 const BASE = ASSETS_BASE_URL;
 const googleMapIconUrl = `${BASE}/icons/google-map-icon.glb`;
+
+export const FONT_URL = "https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono@2.304/fonts/ttf/JetBrainsMono-Regular.ttf";
+preloadFont({ font: FONT_URL }, () => {});
 
 export class Marker {
   static appState = null;
@@ -101,7 +104,7 @@ export class LocationMarker extends Marker {
       const textMesh = new Text();
       textMesh.text = "You are here!";
       textMesh.fontSize = 0.15;
-      textMesh.font = "https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono@2.304/fonts/ttf/JetBrainsMono-Regular.ttf";
+      textMesh.font = FONT_URL;
       textMesh.color = 0xff0000;
       textMesh.anchorX = 'center';
       textMesh.anchorY = 'middle';
