@@ -15,12 +15,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&icon_names=album,arrow_back,celebration,chevron_right,circle,close,directions_run,event,falling,festival,flashlight_off,flashlight_on,hourglass_empty,image,info_i,keyboard,location_on,logout,map,mic_external_on,music_note,music_note_2,open_in_new,qr_code_scanner,search,settings,store,swap_vert,theater_comedy,timer_off,touch_app&display=block" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="./favicon/favicon.svg"/>
     <link rel="apple-touch-icon" href="./favicon/apple-touch-icon.png"/>
-    <script type="module" crossorigin src="./assets/map-DJUBf3bu.js"></script>
-    <link rel="modulepreload" crossorigin href="./assets/input-BjVbqDdS.js">
+    <script type="module" crossorigin src="./assets/map-CPVeImRC.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/input-M7-K_QJL.js">
     <link rel="modulepreload" crossorigin href="./assets/vendor-CMrZzyQn.js">
     <link rel="modulepreload" crossorigin href="./assets/vendor-three-DfRL8YIG.js">
-    <link rel="stylesheet" crossorigin href="./assets/input-C7a_lhDz.css">
-    <link rel="stylesheet" crossorigin href="./assets/map-DX_edlTc.css">
+    <link rel="stylesheet" crossorigin href="./assets/input-C3c1iuPe.css">
+    <link rel="stylesheet" crossorigin href="./assets/map-DNxxhval.css">
   </head>
   <body>
     <div id="canvas-container"></div>
@@ -494,7 +494,7 @@
               <div id="qrcode_scanner" class="qr-scanner-container">
                 <span class="material-symbols-outlined" style="font-size: 48px; opacity: 0.4;">qr_code_scanner</span>
               </div>
-              <button id="qr-flash-btn">
+              <button id="qr-flash-btn" class="qr-flash-btn">
                 <span class="material-symbols-outlined text-[20px]" id="qr-flash-icon">flashlight_off</span>
                 Toggle Flash
               </button>
@@ -567,11 +567,21 @@
               <div id="queue_qrcode_scanner" class="qr-scanner-container mx-auto">
                 <span class="material-symbols-outlined" style="font-size: 48px; opacity: 0.4;">qr_code_scanner</span>
               </div>
+              <button id="queue-qr-flash-btn" class="qr-flash-btn">
+                <span class="material-symbols-outlined text-[20px]" id="queue-qr-flash-icon">flashlight_off</span>
+                Toggle Flash
+              </button>
               <p id="queue-scan-error" class="queue-error-text mt-4 text-center"></p>
             </div>
 
             <!-- Screen 3: Join -->
             <div id="queue-screen-join" class="queue-screen">
+              <div class="w-full flex items-center mb-4">
+                <button id="queue-back-to-scanner-btn" class="flex items-center gap-2 text-ctp-mauve font-bold">
+                  <span class="material-symbols-outlined">arrow_back</span>
+                  Back
+                </button>
+              </div>
               <p id="queue-token-timer" class="queue-token-timer text-center w-full mb-6 text-ctp-subtext1 font-bold"></p>
               <p class="uppercase font-bold mb-3 text-center w-full" style="font-size: 11px; letter-spacing: 0.1em;">Enter your name</p>
               <input type="text" id="queue-name-input" class="queue-name-input w-full mb-6" placeholder="Your Name" autocomplete="off" />
