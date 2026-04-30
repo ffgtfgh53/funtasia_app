@@ -76,8 +76,33 @@
       Clear directory marker
     </button>
 
+    <div id="welcome-modal-wrapper" class="modal-wrapper">
+      <div class="modal-container">
+        <div class="modal-backdrop" id="welcome-modal-backdrop"></div>
+        <div class="modal-card">
+          <div class="modal-header">
+            <div>
+              <h1 class="modal-title">Welcome to Funtasia!</h1>
+            </div>
+            <button class="modal-close-btn" id="close-welcome-btn">
+              <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+          </div>
+          <div class="modal-content" id="welcome-content-area">
+            <div class="margin-auto text-center align-middle flex flex-col">
+              <h2 class="slide-title text-3xl font-extrabold mb-3">Welcome to</h2>
+              <div class="text-center align-middle justify-center">
+                <image class="m-auto max-w-[min(80%,650px)]" src="/src/assets/Logo.svg"></image>
+              </div>
+              <p class="slide-desc text-xl">NJCxEden is proud to present Funtasia: Charity Carnival and IP Open House!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="settings-modal-wrapper" class="modal-wrapper">
-      <div class="modal-container" style="position: fixed; inset: 0;">
+      <div class="modal-container">
         <div class="modal-backdrop" id="settings-modal-backdrop"></div>
         <div class="modal-card">
           <!-- Header Section -->
@@ -99,14 +124,14 @@
     </div>
 
     <div id="info-modal-wrapper" class="modal-wrapper">
-      <div class="modal-container" style="position: fixed; inset: 0;">
+      <div class="modal-container">
         <div class="modal-backdrop" id="info-modal-backdrop"></div>
         <div class="modal-card">
           <!-- Header Section -->
           <div class="modal-header">
             <div>
               <h1 class="modal-title">Information</h1>
-              <p class="modal-subtitle">How to use this web app</p>
+              <p class="modal-subtitle">How to use this interactive map</p>
             </div>
             <button class="modal-close-btn" id="close-info-btn">
               <span class="material-symbols-outlined text-[20px]">close</span>
@@ -114,7 +139,7 @@
           </div>
           <!-- Welcome Area -->
           <div class="modal-content" id="info-content-area">
-
+<!-- 
             <div class="px-2">
               <h3 class="modal-section-title">Feature overview</h3>
               <p class="text-ctp-subtext1 text-xs px-4 -mt-2 mb-4">Summary of main features (explained more below)</p>
@@ -151,7 +176,7 @@
                 </div>
               
               </div>
-            </div>
+            </div> -->
 
             <!-- ── UI Buttons Section ─────────────────── -->
             <div class="px-2">
@@ -342,7 +367,7 @@
     </div>
 
     <div id="events-modal-wrapper" class="modal-wrapper">
-      <div class="modal-container" style="position: fixed; inset: 0;">
+      <div class="modal-container">
         <div class="modal-backdrop" id="events-modal-backdrop"></div>
         <div class="modal-card">
           <div class="modal-header">
@@ -382,7 +407,7 @@
     </div>
 
     <div id="directory-modal-wrapper" class="modal-wrapper">
-      <div class="modal-container" style="position: fixed; inset: 0;">
+      <div class="modal-container">
         <div class="modal-backdrop" id="directory-modal-backdrop"></div>
         <div class="modal-card">
           <!-- Header Section -->
@@ -455,7 +480,7 @@
     </div>
 
     <div id="qr-modal-wrapper" class="modal-wrapper">
-      <div class="modal-container fixed inset-0">
+      <div class="modal-container">
         <div class="modal-backdrop" id="qr-modal-backdrop"></div>
         <div class="modal-card">
           <!-- Header Section -->
@@ -516,7 +541,7 @@
     </div>
 
     <div id="queue-modal-wrapper" class="modal-wrapper">
-      <div class="modal-container fixed inset-0">
+      <div class="modal-container">
         <div class="modal-backdrop" id="queue-modal-backdrop"></div>
         <div class="modal-card">
           <!-- Header Section -->
@@ -646,14 +671,14 @@
 
     <script>
       // Allow info modal wrapper to appear before loading of all other js, which alows background loading WOAH
-      console.log((new URLSearchParams(window.location.search)).get("t"))
-      if (!(new URLSearchParams(window.location.search)).get("t") && !localStorage.getItem("firstRunDone")) {
+      // console.log((new URLSearchParams(window.location.search)).get("t"))
+      // if (!(new URLSearchParams(window.location.search)).get("t") && !localStorage.getItem("firstRunDone")) {
         document.querySelectorAll(".fab-btn").forEach(btn => {
           btn.style.display = 'none';
         });
-        document.getElementById('info-modal-wrapper').style.display = 'flex';
+        document.getElementById('welcome-modal-wrapper').style.display = 'flex'
         localStorage.setItem("firstRunDone", "flag{y0u_f0und_m3!}");
-      }
+      // }
       
     </script>
 
@@ -667,6 +692,10 @@
       import { Navigation } from '/src/js/events/navigation.js';
       import { QRMarker } from '/src/js/marker/qrmarker.js';
       import { showToast, storeAndHideBottomSheet, reopenStoredBottomSheet, clearStoredBottomSheet } from '/src/js/ui_ux/ui.js';
+      const closeWelcomeBtn = document.getElementById('close-welcome-btn');
+      const welcomeModal = document.getElementById('welcome-modal-wrapper');
+      const welcomeBackdrop = document.getElementById('welcome-modal-backdrop');
+
       const openDirBtn = document.getElementById('open-directory-btn');
       const closeDirBtn = document.getElementById('close-directory-btn');
       const dirModal = document.getElementById('directory-modal-wrapper');
@@ -766,6 +795,15 @@
               console.error("Invalid QR Code structure", decodedText);
           }
       }
+
+      closeWelcomeBtn.addEventListener('click', () => {
+        welcomeModal.style.removeProperty('display');
+        openInfoBtn.click();
+      })
+      welcomeBackdrop.addEventListener('click', () => {
+        welcomeModal.style.removeProperty('display');
+        openInfoBtn.click();
+      })
 
       openDirBtn.addEventListener('click', () => {
         dirModal.style.display = 'block';
