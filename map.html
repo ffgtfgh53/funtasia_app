@@ -12,14 +12,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>Funtasia 3D Map</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&icon_names=album,arrow_back,celebration,chevron_right,circle,close,directions_run,event,falling,festival,flashlight_off,flashlight_on,hourglass_empty,image,info_i,keyboard,location_on,logout,map,mic_external_on,music_note,music_note_2,open_in_new,qr_code_scanner,rock_and_roll,search,settings,store,swap_vert,theater_comedy,touch_app&display=block" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&icon_names=album,arrow_back,celebration,chevron_right,circle,close,directions_run,event,falling,festival,flashlight_off,flashlight_on,hourglass_empty,image,info_i,keyboard,location_on,logout,map,mic_external_on,music_note,music_note_2,open_in_new,qr_code_scanner,search,settings,store,swap_vert,theater_comedy,timer_off,touch_app&display=block" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="./favicon/favicon.svg"/>
     <link rel="apple-touch-icon" href="./favicon/apple-touch-icon.png"/>
-    <script type="module" crossorigin src="./assets/map-bdQH8ZQf.js"></script>
-    <link rel="modulepreload" crossorigin href="./assets/input-CImdIcEU.js">
+    <script type="module" crossorigin src="./assets/map-DJUBf3bu.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/input-BjVbqDdS.js">
     <link rel="modulepreload" crossorigin href="./assets/vendor-CMrZzyQn.js">
-    <link rel="modulepreload" crossorigin href="./assets/vendor-three-DiTxwgKr.js">
-    <link rel="stylesheet" crossorigin href="./assets/input-DtEcG1zz.css">
+    <link rel="modulepreload" crossorigin href="./assets/vendor-three-DfRL8YIG.js">
+    <link rel="stylesheet" crossorigin href="./assets/input-C7a_lhDz.css">
     <link rel="stylesheet" crossorigin href="./assets/map-DX_edlTc.css">
   </head>
   <body>
@@ -219,7 +219,7 @@
                   </div>
                   <div class="info-btn-desc">
                     <span class="info-btn-title">Directory</span>
-                    <span class="info-btn-caption">Browse and search all booths by level or tag.</span>
+                    <span class="info-btn-caption">Browse and find booths by searching and filtering by tags.</span>
                   </div>
                 </div>
 
@@ -267,7 +267,17 @@
                     <span class="info-btn-caption">Click/slide the numbers to switch levels. The highlighted level represents the current level</span>
                   </div>
                 </div>
-              
+
+                <div class="info-btn-row">
+                  <div class="info-btn-preview">
+                    <span class="material-symbols-outlined" style="font-size: 22px;">location_on</span>
+                  </div>
+                  <div class="info-btn-desc">
+                    <span class="info-btn-title">Location Marker (You Are Here!)</span>
+                    <span class="info-btn-caption">The location marker shows the location of the last location QR code scanned</span>
+                  </div>
+                </div>
+
               </div>
             </div>
 
@@ -527,10 +537,22 @@
           <div class="modal-content flex flex-col items-center p-6" id="queue-modal-content">
             
             <!-- Screen 1: Instructions -->
-            <div id="queue-screen-instructions" class="queue-screen active">
-              <span class="material-symbols-outlined text-[64px] text-ctp-mauve mb-4 text-center block">qr_code_scanner</span>
-              <p class="text-center text-ctp-text mb-8">Scan the QR code at the escape room booth to join the virtual queue.</p>
-              <button id="queue-scan-btn" class="queue-action-btn">Scan QR Code</button>
+            <div id="queue-screen-instructions" class="queue-screen active w-full flex-col">
+              <p class="text-center text-ctp-text mb-6">Visit the Escape Room and make payments before joining the queue with the "Join Queue" button below.</p>
+              
+              <div class="bg-ctp-surface0 rounded-lg p-4 mb-6 w-full flex flex-row justify-around border border-ctp-surface2">
+                 <div class="flex flex-col items-center">
+                    <p class="text-ctp-subtext0 text-xs font-bold uppercase tracking-wider mb-1 text-center">Number of<br>People</p>
+                    <p id="queue-info-people" class="text-ctp-mauve text-3xl font-bold">-</p>
+                 </div>
+                 <div class="w-px bg-ctp-surface2"></div>
+                 <div class="flex flex-col items-center">
+                    <p class="text-ctp-subtext0 text-xs font-bold uppercase tracking-wider mb-1 text-center">Estimated<br>Wait Time</p>
+                    <p id="queue-info-wait" class="text-ctp-mauve text-3xl font-bold">-</p>
+                 </div>
+              </div>
+              
+              <button id="queue-scan-btn" class="queue-action-btn w-full">Join Queue</button>
             </div>
 
             <!-- Screen 2: Scanner -->
@@ -559,13 +581,21 @@
 
             <!-- Screen 4: Waiting -->
             <div id="queue-screen-wait" class="queue-screen">
-              <div class="flex flex-col items-center mb-8 w-full">
-                <p id="queue-wait-name" class="text-ctp-subtext1 font-bold mb-4"></p>
-                <div class="text-center">
-                  <p id="queue-wait-position" class="queue-position text-ctp-mauve">--</p>
-                  <p id="queue-wait-ahead" class="text-ctp-subtext1 mt-2">-- people ahead of you</p>
+              <div class="bg-ctp-surface0 rounded-lg p-6 w-full mb-6 border-2 border-dashed border-ctp-surface2">
+                <p class="uppercase font-bold mb-4 text-center text-ctp-subtext0 tracking-widest text-xs">Escape Room Ticket</p>
+                <h2 id="queue-ticket-number" class="text-5xl font-bold text-center text-ctp-mauve mb-6">#--</h2>
+                
+                <div class="flex justify-between items-center mb-4">
+                  <span class="text-ctp-subtext1">Place in queue</span>
+                  <span id="queue-wait-position" class="font-bold text-ctp-text text-xl">--</span>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                  <span class="text-ctp-subtext1">Est. wait time</span>
+                  <span id="queue-wait-time" class="font-bold text-ctp-text text-xl">--</span>
                 </div>
               </div>
+
               <div class="flex items-center justify-center gap-2 text-ctp-text mb-8">
                 <span class="material-symbols-outlined animate-[spin_2s_ease-in-out_infinite] text-[20px]">hourglass_empty</span>
                 <span>Waiting for your turn...</span>
@@ -579,6 +609,7 @@
               <h2 class="text-2xl font-bold text-ctp-text text-center mb-6">It's your turn!</h2>
               <p class="text-ctp-subtext1 text-center mb-4">Head to the escape room booth. You have:</p>
               <p id="queue-countdown" class="queue-countdown text-ctp-red text-center mb-8">05:00</p>
+              <button id="queue-leave-notified-btn" class="queue-leave-btn w-full">Leave Queue</button>
             </div>
 
             <!-- Screen 6: Expired -->
@@ -597,17 +628,17 @@
 
     <script>
       // Allow info modal wrapper to appear before loading of all other js, which alows background loading WOAH
-      cookieStore.get("firstRunDone")
-        .then(val => {
-          if (!val) {
-            document.querySelectorAll(".fab-btn").forEach(btn => {
-              btn.style.display = 'none';
-            });
-            document.getElementById('info-modal-wrapper').style.display = 'flex';
-            cookieStore.set("firstRunDone", "flag{y0u_f0und_m3!}")
-          }
-      })
+      console.log((new URLSearchParams(window.location.search)).get("t"))
+      if (!(new URLSearchParams(window.location.search)).get("t") && !localStorage.getItem("firstRunDone")) {
+        document.querySelectorAll(".fab-btn").forEach(btn => {
+          btn.style.display = 'none';
+        });
+        document.getElementById('info-modal-wrapper').style.display = 'flex';
+        localStorage.setItem("firstRunDone", "flag{y0u_f0und_m3!}");
+      }
+      
     </script>
+
 
   </body>
 </html>
