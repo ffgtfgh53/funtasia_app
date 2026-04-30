@@ -9,10 +9,10 @@ import { fetchDirectoryData, initDirectory } from "@/js/feature/directory.js";
 import { Floor } from "@/js/floor/floor.js";
 import { applyThemeToScene } from "@/js/floor/modelParser.js";
 import { Icon } from "@/js/marker/icon.js";
-import { Marker } from "@/js/marker/marker.js";
+import { Marker } from "@/js/marker/marker.js"; 
 import { QRMarker } from "@/js/marker/qrmarker.js";
 import { startAnimationLoop } from "@/js/ui_ux/animate.js";
-import { hideBottomSheet, setupUI } from "@/js/ui_ux/ui.js";
+import { hideBottomSheet, setupUI, setDirectoryData } from "@/js/ui_ux/ui.js";
 
 const { scene, camera, renderer, controls } = setupScene();
 
@@ -66,6 +66,9 @@ setupEventListeners(appState);
 async function initApp() {
   // 1. Fetch raw data
   const rawData = await fetchDirectoryData();
+
+  // Register the fetched directory data with the UI module
+  setDirectoryData(rawData);
 
   // No pre-loading — floors are fetched on-demand in Navigation.switchFloor()
   // 2. Set up UI

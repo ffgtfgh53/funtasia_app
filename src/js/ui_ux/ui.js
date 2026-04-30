@@ -4,7 +4,37 @@ const sheet = document.getElementById("bottom-sheet");
 const sheetTitle = document.getElementById("sheet-title");
 const sheetDesc = document.getElementById("sheet-desc");
 const closeBtn = document.getElementById("close-btn");
-const locationData = {}; // Placeholder
+/** @type {Object.<string, {title: string, description: string}>} */
+const locationData = {}; 
+
+/**
+ * Populates the UI's location database from the directory JSON.
+ * @param {Object} data - The directory data object { floor: { boothId: item } }
+ */
+export function setDirectoryData(data) {
+  if (!data || typeof data !== 'object') return;
+
+  // Flatten the floor-grouped data for the UI lookup map
+  Object.values(data).forEach(floorEntries => {
+    if (!floorEntries || typeof floorEntries !== 'object') return;
+
+    Object.entries(floorEntries).forEach(([id, item]) => {
+      const title = item["Booth Name"] || item["booth_name"] || id;
+      const description = item["Booth Description"] || item["booth_description"];
+
+      const info = {
+        title: title,
+        description: description || `Welcome to ${title}.`
+      };
+
+      // Map by ID and by Title to ensure showBottomSheet always finds the data
+      locationData[id] = info;
+      if (title !== id) {
+        locationData[title] = info;
+      }
+    });
+  });
+}
 
 function getLocationInfo(objectName) {
   if (locationData[objectName]) {
@@ -24,11 +54,11 @@ function getLocationInfo(objectName) {
 let currentAppState = null;
 let storedBottomSheetState = null;
 
-export function showBottomSheet(objectName, childFloorId = null, description = null) {
+export function showBottomSheet(objectName, childFloorId = null, description = null, title = null) {
   // Store the current state so it can be restored later
-  storedBottomSheetState = { objectName, childFloorId, description };
+  storedBottomSheetState = { objectName, childFloorId, description, title };
   const locationInfo = getLocationInfo(objectName);
-  sheetTitle.textContent = locationInfo.title;
+  sheetTitle.textContent = title || locationInfo.title;
   sheetDesc.textContent = description ? description : locationInfo.description;
   
   const enterBtn = document.getElementById("enter-child-btn");
@@ -70,8 +100,8 @@ export function storeAndHideBottomSheet() {
 
 export function reopenStoredBottomSheet() {
   if (storedBottomSheetState) {
-    const { objectName, childFloorId, description } = storedBottomSheetState;
-    showBottomSheet(objectName, childFloorId, description);
+    const { objectName, childFloorId, description, title } = storedBottomSheetState;
+    showBottomSheet(objectName, childFloorId, description, title);
   }
 }
 
@@ -327,5 +357,3 @@ export function showInfo() {
   console.log("Info button clicked - function placeholder");
   // Future implementation: show app info / tutorial modal
 }
-
-
