@@ -128,10 +128,21 @@ async function initApp() {
           const config = appState.currentFloor.cameraConfig;
           appState.cameraAnim.controlsTarget.copy(config.target);
           appState.cameraAnim.cameraTarget.copy(config.initialPosition);
+          appState.cameraAnim.isSystemAction = true;
           appState.cameraAnim.active = true;
         }
       },
       appState.rotationLocked
+    );
+
+    SettingsController.addToggle(
+      controlsSection,
+      'Camera Auto-Focus',
+      'Smoothly animate the camera when selecting a location',
+      (enabled) => {
+        appState.autoFocusEnabled = enabled;
+      },
+      appState.autoFocusEnabled !== false
     );
   }
 

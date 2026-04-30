@@ -18,6 +18,12 @@ export function startAnimationLoop(appState) {
     Utilises interpolation to smoothly re-orientate the camera upon user 'click'
     */
     if (appState.cameraAnim && appState.cameraAnim.active) {
+      // If auto-focus is disabled and this wasn't triggered by a system action (like Rotation Lock), cancel it
+      if (appState.autoFocusEnabled === false && !appState.cameraAnim.isSystemAction) {
+        appState.cameraAnim.active = false;
+        return;
+      }
+
       const lerpFactor = 0.05;
       
       appState.camera.position.lerp(appState.cameraAnim.cameraTarget, lerpFactor);
@@ -31,6 +37,7 @@ export function startAnimationLoop(appState) {
       
       if (posDist < 0.1 && targetDist < 0.1) {
         appState.cameraAnim.active = false;
+        appState.cameraAnim.isSystemAction = false;
       }
     }
 
