@@ -1,19 +1,20 @@
 [{
   "title": "Busking Performances",
-  "subtitle": "Busking performances from our own NJCians!",
+  "subtitle": "Busking performances by local performers!",
   "endText": "End of Performances",
   "location": "O2",
   "events": [
     {
       "time": "1630",
       "title": "Weyoung",
+      "link": {"link": "https://www.instagram.com/hcweyoung/", "text": "Instagram"},
       "songs": [
-        { "title": "愛錯", "author": "Wang Leehom", "icon": "mic_external_on" },
+        { "title": "愛錯", "author": "Wang Leehom" },
         { "title": "⁠夜空中最亮的星", "author": "Escape Plan" },
         { "title": "Everybody Talks", "author": "Neon Trees" },
         { "title": "太陽與地球", "author": "Crowd Lu" },
         { "title": "Out of My League", "author": "Fitz and the Tantrums" },
-        { "title": "Until I Found You (Em Beihold version)", "author": "Stephen Sanchez and Em Beihold", "icon": "mic_external_on" }
+        { "title": "Until I Found You (Em Beihold version)", "author": "Stephen Sanchez and Em Beihold" }
       ]
     },
     {
@@ -21,21 +22,22 @@
       "title": "Nunyuh Business",
       "link": {"link": "https://www.instagram.com/its.nunyuhbusiness/", "text": "Instagram"},
       "songs": [
-        { "title": "That Should Be Me", "author": "Justin Bieber", "icon": "mic_external_on" },
-        { "title": "Sorry", "author": "Justin Bieber", "icon": "mic_external_on" },
-        { "title": "Yummy", "author": "Justin Bieber", "icon": "mic_external_on" },
-        { "title": "Beauty and a Beat", "author": "Justin Bieber", "icon": "mic_external_on" },
-        { "title": "Baby", "author": "Justin Bieber", "icon": "mic_external_on" },
-        { "title": "Daisies", "author": "Justin Bieber", "icon": "mic_external_on" }
+        { "title": "That Should Be Me", "author": "Justin Bieber" },
+        { "title": "Sorry",             "author": "Justin Bieber", "__comment__": "is it too late now to say sorry" },
+        { "title": "Yummy",             "author": "Justin Bieber" },
+        { "title": "Beauty and a Beat", "author": "Justin Bieber" },
+        { "title": "Baby",              "author": "Justin Bieber" },
+        { "title": "Daisies",           "author": "Justin Bieber" }
       ]
     },
     {
       "time": "1740",
       "title": "Phyllis Lim",
+      "link": {"link": "https://www.instagram.com/phyllzx/", "text": "Instagram"},
       "songs": [
-        { "title": "Dreams", "author": "The Cranberries" },
-        { "title": "Blade Bird", "author": "Oklou" },
-        { "title": "Skinshine", "author": "Phyllzx" }
+        { "title": "Dreams",     "author": "The Cranberries" },
+        { "title": "Blade Bird", "author": "Oklou"           },
+        { "title": "Skinshine",  "author": "Phyllzx"         }
       ]
     },
     {
@@ -43,35 +45,36 @@
       "title": "Blueforms",
       "link": {"link":"https://www.instagram.com/theblueforms/", "text": "Instagram"},
       "songs": [
-        {"title": "UNAPPROVED: Kilby Girl", "author": "The Backseat Lovers"},
-        { "title": "Forget You", "author": "CeeLo Green", "icon": "mic_external_on" },
-        { "title": "Creep", "author": "Radiohead" },
-        { "title": "Don't Stop Me Now", "author": "Queen" },
-        { "title": "Don't Look Back in Anger", "author": "Oasis" },
-        { "title": "Kiss You", "author": "One Direction", "icon": "mic_external_on" },
-        { "title": "Put Your Records On", "author": "Corinne Bailey Rae", "icon": "album" }
+        { "title": "UNAPPROVED: Kilby Girl",   "author": "The Backseat Lovers" },
+        { "title": "Forget You",               "author": "CeeLo Green"         },
+        { "title": "Creep",                    "author": "Radiohead"           },
+        { "title": "Don't Stop Me Now",        "author": "Queen"               },
+        { "title": "Don't Look Back in Anger", "author": "Oasis"               },
+        { "title": "Kiss You",                 "author": "One Direction"       },
+        { "title": "Put Your Records On",      "author": "Corinne Bailey Rae"  }
       ]
     },
     {
       "time": "1830",
       "title": "Updawg",
+      "link": {"link": "https://www.instagram.com/updawgz_/", "text": "Instagram"},
       "songs": [
-        { "title": "Kiss Me", "author": "Sixpence None The Richer" },
-        { "title": "Every Summertime", "author": "NIKI", "icon": "mic_external_on" },
-        { "title": "September", "author": "Earth, Wind and Fire", "icon": "album" },
-        { "title": "Everybody Talks", "author": "The Neon Trees" },
-        { "title": "Shut Up And Dance", "author": "Walk The Moon" }
+        { "title": "Kiss Me",           "author": "Sixpence None The Richer" },
+        { "title": "Every Summertime",  "author": "NIKI"                     },
+        { "title": "September",         "author": "Earth, Wind and Fire"     },
+        { "title": "Everybody Talks",   "author": "The Neon Trees"           },
+        { "title": "Shut Up And Dance", "author": "Walk The Moon"            }
       ]
     },
     {
       "time": "1905",
       "title": "Thaarmin",
-      "link": {"link": "https://linktr.ee/thaarmin/", "text": "Linktree"},
+      "link": {"link": "https://www.instagram.com/thaarmin/", "text": "Instagram"},
       "songs": [
-        { "title": "Circles", "author": "Thaarmin", "icon": "mic_external_on" },
-        { "title": "Bird of a Feather", "author": "Billie Eilish", "icon": "mic_external_on" },
-        { "title": "UNAPPROVED: Secrets of your Scars", "author": "Thaarmin", "icon": "mic_external_on" },
-        { "title": "Roll the Dice", "author": "Thaarmin", "icon": "mic_external_on" }
+        { "title": "Circles",                           "author": "Thaarmin"      },
+        { "title": "Bird of a Feather",                 "author": "Billie Eilish" },
+        { "title": "UNAPPROVED: Secrets of your Scars", "author": "Thaarmin"      },
+        { "title": "Roll the Dice",                     "author": "Thaarmin"      }
       ]
     },
     {
@@ -84,7 +87,7 @@
         { "title": "My Hero", "author": "Foo Fighters" },
         { "title": "You Give Love a Bad Name", "author": "Bon Jovi" },
         { "title": "海阔天空", "author": "Beyond" },
-        { "title": "Just The Way You Are", "author": "Bruno Mars", "icon": "mic_external_on" }
+        { "title": "Just The Way You Are", "author": "Bruno Mars"}
       ]
     }
   ]
