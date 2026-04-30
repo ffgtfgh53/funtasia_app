@@ -12,14 +12,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>Funtasia 3D Map</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&icon_names=album,arrow_back,celebration,chevron_right,circle,close,directions_run,event,falling,festival,flashlight_off,flashlight_on,hourglass_empty,image,info_i,keyboard,location_on,logout,map,mic_external_on,music_note,music_note_2,open_in_new,qr_code_scanner,search,settings,store,swap_vert,theater_comedy,timer_off,touch_app&display=block" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&icon_names=album,arrow_back,celebration,chevron_right,circle,close,directions_run,event,falling,festival,flashlight_off,flashlight_on,hourglass_empty,image,info_i,keyboard,location_on,logout,map,mic_external_on,music_note,music_note_2,open_in_new,qr_code_scanner,search,search_off,settings,store,swap_vert,theater_comedy,timer_off,touch_app&display=block" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="./favicon/favicon.svg"/>
     <link rel="apple-touch-icon" href="./favicon/apple-touch-icon.png"/>
-    <script type="module" crossorigin src="./assets/map-CPVeImRC.js"></script>
-    <link rel="modulepreload" crossorigin href="./assets/input-M7-K_QJL.js">
+    <script type="module" crossorigin src="./assets/map-C2gnDOxv.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/input-CqaR-TEl.js">
     <link rel="modulepreload" crossorigin href="./assets/vendor-CMrZzyQn.js">
     <link rel="modulepreload" crossorigin href="./assets/vendor-three-DfRL8YIG.js">
-    <link rel="stylesheet" crossorigin href="./assets/input-C3c1iuPe.css">
+    <link rel="stylesheet" crossorigin href="./assets/input-Dj9qywGe.css">
     <link rel="stylesheet" crossorigin href="./assets/map-DNxxhval.css">
   </head>
   <body>
@@ -527,7 +527,9 @@
           <div class="modal-header">
             <div>
               <h1 class="modal-title" id="queue-modal-title">Escape Room Queue</h1>
-              <p class="modal-subtitle" id="queue-modal-subtitle">Check status or join the line</p>
+              <div class="flex flex-wrap items-center gap-2">
+                <p class="modal-subtitle" id="queue-modal-subtitle">Check status or join the line</p>
+              </div>
             </div>
             <button class="modal-close-btn" id="close-queue-btn">
               <span class="material-symbols-outlined text-[20px]">close</span>
@@ -538,21 +540,30 @@
             
             <!-- Screen 1: Instructions -->
             <div id="queue-screen-instructions" class="queue-screen active w-full flex-col">
-              <p class="text-center text-ctp-text mb-6">Visit the Escape Room and make payments before joining the queue with the "Join Queue" button below.</p>
               
-              <div class="bg-ctp-surface0 rounded-lg p-4 mb-6 w-full flex flex-row justify-around border border-ctp-surface2">
-                 <div class="flex flex-col items-center">
-                    <p class="text-ctp-subtext0 text-xs font-bold uppercase tracking-wider mb-1 text-center">Number of<br>People</p>
-                    <p id="queue-info-people" class="text-ctp-mauve text-3xl font-bold">-</p>
-                 </div>
-                 <div class="w-px bg-ctp-surface2"></div>
-                 <div class="flex flex-col items-center">
-                    <p class="text-ctp-subtext0 text-xs font-bold uppercase tracking-wider mb-1 text-center">Estimated<br>Wait Time</p>
-                    <p id="queue-info-wait" class="text-ctp-mauve text-3xl font-bold">-</p>
-                 </div>
+              <div id="queue-info-grid" class="bg-ctp-surface0 rounded-lg p-4 mb-6 w-full flex flex-col items-center border border-ctp-surface2">
+                <div id="queue-info-stats" class="flex flex-row justify-around w-full">
+                  <div class="flex flex-col items-center">
+                     <p class="text-ctp-subtext0 text-xs font-bold uppercase tracking-wider mb-1 text-center">Number of<br>People</p>
+                     <p id="queue-info-people" class="text-ctp-mauve text-3xl font-bold">-</p>
+                  </div>
+                  <div class="w-px bg-ctp-surface2"></div>
+                  <div class="flex flex-col items-center">
+                     <p class="text-ctp-subtext0 text-xs font-bold uppercase tracking-wider mb-1 text-center">Estimated<br>Wait Time</p>
+                     <p id="queue-info-wait" class="text-ctp-mauve text-3xl font-bold">-</p>
+                  </div>
+                </div>
+                <div id="queue-info-unavailable" class="hidden text-ctp-mauve text-xl font-bold py-2">
+                  Queue status is currently unavailable, try again later
+                </div>
               </div>
-              
-              <button id="queue-scan-btn" class="queue-action-btn w-full">Join Queue</button>
+              <p class="text-center text-ctp-text mb-6">Visit the 
+                <span id="queue-location-tag" class="cursor-pointer hover:opacity-70 transition-opacity active:scale-95 text-ctp-mauve text-[10px] font-bold uppercase tracking-wider inline-flex items-center gap-0.5 bg-ctp-surface1/50 px-2 py-0.5 rounded-full align-middle" data-booth-id="DS3">
+                  <span class="material-symbols-outlined text-[14px]">location_on</span>
+                  Escape Room
+                </span> 
+                and make payment before joining the queue with the "Join Queue" button below.</p>              
+              <button id="queue-scan-btn" class="queue-action-btn w-full">Payment made</button>
             </div>
 
             <!-- Screen 2: Scanner -->
@@ -563,6 +574,7 @@
                   Back
                 </button>
               </div>
+              <p class="text-center text-ctp-text mb-6">Scan QR code at the payment counter to join the queue</p>
               <p class="uppercase font-bold mb-3 text-center w-full" style="font-size: 11px; letter-spacing: 0.1em;">Align within frame</p>
               <div id="queue_qrcode_scanner" class="qr-scanner-container mx-auto">
                 <span class="material-symbols-outlined" style="font-size: 48px; opacity: 0.4;">qr_code_scanner</span>
