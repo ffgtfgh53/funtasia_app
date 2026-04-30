@@ -523,7 +523,9 @@
           <div class="modal-header">
             <div>
               <h1 class="modal-title" id="queue-modal-title">Escape Room Queue</h1>
-              <p class="modal-subtitle" id="queue-modal-subtitle">Check status or join the line</p>
+              <div class="flex flex-wrap items-center gap-2">
+                <p class="modal-subtitle" id="queue-modal-subtitle">Check status or join the line</p>
+              </div>
             </div>
             <button class="modal-close-btn" id="close-queue-btn">
               <span class="material-symbols-outlined text-[20px]">close</span>
@@ -534,21 +536,30 @@
             
             <!-- Screen 1: Instructions -->
             <div id="queue-screen-instructions" class="queue-screen active w-full flex-col">
-              <p class="text-center text-ctp-text mb-6">Visit the Escape Room and make payments before joining the queue with the "Join Queue" button below.</p>
               
-              <div class="bg-ctp-surface0 rounded-lg p-4 mb-6 w-full flex flex-row justify-around border border-ctp-surface2">
-                 <div class="flex flex-col items-center">
-                    <p class="text-ctp-subtext0 text-xs font-bold uppercase tracking-wider mb-1 text-center">Number of<br>People</p>
-                    <p id="queue-info-people" class="text-ctp-mauve text-3xl font-bold">-</p>
-                 </div>
-                 <div class="w-px bg-ctp-surface2"></div>
-                 <div class="flex flex-col items-center">
-                    <p class="text-ctp-subtext0 text-xs font-bold uppercase tracking-wider mb-1 text-center">Estimated<br>Wait Time</p>
-                    <p id="queue-info-wait" class="text-ctp-mauve text-3xl font-bold">-</p>
-                 </div>
+              <div id="queue-info-grid" class="bg-ctp-surface0 rounded-lg p-4 mb-6 w-full flex flex-col items-center border border-ctp-surface2">
+                <div id="queue-info-stats" class="flex flex-row justify-around w-full">
+                  <div class="flex flex-col items-center">
+                     <p class="text-ctp-subtext0 text-xs font-bold uppercase tracking-wider mb-1 text-center">Number of<br>People</p>
+                     <p id="queue-info-people" class="text-ctp-mauve text-3xl font-bold">-</p>
+                  </div>
+                  <div class="w-px bg-ctp-surface2"></div>
+                  <div class="flex flex-col items-center">
+                     <p class="text-ctp-subtext0 text-xs font-bold uppercase tracking-wider mb-1 text-center">Estimated<br>Wait Time</p>
+                     <p id="queue-info-wait" class="text-ctp-mauve text-3xl font-bold">-</p>
+                  </div>
+                </div>
+                <div id="queue-info-unavailable" class="hidden text-ctp-mauve text-xl font-bold py-2">
+                  Queue status is currently unavailable, try again later
+                </div>
               </div>
-              
-              <button id="queue-scan-btn" class="queue-action-btn w-full">Join Queue</button>
+              <p class="text-center text-ctp-text mb-6">Visit the 
+                <span id="queue-location-tag" class="cursor-pointer hover:opacity-70 transition-opacity active:scale-95 text-ctp-mauve text-[10px] font-bold uppercase tracking-wider inline-flex items-center gap-0.5 bg-ctp-surface1/50 px-2 py-0.5 rounded-full align-middle" data-booth-id="DS3">
+                  <span class="material-symbols-outlined text-[14px]">location_on</span>
+                  Escape Room
+                </span> 
+                and make payment before joining the queue with the "Join Queue" button below.</p>              
+              <button id="queue-scan-btn" class="queue-action-btn w-full">Payment made</button>
             </div>
 
             <!-- Screen 2: Scanner -->
@@ -559,6 +570,7 @@
                   Back
                 </button>
               </div>
+              <p class="text-center text-ctp-text mb-6">Scan QR code at the payment counter to join the queue</p>
               <p class="uppercase font-bold mb-3 text-center w-full" style="font-size: 11px; letter-spacing: 0.1em;">Align within frame</p>
               <div id="queue_qrcode_scanner" class="qr-scanner-container mx-auto">
                 <span class="material-symbols-outlined" style="font-size: 48px; opacity: 0.4;">qr_code_scanner</span>

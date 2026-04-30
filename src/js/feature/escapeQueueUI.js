@@ -1,6 +1,7 @@
 import * as escapeQueue from '@/js/helper/escapeQueue.js';
 import { startScanner, stopScanner, toggleTorch } from '@/js/helper/qrScanner.js';
 import { showToast } from '@/js/ui_ux/ui.js';
+import { focusOnBooth } from '@/js/feature/directory.js';
 
 /**
  * Initializes the Escape Room Queue UI logic.
@@ -13,6 +14,23 @@ export function initEscapeQueueUI() {
     const queueBackdrop = document.getElementById('queue-modal-backdrop');
     const queueModalTitle = document.getElementById('queue-modal-title');
     const queueModalSubtitle = document.getElementById('queue-modal-subtitle');
+
+    function updateGeneralStatusUI(total) {
+        const peopleEl = document.getElementById('queue-info-people');
+        const waitEl = document.getElementById('queue-info-wait');
+        const statsEl = document.getElementById('queue-info-stats');
+        const unavailableEl = document.getElementById('queue-info-unavailable');
+
+        if (total === '-' || total === null || total === undefined) {
+            statsEl?.classList.add('hidden');
+            unavailableEl?.classList.remove('hidden');
+        } else {
+            if (peopleEl) peopleEl.textContent = total;
+            if (waitEl) waitEl.textContent = `${total * 15} mins`;
+            statsEl?.classList.remove('hidden');
+            unavailableEl?.classList.add('hidden');
+        }
+    }
 
     const qScreens = {
         instructions: document.getElementById('queue-screen-instructions'),
@@ -116,10 +134,7 @@ export function initEscapeQueueUI() {
         onTick: (m, s) => {
             document.getElementById('queue-countdown').textContent = `${m}:${s}`;
         },
-        onGeneralStatus: (total) => {
-            document.getElementById('queue-info-people').textContent = total;
-            document.getElementById('queue-info-wait').textContent = `${total * 15} mins`;
-        }
+        onGeneralStatus: (total) => updateGeneralStatusUI(total)
     });
 
     // Page Load logic for ?t= token
@@ -164,14 +179,12 @@ export function initEscapeQueueUI() {
                 const res = await fetch(`/queue-api/queue?t=${Date.now()}`);
                 if (res.ok) {
                     const data = await res.json();
-                    document.getElementById('queue-info-people').textContent = data.total;
-                    document.getElementById('queue-info-wait').textContent = `${data.total * 15} mins`;
+                    updateGeneralStatusUI(data.total);
                 } else {
                     throw new Error();
                 }
             } catch {
-                document.getElementById('queue-info-people').textContent = '-';
-                document.getElementById('queue-info-wait').textContent = 'Queue unavailable';
+                updateGeneralStatusUI('-');
             }
         }
     });
@@ -260,4 +273,13 @@ export function initEscapeQueueUI() {
     };
     closeQueueBtn.addEventListener('click', closeHandler);
     queueBackdrop.addEventListener('click', closeHandler);
+
+    // Handle location tag click
+    document.getElementById('queue-location-tag')?.addEventListener('click', (e) => {
+        const boothId = e.currentTarget.dataset.boothId;
+        if (boothId) {
+            focusOnBooth(boothId);
+            closeHandler();
+        }
+    });
 }
