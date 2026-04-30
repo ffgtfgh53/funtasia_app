@@ -20,7 +20,9 @@ npm run build
 
 git checkout gh-pages
 
+# Remove all tracked files except CNAME
 git rm -r .
+git checkout gh-pages -- CNAME || :
 
 mv dist/* .
 
