@@ -103,6 +103,12 @@ export class Navigation {
              // Attempt to re-select the parent object
              let targetObj = appState.previousSelectedObject;
              
+             // Ensure the previous selection is actually the parent of the child floor we just left
+             // (Prevents stale selection when jumping between child models via the directory)
+             if (targetObj && targetObj.userData.child !== floorId) {
+                 targetObj = null;
+             }
+             
              // If no previously selected object, try to find it by matching the child floor ID
              if (!targetObj && appState.currentFloor && Floor.childModels[appState.currentFloor.id]) {
                  for (const [nodeName, childId] of Object.entries(Floor.childModels[appState.currentFloor.id])) {

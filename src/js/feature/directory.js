@@ -4,6 +4,7 @@ import { Floor } from "@/js/floor/floor.js";
 import { clearStoredBottomSheet, showBottomSheet, hideBottomSheet } from "@/js/ui_ux/ui.js";
 import { DirectoryMarker } from '@/js/marker/directorymarker.js';
 import { animateCameraTo } from '@/js/ui_ux/animate.js';
+import { focusOnObject } from "@/js/ui_ux/cameraUtils.js";
 
 let cachedFuntasiaData = null;
 
@@ -161,22 +162,28 @@ function getFilteredData(funtasiaData) {
       if (filterState.search) {
         const tokens = filterState.search.toLowerCase().trim().split(/\s+/);
         
-        const itemTagsRaw = item["tags"] || item["Tags"] || "";
+        const itemTagsRaw = item["tags"] || "";
         const itemTagsStr = Array.isArray(itemTagsRaw) ? itemTagsRaw.join(" ") : String(itemTagsRaw);
         
-        const invisibleTags = item["invis_tags"] || item["invis_tag"] || item["Invisible Tags"] || "";
+        const invisibleTags = item["invis_tags"] || "";
         const invisibleTagsStr = Array.isArray(invisibleTags) ? invisibleTags.join(" ") : String(invisibleTags);
 
         const keywords = item["Keywords"] || "";
         const keywordsStr = Array.isArray(keywords) ? keywords.join(" ") : String(keywords);
 
+        const levelStr = String(level || "");
+        const humanLevel = `level ${levelStr.replace(/[^0-9]/g, "")}`;
+
         const haystack = [
-          item["booth_name"] || item["Booth Name"] || "",
-          item["booth_description"] || item["Booth Description"] || "",
+          item["booth_name"] || "",
+          item["booth_description"] || "",
           itemTagsStr,
           invisibleTagsStr,
           keywordsStr,
-          boothId || ""
+          item["parent_model"] || "",
+          boothId || "",
+          levelStr,
+          humanLevel
         ].join(" ").toLowerCase();
 
         const allMatch = tokens.every(token => haystack.includes(token));
@@ -220,8 +227,8 @@ export async function focusOnBooth(boothNum, levelHint = null) {
     return;
   }
 
-  const boothName = item["booth_name"] || item["Booth Name"] || boothNum;
-  const boothDesc = item["booth_description"] || item["Booth Description"] || "No description available.";
+  const boothName = item["booth_name"] || boothNum;
+  const boothDesc = item["booth_description"] || "No description available.";
 
   // 1. Navigation Logic
   let targetFloorId = level;
@@ -265,31 +272,41 @@ export async function focusOnBooth(boothNum, levelHint = null) {
     appStateRef.activeDirectoryMarker = marker;
     appStateRef.activeMarkers.push(marker);
 
-    // Camera animation setup
-    const objectCenter = latestItem["Location"].clone().add(new THREE.Vector3(0, 1, 0));
-    const camPos = appStateRef.camera.position.clone();
-    const controlsTarget = appStateRef.controls.target.clone();
+    // 4. Camera Focus
+    // Find the interactive object in the scene to apply highlight and focus
+    const currentFloor = Floor.floors[targetFloorId];
+    const targetObject = currentFloor?.interactiveObjects?.find(obj => 
+      obj.userData.boothId === boothNum
+    );
 
-    const direction = new THREE.Vector3().subVectors(camPos, controlsTarget);
-    direction.y = 0;
-    if (direction.lengthSq() < 0.001) direction.set(0, 0, 1);
-    direction.normalize();
-
-    // Cardinal snapping
-    if (Math.abs(direction.x) > Math.abs(direction.z)) {
-      direction.set(Math.sign(direction.x), 0, 0);
+    if (targetObject) {
+      focusOnObject(targetObject, appStateRef);
     } else {
-      direction.set(0, 0, Math.sign(direction.z));
+      // Fallback: Camera animation using stored location coordinates if object is missing
+      const objectCenter = latestItem["Location"].clone().add(new THREE.Vector3(0, 1, 0));
+      const camPos = appStateRef.camera.position.clone();
+      const controlsTarget = appStateRef.controls.target.clone();
+
+      const direction = new THREE.Vector3().subVectors(camPos, controlsTarget);
+      direction.y = 0;
+      if (direction.lengthSq() < 0.001) direction.set(0, 0, 1);
+      direction.normalize();
+
+      if (Math.abs(direction.x) > Math.abs(direction.z)) {
+        direction.set(Math.sign(direction.x), 0, 0);
+      } else {
+        direction.set(0, 0, Math.sign(direction.z));
+      }
+
+      const markerBaseScale = 5;
+      const distance = markerBaseScale * (appStateRef.cameraAnim.viewDistanceFactor || 1.2);
+      const heightOffset = markerBaseScale * (appStateRef.cameraAnim.viewHeightFactor || 0.8);
+      const newCamPos = objectCenter.clone()
+        .add(direction.multiplyScalar(distance))
+        .add(new THREE.Vector3(0, heightOffset, 0));
+
+      animateCameraTo(appStateRef, newCamPos, objectCenter);
     }
-
-    const markerBaseScale = 5;
-    const distance = markerBaseScale * (appStateRef.cameraAnim.viewDistanceFactor || 1.2);
-    const heightOffset = markerBaseScale * (appStateRef.cameraAnim.viewHeightFactor || 0.8);
-    const newCamPos = objectCenter.clone()
-      .add(direction.multiplyScalar(distance))
-      .add(new THREE.Vector3(0, heightOffset, 0));
-
-    animateCameraTo(appStateRef, newCamPos, objectCenter);
   }
 
   // 4. Interaction messaging
@@ -352,7 +369,7 @@ function renderDirectory(container, funtasiaData) {
 
     const levelHeader = document.createElement("h3");
     levelHeader.className = "modal-section-title text-primary";
-    levelHeader.textContent = level;
+    levelHeader.textContent = level.toUpperCase();
     levelSection.appendChild(levelHeader);
 
     for (const [zone, items] of Object.entries(grouped[level])) {
@@ -372,9 +389,9 @@ function renderDirectory(container, funtasiaData) {
         const itemEl = document.createElement("div");
         itemEl.className = "modal-list-item";
 
-        let boothName = item["booth_name"] || item["Booth Name"] || "Unnamed Booth";
+        let boothName = item["booth_name"] || "Unnamed Booth";
         if (boothName === "-") boothName = "Unnamed Booth";
-        const boothDesc = item["booth_description"] || item["Booth Description"] || "No description available.";
+        const boothDesc = item["booth_description"] || "No description available.";
         const boothNum = item["Booth ID"];
         const itemTags = parseTags(item["tags"] || item["Tags"]);
 
