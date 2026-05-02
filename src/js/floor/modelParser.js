@@ -302,9 +302,24 @@ export function parseModel(gltf, floorId, scene, funtasiaData, dataFloorId = flo
       logicalNode.name = `${floorId}_Object_${objects.length + 1}`;
     }
     logicalNode.userData.boothId = lookupName;
+    
+    // Detect if this object belongs to a parent model (e.g. Canteen, ISH)
+    let parentModelName = null;
+    const levelChildren = Floor.childModels[dataFloorId] || {};
+    let p = logicalNode.parent;
+    while (p && p !== model) {
+      if (levelChildren[p.name]) {
+        parentModelName = p.name;
+        break;
+      }
+      p = p.parent;
+    }
 
     if (funtasiaData && funtasiaData[dataFloorId] && funtasiaData[dataFloorId][lookupName]) {
       const entry = funtasiaData[dataFloorId][lookupName];
+      if (parentModelName) {
+        entry["parent_model"] = parentModelName;
+      }
       const boothName = entry["booth_name"];
       if (boothName && boothName !== "-") {
         logicalNode.name = boothName;

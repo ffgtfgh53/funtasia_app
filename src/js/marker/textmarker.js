@@ -26,7 +26,7 @@ export class TextMarker extends Marker {
     this.name = name;
     
     // Default marker height above the position
-    this.markerHeight = 0.8;
+    this.markerHeight = 0.4;
 
     this._textLabelGroup = new THREE.Group();
 
