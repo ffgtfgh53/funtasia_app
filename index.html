@@ -78,7 +78,7 @@
       Clear directory marker
     </button>
 
-    <div id="welcome-modal-wrapper" class="flex modal-wrapper">
+    <div id="welcome-modal-wrapper" class="modal-wrapper">
       <div class="modal-container">
         <div class="modal-backdrop" id="welcome-modal-backdrop"></div>
         <div class="modal-card items-center">
@@ -554,10 +554,10 @@
               <div id="queue_qrcode_scanner" class="qr-scanner-container mx-auto">
                 <span class="material-symbols-outlined" style="font-size: 48px; opacity: 0.4;">qr_code_scanner</span>
               </div>
-              <button id="queue-qr-flash-btn" class="qr-flash-btn">
-                <span class="material-symbols-outlined text-[20px]" id="queue-qr-flash-icon">flashlight_off</span>
-                Toggle Flash
-              </button>
+              <div id="queue-camera-loading" class="hidden items-center justify-center gap-3 text-ctp-mauve mt-6">
+                <span class="material-symbols-outlined animate-[spin_2s_ease-in-out_infinite] text-[28px]">hourglass_empty</span>
+                <span class="font-bold text-lg">Fetching Camera</span>
+              </div>
               <p id="queue-scan-error" class="queue-error-text mt-4 text-center"></p>
             </div>
 
