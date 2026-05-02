@@ -25,13 +25,6 @@ export default defineConfig({
     port:5317,
     allowedHosts: ["chunky-toaster.seagull-hippocampus.ts.net","broken-toaster.seagull-hippocampus.ts.net"],
     host:true,
-    proxy: {
-      '/queue-api': {
-        target: 'http://127.0.0.1:3000',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/queue-api/, '/api'),
-      },
-    },
   },
   build: {
     rollupOptions: {
