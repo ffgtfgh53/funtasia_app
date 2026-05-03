@@ -67,6 +67,7 @@ export async function switchEventCategory(category) {
 
         let html = '';
         let currentEventID = null;
+        console.log(data_arr)
         data_arr.forEach((data, index) => {
             if (!data.events || data.events.length === 0) {
                 eventsListContainer.innerHTML = '<p class="text-center opacity-50 py-10">No events scheduled in this category.</p>';
@@ -75,8 +76,8 @@ export async function switchEventCategory(category) {
             const eventID = "events-item-" + (index + 1)
             html += `
             <header id="${eventID}" class="text-left sticky -top-8 -left-4 bg-ctp-base text-ctp-base min-h-28 z-50 w-[calc(100%+var(--spacing)*4)]" style="contain: layout paint;">
-                <div class="flex flex-row mb-1 justify-items-center w-full ml-4 mt-8">
-                    <h1 class="font-headline text-3xl font-bold tracking-tight text-ctp-text leading-none mr-2">${data.title}</h1>
+                <div class="flex flex-col mb-1 items-start w-full ml-4 mt-8 gap-2">
+                    <h1 class="font-headline text-3xl font-bold tracking-tight text-ctp-text leading-none">${data.title}</h1>
                     <span class="events-location cursor-pointer hover:opacity-70 transition-opacity active:scale-95" data-booth-id="${data.location_id || data.location}">
                         <span class="material-symbols-outlined text-[12px]">location_on</span>${data.location}
                     </span>
@@ -85,6 +86,7 @@ export async function switchEventCategory(category) {
             </header>
             <div class="events-timeline">
             `;            
+            console.log(data.location_id)
 
             const now = new Date();
             const currentMinutes = now.getHours() * 60 + now.getMinutes();

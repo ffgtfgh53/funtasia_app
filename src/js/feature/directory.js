@@ -87,7 +87,7 @@ export function setDirectoryListData(processedData) {
   const container = document.getElementById("funtasia-directory-list");
   if (container) {
     // Re-populate tags and re-render with the latest processed data
-    populateTagChips(cachedFuntasiaData);
+    initCustomFilters(cachedFuntasiaData);
     applyFilters();
   }
 }
@@ -392,7 +392,7 @@ function renderDirectory(container, funtasiaData) {
 
         let boothName = item["booth_name"] || "Unnamed Booth";
         if (boothName === "-") boothName = "Unnamed Booth";
-        const boothDesc = item["booth_oneline_description"] || item["booth_description"] || "No description available.";
+        const boothDesc = item["booth_oneline_description"] || item["booth_description"] || "";
         const boothNum = item["Booth ID"];
         const itemTags = parseTags(item["tags"] || item["Tags"]);
 
@@ -429,37 +429,183 @@ function renderDirectory(container, funtasiaData) {
   });
 }
 
-/* ── Tag Chip Population ─────────────────────────────────── */
+/* ── Tag Multiselect ─────────────────────────────────────── */
 
-function populateTagChips(funtasiaData) {
-  const tagsContainer = document.getElementById("filter-tags-container");
-  if (!tagsContainer) return;
+/** Injects a <style> block with per-tag colours for Choices.js pills */
+function injectTagColorStyles() {
+  const existing = document.getElementById("choices-tag-colors");
+  if (existing) existing.remove();
 
-  tagsContainer.innerHTML = "";
-  const allTags = collectAllTags(funtasiaData);
+  const style = document.createElement("style");
+  style.id = "choices-tag-colors";
 
-  allTags.forEach(tag => {
-    const chip = document.createElement("button");
-    chip.className = "filter-chip";
-    chip.textContent = tag;
-    const color = tagColorMap[tag] || fallbackTagColor;
-    chip.style.setProperty("--chip-color", color);
+  const rules = Object.entries(tagColorMap).map(([tag, color]) => `
+    .custom-dropdown-menu .custom-dropdown-item[data-value="${tag}"].selected {
+      color: ${color};
+    }
+    .custom-dropdown-menu .custom-dropdown-item[data-value="${tag}"].selected::after {
+      color: ${color};
+    }
+    #selected-tags-container .tag-pill[data-value="${tag}"] {
+      border-color: ${color};
+      background: color-mix(in srgb, ${color} 15%, transparent);
+      color: ${color};
+    }
+  `);
 
-    if (filterState.tags.has(tag)) chip.classList.add("active");
+  style.textContent = rules.join("");
+  document.head.appendChild(style);
+}
 
-    chip.addEventListener("click", () => {
-      if (filterState.tags.has(tag)) {
-        filterState.tags.delete(tag);
-        chip.classList.remove("active");
-      } else {
-        filterState.tags.add(tag);
-        chip.classList.add("active");
-      }
-      applyFilters();
-    });
+/** Updates the manual filter trigger UI based on filterState */
+function updateFilterUI() {
+  // 1. Tags
+  const tagContainer = document.getElementById("selected-tags-container");
+  const tagPlaceholder = document.getElementById("multiselect-placeholder");
+  if (tagContainer && tagPlaceholder) {
+    tagContainer.innerHTML = "";
+    if (filterState.tags.size === 0) {
+      tagPlaceholder.style.display = "block";
+    } else {
+      tagPlaceholder.style.display = "none";
+      filterState.tags.forEach(tag => {
+        const pill = document.createElement("span");
+        pill.className = "tag-pill";
+        pill.dataset.value = tag;
+        pill.innerHTML = `
+          ${tag}
+          <span class="remove-btn material-symbols-outlined" onclick="event.stopPropagation(); window.toggleTagSelection('${tag.replace(/'/g, "\\'")}');">close</span>
+        `;
+        tagContainer.appendChild(pill);
+      });
+    }
+  }
 
-    tagsContainer.appendChild(chip);
+  // 2. Level Label
+  const levelLabel = document.getElementById("filter-level-label");
+  if (levelLabel) {
+    levelLabel.textContent = filterState.level ? filterState.level.toUpperCase() : "All Levels";
+  }
+
+  // 3. Zone Label
+  const zoneLabel = document.getElementById("filter-zone-label");
+  if (zoneLabel) {
+    zoneLabel.textContent = filterState.zone || "All Zones";
+  }
+
+  // 4. Update menu item states
+  document.querySelectorAll(".custom-dropdown-item").forEach(item => {
+    const val = item.dataset.value;
+    const filterType = item.dataset.filter;
+    let isSelected = false;
+
+    if (filterType === "tags") isSelected = filterState.tags.has(val);
+    else if (filterType === "level") isSelected = (filterState.level === val);
+    else if (filterType === "zone") isSelected = (filterState.zone === val);
+
+    item.classList.toggle("selected", isSelected);
   });
+}
+
+/** Toggles a tag in the filter state */
+window.toggleTagSelection = function(tag) {
+  if (filterState.tags.has(tag)) filterState.tags.delete(tag);
+  else filterState.tags.add(tag);
+  updateFilterUI();
+  applyFilters();
+};
+
+/** Sets level filter */
+window.setLevelFilter = function(val) {
+  filterState.level = val;
+  document.getElementById("filter-level-menu")?.classList.add("hidden");
+  updateFilterUI();
+  applyFilters();
+};
+
+/** Sets zone filter */
+window.setZoneFilter = function(val) {
+  filterState.zone = val;
+  document.getElementById("filter-zone-menu")?.classList.add("hidden");
+  updateFilterUI();
+  applyFilters();
+};
+
+/** Initialises all custom manual dropdowns */
+function initCustomFilters(funtasiaData) {
+  const closeAllMenus = () => {
+    ["tags", "level", "zone"].forEach(f => {
+      document.getElementById(`filter-${f}-menu`)?.classList.add("hidden");
+    });
+  };
+
+  // 1. Tags
+  const tagTrigger = document.getElementById("filter-tags-trigger");
+  const tagMenu = document.getElementById("filter-tags-menu");
+  if (tagTrigger && tagMenu) {
+    const allTags = collectAllTags(funtasiaData);
+    tagMenu.innerHTML = allTags.map(tag => `
+      <div class="custom-dropdown-item" data-filter="tags" data-value="${tag}" onclick="window.toggleTagSelection('${tag.replace(/'/g, "\\'")}');">
+        ${tag}
+      </div>
+    `).join("");
+    tagTrigger.onclick = (e) => { 
+      e.stopPropagation(); 
+      const isHidden = tagMenu.classList.contains("hidden");
+      closeAllMenus();
+      if (isHidden) tagMenu.classList.remove("hidden");
+    };
+  }
+
+  // 2. Levels
+  const levelTrigger = document.getElementById("filter-level-trigger");
+  const levelMenu = document.getElementById("filter-level-menu");
+  if (levelTrigger && levelMenu) {
+    const levels = ["", "b3", "b2", "b1", "l1", "l2"];
+    levelMenu.innerHTML = levels.map(l => `
+      <div class="custom-dropdown-item" data-filter="level" data-value="${l}" onclick="window.setLevelFilter('${l}');">
+        ${l ? l.toUpperCase() : "All Levels"}
+      </div>
+    `).join("");
+    levelTrigger.onclick = (e) => { 
+      e.stopPropagation(); 
+      const isHidden = levelMenu.classList.contains("hidden");
+      closeAllMenus();
+      if (isHidden) levelMenu.classList.remove("hidden");
+    };
+  }
+
+  // 3. Zones
+  const zoneTrigger = document.getElementById("filter-zone-trigger");
+  const zoneMenu = document.getElementById("filter-zone-menu");
+  if (zoneTrigger && zoneMenu) {
+    const zones = ["", "Yellow", "Green", "Blue", "Red", "Purple", "Orange", "Brown"];
+    zoneMenu.innerHTML = zones.map(z => `
+      <div class="custom-dropdown-item" data-filter="zone" data-value="${z}" onclick="window.setZoneFilter('${z}');">
+        ${z || "All Zones"}
+      </div>
+    `).join("");
+    zoneTrigger.onclick = (e) => { 
+      e.stopPropagation(); 
+      const isHidden = zoneMenu.classList.contains("hidden");
+      closeAllMenus();
+      if (isHidden) zoneMenu.classList.remove("hidden");
+    };
+  }
+
+  // 4. Global close logic
+  document.addEventListener("click", (e) => {
+    ["tags", "level", "zone"].forEach(f => {
+      const trigger = document.getElementById(`filter-${f}-trigger`);
+      const menu = document.getElementById(`filter-${f}-menu`);
+      if (trigger && menu && !trigger.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.add("hidden");
+      }
+    });
+  });
+
+  injectTagColorStyles();
+  updateFilterUI();
 }
 
 /* ── Filter Application ──────────────────────────────────── */
@@ -480,23 +626,9 @@ function bindFilterEvents() {
       filterState.search = e.target.value;
       applyFilters();
     });
-  }
 
-  // Level dropdown
-  const levelSelect = document.getElementById("filter-level");
-  if (levelSelect) {
-    levelSelect.addEventListener("change", (e) => {
-      filterState.level = e.target.value;
-      applyFilters();
-    });
-  }
-
-  // Zone dropdown
-  const zoneSelect = document.getElementById("filter-zone");
-  if (zoneSelect) {
-    zoneSelect.addEventListener("change", (e) => {
-      filterState.zone = e.target.value;
-      applyFilters();
+    searchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") searchInput.blur();
     });
   }
 
@@ -509,17 +641,10 @@ function bindFilterEvents() {
       filterState.zone = "";
       filterState.tags.clear();
 
-      // Reset UI controls
       if (searchInput) searchInput.value = "";
-      if (levelSelect) levelSelect.value = "";
-      if (zoneSelect) zoneSelect.value = "";
-
-      // Reset tag chips
-      document.querySelectorAll("#filter-tags-container .filter-chip").forEach(chip => {
-        chip.classList.remove("active");
-      });
-
+      updateFilterUI();
       applyFilters();
+      clearBtn.blur();
     });
   }
 }
@@ -536,9 +661,9 @@ export function initDirectory(appState) {
   bindFilterEvents();
 
   if (cachedFuntasiaData) {
-    populateTagChips(cachedFuntasiaData);
+    initCustomFilters(cachedFuntasiaData);
     renderDirectory(container, cachedFuntasiaData);
   } else {
-    container.innerHTML = "Loading directory data..."; 
+    container.innerHTML = "Loading directory data...";
   }
 }
