@@ -41,6 +41,24 @@
     .modal-content {
         @apply px-2 py-4 overflow-y-scroll overflow-x-hidden space-y-8 -z-50;
     }
+
+
+    .modal-content::-webkit-scrollbar {
+        width:5px;
+    }
+    .modal-content::-webkit-scrollbar-track {
+        background: transparent;
+        margin-block:25px;
+    }
+    .modal-content::-webkit-scrollbar-thumb {
+        background: var(--color-ctp-surface2);
+        border-radius: 100vw;
+        border: 2px solid transparent;
+    }
+    .modal-content::-webkit-scrollbar-thumb:hover {
+        background: var(--color-ctp-mauve-50);
+    }
+
     .modal-search-wrapper {
         @apply relative flex items-center rounded-2xl;
     }
@@ -105,11 +123,16 @@
         letter-spacing: 0.08em;
     }
     .filter-clear-btn {
-        @apply text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-lg transition-all cursor-pointer text-ctp-base bg-ctp-red-900;
+        @apply text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-lg transition-colors duration-150 cursor-pointer text-ctp-base bg-ctp-red-900;
         border: none;
     }
-    .filter-clear-btn:hover {
-        @apply text-ctp-red bg-ctp-red-950;
+    @media (hover: hover) {
+        .filter-clear-btn:hover {
+            @apply text-ctp-red bg-ctp-red-950;
+        }
+    }
+    .filter-clear-btn:focus {
+        @apply outline-none;
     }
     .filter-clear-btn:active {
         transform: scale(0.95);
@@ -135,32 +158,64 @@
         box-shadow: 0 0 0 2px var(--color-ctp-mauve-700);
     }
 
-    /* ── Tag Chips ──────────────────────────────── */
-    .filter-chips-container {
-        @apply flex flex-wrap gap-2;
+
+    /* ── Tag Multiselect (Choices.js overrides) ────────── */
+    /* ── Custom Multiselect ────────────────────── */
+    .multiselect-trigger {
+        @apply relative transition-all duration-200;
     }
-    .filter-chip {
-        @apply inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider cursor-pointer transition-all select-none bg-ctp-surface0;
-        border: 1px solid color-mix(in srgb, var(--color-ctp-surface0) 60%, transparent);
+    .multiselect-trigger:active {
+        @apply scale-[0.98] bg-ctp-surface1;
     }
-    .filter-chip:hover {
-        @apply bg-ctp-surface2;
-        border-color: var(--color-ctp-subtext0);
+    .custom-dropdown-menu {
+        @apply backdrop-blur-md overflow-y-auto overflow-x-hidden rounded-xl;
+        background-color: color-mix(in srgb, var(--color-ctp-mantle) 85%, transparent);
+        border: 1px solid color-mix(in srgb, var(--color-outline-variant) 20%, transparent);
+        box-shadow: 0 16px 48px color-mix(in srgb, var(--color-ctp-crust) 40%, transparent);
+    
     }
-    .filter-chip.active {
-        border-color: var(--chip-color, var(--color-ctp-mauve));
-        background: color-mix(in srgb, var(--chip-color, var(--color-ctp-mauve)) 15%, transparent);
-        color: var(--chip-color, var(--color-ctp-mauve));
+    
+    .custom-dropdown-menu::-webkit-scrollbar {
+        width:5px;
     }
-    .filter-chip.active:hover {
-        background: color-mix(in srgb, var(--chip-color, var(--color-ctp-mauve)) 32%, transparent);
+    .custom-dropdown-menu::-webkit-scrollbar-track {
+        background: color-mix(in srgb, var(--color-ctp-surface0) 40%, transparent);
+        border-radius: 100vw;
+        margin-block: 20px; /* Inset from top/bottom */
+    }
+    .custom-dropdown-menu::-webkit-scrollbar-thumb {
+        background: var(--color-ctp-surface2);
+        border-radius: 100vw;
+        border: 2px solid transparent;
+    }
+    .custom-dropdown-menu::-webkit-scrollbar-thumb:hover {
+        background: var(--color-ctp-mauve);
+    }
+    .custom-dropdown-item {
+        @apply flex items-center justify-between px-4 py-2 mx-2 my-1 text-[11px] font-bold uppercase tracking-wider text-ctp-text cursor-pointer transition-all rounded-full hover:bg-ctp-surface1/50;
+    }
+    .custom-dropdown-item.selected {
+        @apply text-ctp-mauve bg-ctp-surface0/80;
+    }
+    .custom-dropdown-item.selected::after {
+        font-family: 'Material Symbols Outlined';
+        content: 'check';
+        font-size: 16px;
+        text-transform: none;
+        font-variation-settings: 'opsz' 20, 'wght' 600;
+        line-height: 1;
     }
 
     /* ── Tag Pills (inline in list items) ──────── */
     .tag-pill {
-        @apply inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider;
+        @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all;
         background: color-mix(in srgb, var(--pill-color, var(--color-ctp-mauve)) 12%, transparent);
         color: var(--pill-color, var(--color-ctp-mauve));
+        border: 1px solid color-mix(in srgb, var(--pill-color, var(--color-ctp-mauve)) 30%, transparent);
+    }
+    .tag-pill .remove-btn {
+        @apply material-symbols-outlined text-[14px] cursor-pointer hover:bg-ctp-text/10 rounded-full transition-colors;
+        font-variation-settings: 'opsz' 20, 'wght' 600;
     }
 
     /* ── Divider between filter and list ────────── */
