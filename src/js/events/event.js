@@ -63,8 +63,6 @@ export function setupEventListeners(appState) {
   */
   window.addEventListener("touchmove", (event) => {
     if (isPointerOverUI(event)) return;
-    // TODO: Achieve a DOLLY_ROTATE setup such that both actions only occur when the conditions are met but can occur simulatenously in that same period
-    // [GUESTURE ISOLATION] Process gesture detection
     if (event.touches.length === 2 && prevTouches.length === 2) {
       const p1 = prevTouches[0];
       const p2 = prevTouches[1];
