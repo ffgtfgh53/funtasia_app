@@ -453,7 +453,7 @@
       "location": ""
     },
     "O2": {
-      "booth_name": "PA Busking Booth",
+      "booth_name": "Busking @ Linkway",
       "tags": "Performance",
       "invis_tags": [
         "PA",
@@ -1001,7 +1001,7 @@
       "location": ""
     },
     "LT5": {
-      "booth_name": "IP OH CCA Performances",
+      "booth_name": "CCA Performances @ LT5",
       "tags": "Performance",
       "invis_tags": [
         "Malay Dance",
