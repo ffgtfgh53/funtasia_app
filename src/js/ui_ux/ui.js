@@ -137,7 +137,7 @@ export function showBottomSheet(objectName, childFloorId = null, description = n
     if (locationInfo.title.toLowerCase().includes("escape room")) {
       escapeRoomBtn.style.display = "flex";
       escapeRoomBtn.onclick = () => {
-        window.open("https://queue.njcfuntasia.com", "_blank");
+        window.open("https://escape-room.njcfuntasia.com", "_blank");
       };
     } else {
       escapeRoomBtn.style.display = "none";
