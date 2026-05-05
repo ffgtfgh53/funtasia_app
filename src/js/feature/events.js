@@ -167,7 +167,7 @@ export async function switchEventCategory(category) {
                     ev.songs.forEach(song => {
                         songsHtml += `
                         <div class="flex items-center gap-3 my-4">
-                            <span class="material-symbols-outlined text-[18px] text-ctp-mauve-800">${song.icon ? song.icon : "music_note"}</span>
+                            <span class="material-symbols-outlined text-[18px] text-ctp-text">${song.icon ? song.icon : "music_note"}</span>
                             <div class="flex flex-col gap-0.5">
                                 <span class="font-headline font-bold text-[12px] text-ctp-text uppercase tracking-wider">${song.title}</span>
                                 <span class="font-body text-[10px] text-ctp-mauve font-bold uppercase tracking-widest">${song.author}</span>
