@@ -220,7 +220,7 @@ export function parseModel(gltf, floorId, scene, funtasiaData, dataFloorId = flo
       if (!markerNames.has(logicalNode.name)) {
         const pos = child.getWorldPosition(new THREE.Vector3());
         pos.y = 0;
-        const tm = new TextMarker(scene, pos, textMarkerMap[floorKey][logicalNode.name], floorId);
+        const tm = new TextMarker(model, pos, textMarkerMap[floorKey][logicalNode.name], floorId);
         if (tm.group) tm.group.visible = false;
         textMarkers.push(tm);
         markerNames.add(logicalNode.name);
@@ -266,7 +266,7 @@ export function parseModel(gltf, floorId, scene, funtasiaData, dataFloorId = flo
         }
         if (normalisedRole) {
           const pos = child.getWorldPosition(new THREE.Vector3());
-          new Icon(normalisedRole, pos, floorId);
+          new Icon(model, normalisedRole, pos, floorId);
         }
       }
     }

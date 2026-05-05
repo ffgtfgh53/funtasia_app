@@ -1,6 +1,8 @@
 import * as THREE from "three";
 import { Marker, FONT_URL } from "@/js/marker/marker.js";
+import { floorOrder } from "@/js/events/navigation.js";
 import { Text } from "troika-three-text";
+import { Floor } from "@/js/floor/floor.js";
 
 export class TextMarker extends Marker {
   static allTextMarkers = [];
@@ -20,9 +22,9 @@ export class TextMarker extends Marker {
    * @param {string} name - The text to render.
    * @param {string} level - The level/floor ID this marker belongs to.
    */
-  constructor(scene, position, name, level) {
-    super(position, level);
-    this.scene = scene;
+  constructor(parent, position, name, level) {
+    super(parent, position, level);
+    this.scene = parent || Marker.scene || (this.appState ? this.appState.scene : null);
     this.name = name;
     
     // Default marker height above the position
@@ -89,8 +91,19 @@ export class TextMarker extends Marker {
 
   // Helper method to sync visibility across instances
   static updateVisibility() {
+    const activeFloor = Floor.floors[TextMarker.activeLevel];
+    const isViewingChild = !!activeFloor?.parentFloorId;
+    const activeRefFloorId = activeFloor?.parentFloorId || TextMarker.activeLevel;
+    const activeIdx = floorOrder.indexOf(activeRefFloorId);
+
     Object.keys(TextMarker.textMarkersByLevel).forEach((level) => {
-      const isLevelActive = (level === TextMarker.activeLevel);
+      const markerFloor = Floor.floors[level];
+      const markerRefFloorId = markerFloor?.parentFloorId || level;
+      const levelIdx = floorOrder.indexOf(markerRefFloorId);
+      
+      const isGhost = !isViewingChild && window.ghostLayersEnabled && levelIdx < activeIdx && activeIdx !== -1;
+      const isLevelActive = (level === TextMarker.activeLevel) || isGhost;
+
       TextMarker.textMarkersByLevel[level].forEach((marker) => {
         if (marker.group) {
           marker.group.visible = TextMarker.textMarkersVisible && isLevelActive;
@@ -107,8 +120,20 @@ export class TextMarker extends Marker {
   animate(time, camera) {
     if (!this.group) return;
 
+    const activeFloor = Floor.floors[TextMarker.activeLevel];
+    const isViewingChild = !!activeFloor?.parentFloorId;
+    const activeRefFloorId = activeFloor?.parentFloorId || TextMarker.activeLevel;
+    const activeIdx = floorOrder.indexOf(activeRefFloorId);
+
+    const markerFloor = Floor.floors[this.level];
+    const markerRefFloorId = markerFloor?.parentFloorId || this.level;
+    const levelIdx = floorOrder.indexOf(markerRefFloorId);
+
+    const isGhost = !isViewingChild && window.ghostLayersEnabled && levelIdx < activeIdx && activeIdx !== -1;
+    const isLevelActive = (this.level === TextMarker.activeLevel) || isGhost;
+
     // Ensure visibility is correct
-    const isVisible = TextMarker.textMarkersVisible && this.level === TextMarker.activeLevel;
+    const isVisible = TextMarker.textMarkersVisible && isLevelActive;
     this.group.visible = isVisible;
 
     if (!isVisible) return;

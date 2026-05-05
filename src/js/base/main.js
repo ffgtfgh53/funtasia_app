@@ -83,6 +83,10 @@ async function initApp() {
   SettingsController.init('settings-content-area');
   const visualsSection = SettingsController.addSection('Visual Preferences');
   const controlsSection = SettingsController.addSection('Controls');
+  
+  // Initialize Ghost Layers state from local storage (defaulting to true)
+  window.ghostLayersEnabled = localStorage.getItem('funtasia-ghost-layers') !== 'false';
+  
   if (visualsSection) {
     SettingsController.addToggle(
       visualsSection,
@@ -90,6 +94,17 @@ async function initApp() {
       'Toggle 3D points of interest markers',
       (state) => { Icon.state(state); },
       Icon.iconsVisible !== false
+    );
+    SettingsController.addToggle(
+      visualsSection,
+      'Ghost Layers',
+      'View lower levels as translucent layers',
+      (state) => {
+          localStorage.setItem('funtasia-ghost-layers', state);
+          window.ghostLayersEnabled = state;
+          if (window.updateFloorVisibilities) window.updateFloorVisibilities();
+      },
+      window.ghostLayersEnabled
     );
     SettingsController.addToggle(
       visualsSection,

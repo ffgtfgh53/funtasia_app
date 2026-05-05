@@ -3,7 +3,9 @@ Function: animate() -> Main animation loop
 */
 
 import { Icon } from "@/js/marker/icon.js";
+import { Floor } from "@/js/floor/floor.js";
 import { TextMarker } from "@/js/marker/textmarker.js";
+import { Navigation, floorOrder } from "@/js/events/navigation.js";
 
 export function animateCameraTo(appState, cameraTarget, controlsTarget, isSystemAction = false, lerpFactor = 0.05) {
   appState.cameraAnim.controlsTarget.copy(controlsTarget);
@@ -51,7 +53,26 @@ export function startAnimationLoop(appState) {
 
     appState.controls.update();
     
-    
+    /*
+    Animate floor transitions (Ghost Layers sliding)
+    */
+    const activeFloorId = Navigation.appState?.currentFloor?.id;
+    Object.values(Floor.floors).forEach((floor) => {
+      if (floor.sceneModel && floor.sceneModel.visible) {
+        const dist = floor.targetY - floor.sceneModel.position.y;
+        if (Math.abs(dist) > 0.01) {
+          floor.sceneModel.position.y += dist * 0.1;
+        } else {
+          // If floor has finished flying out to the top, hide it
+          const floorIdx = floorOrder.indexOf(floor.id);
+          const targetIdx = floorOrder.indexOf(activeFloorId);
+          if (floorIdx > targetIdx && targetIdx !== -1) {
+            floor.sceneModel.visible = false;
+          }
+        }
+      }
+    });    
+
     const time = performance.now();
     /*
     Animate markers

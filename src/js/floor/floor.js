@@ -32,6 +32,7 @@ export class Floor {
     this.parentFloorId = null; // Set dynamically if this is a child model
 
     this.sceneModel = null;
+    this.targetY = 0;
     this.interactiveObjects = [];
     this.textMarkers = [];
     
@@ -61,12 +62,16 @@ export class Floor {
    */
   async load(appState, funtasiaData) {
     if (this.isLoaded()) return;
+    if (this._loading) return; // Prevent multiple simultaneous loads
+
+    this._loading = true;
 
     const gltf = await loadModel(this.modelPath);
     const parsingId = this.parentFloorId || this.id;
     const result = parseModel(gltf, this.id, appState.scene, funtasiaData, parsingId);
     this.attachParsedData(result.model, result.interactiveObjects, result.cameraConfig, result.textMarkers);
     
+    this._loading = false;
     window.dispatchEvent(new CustomEvent("floorReady", { detail: { floorId: this.id } }));
     console.log(`[Floor] Parsed ${this.id}: ${result.interactiveObjects.length} interactive meshes.`);
   }

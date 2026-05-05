@@ -777,6 +777,20 @@
         });
       }
 
+      // // Ghost Layers Toggle Logic
+      // const ghostToggle = document.getElementById('ghost-layers-toggle');
+      // if (ghostToggle) {
+      //   const savedGhost = localStorage.getItem('funtasia-ghost-layers') !== 'false';
+      //   ghostToggle.checked = savedGhost;
+      //   window.ghostLayersEnabled = savedGhost;
+
+      //   ghostToggle.addEventListener('change', (e) => {
+      //     localStorage.setItem('funtasia-ghost-layers', e.target.checked);
+      //     window.ghostLayersEnabled = e.target.checked;
+      //     if (window.updateFloorVisibilities) window.updateFloorVisibilities();
+      //   });
+      // }
+
       // Auto-focus logic for manual input
       const inputs = document.querySelectorAll('.qr-code-input');
       inputs.forEach((input, index) => {

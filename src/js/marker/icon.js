@@ -1,5 +1,7 @@
 import * as THREE from "three";
 import { Marker } from "./marker.js";
+import { floorOrder } from "@/js/events/navigation.js";
+import { Floor } from "@/js/floor/floor.js";
 
 const BASE = ASSETS_BASE_URL;
 
@@ -26,8 +28,8 @@ export class Icon extends Marker {
   // Track icons mapped by their level
   static iconsByLevel = {};
 
-  constructor(type, position, level) {
-    super(position, level);
+  constructor(parent, type, position, level) {
+    super(parent, position, level);
     
     this.icontype = type;
     this.iconPath = Icon.iconPaths[this.icontype]; 
@@ -91,8 +93,20 @@ export class Icon extends Marker {
 
   // Helper method to sync visibility across instances, optimized for levels
   static updateVisibility() {
+    const activeFloor = Floor.floors[Icon.activeLevel];
+    const isViewingChild = !!activeFloor?.parentFloorId;
+    const activeRefFloorId = activeFloor?.parentFloorId || Icon.activeLevel;
+    const activeIdx = floorOrder.indexOf(activeRefFloorId);
+
     Object.keys(Icon.iconsByLevel).forEach((level) => {
-      const isLevelActive = (level === Icon.activeLevel);
+      const iconFloor = Floor.floors[level];
+      const iconRefFloorId = iconFloor?.parentFloorId || level;
+      const levelIdx = floorOrder.indexOf(iconRefFloorId);
+      
+      // If child active, hide all ghosts. Otherwise, standard ghost logic.
+      const isGhost = !isViewingChild && window.ghostLayersEnabled && levelIdx < activeIdx && activeIdx !== -1;
+      const isLevelActive = (level === Icon.activeLevel) || isGhost;
+
       Icon.iconsByLevel[level].forEach((icon) => {
         if (icon.group) {
           icon.group.visible = Icon.iconsVisible && isLevelActive;
@@ -117,9 +131,20 @@ export class Icon extends Marker {
     // 1. Zoom out: Cap at original size
     const finalScale = Math.min(this.baseScale, targetScale);
     
-    // 2. Zoom in: Hide if less than a quarter of original size
-    const isVisible = finalScale >= (this.baseScale / 4.5) && Icon.iconsVisible && this.level === Icon.activeLevel;
+    const activeFloor = Floor.floors[Icon.activeLevel];
+    const isViewingChild = !!activeFloor?.parentFloorId;
+    const activeRefFloorId = activeFloor?.parentFloorId || Icon.activeLevel;
+    const activeIdx = floorOrder.indexOf(activeRefFloorId);
     
+    const iconFloor = Floor.floors[this.level];
+    const iconRefFloorId = iconFloor?.parentFloorId || this.level;
+    const levelIdx = floorOrder.indexOf(iconRefFloorId);
+    const isGhost = !isViewingChild && window.ghostLayersEnabled && levelIdx < activeIdx && activeIdx !== -1;
+    const isLevelActive = (this.level === Icon.activeLevel) || isGhost;
+
+    // 2. Zoom in: Hide if less than a quarter of original size
+    const isVisible = finalScale >= (this.baseScale / 4.5) && Icon.iconsVisible && isLevelActive;
+
     this.group.visible = isVisible;
     if (isVisible) {
       this.indicator.scale.set(finalScale * this.aspect, finalScale, 1);

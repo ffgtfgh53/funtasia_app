@@ -12,20 +12,27 @@ export class Marker {
   static appState = null;
   static scene = null;
 
-  constructor(position, level) {
+  constructor(parent, position, level) {
     this.appState = Marker.appState;
-    this.scene = Marker.scene || (this.appState ? this.appState.scene : null);
+    this.parent = parent || Marker.scene || (this.appState ? this.appState.scene : null);
     
     this.position = position ? position.clone() : new THREE.Vector3();
     this.level = level;
 
     this.group = new THREE.Group();
-    this.group.position.copy(this.position);
+    
+    // If parent is a floor model (not the global scene), 
+    // convert world position to local position to prevent double-offsetting.
+    if (this.parent && this.parent.type !== 'Scene') {
+      this.group.position.copy(this.parent.worldToLocal(this.position.clone()));
+    } else {
+      this.group.position.copy(this.position);
+    }
 
     this.indicator = null; // To be populated by subclasses
 
-    if (this.scene) {
-      this.scene.add(this.group);
+    if (this.parent) {
+      this.parent.add(this.group);
     }
   }
 
@@ -45,11 +52,12 @@ export class LocationMarker extends Marker {
    * @param {THREE.Vector3} position - World position of the marker.
    * @param {boolean} text - Whether to include the "You are here!" text label.
    */
-  constructor(scene, position, text = false, showRing = true) {
-    super();
-    this.scene = scene;
+  constructor(parent, position, text = false, showRing = true) {
+    super(parent, position); // Base class handles positioning and parenting
+    
+    // Use the existing group created by super()
+    this.scene = this.parent;
     this.markerHeight = 0.8;
-    this.group = new THREE.Group();
 
     // ----- materials -----
     const activeMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
@@ -128,9 +136,6 @@ export class LocationMarker extends Marker {
       this._textLabelGroup.position.y = this.markerHeight + 0.4;
       this.group.add(this._textLabelGroup);
     }
-
-    if (position) this.group.position.copy(position);
-    this.scene.add(this.group);
   }
 
   /**
