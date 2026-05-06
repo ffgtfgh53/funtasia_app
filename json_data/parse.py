@@ -12,7 +12,6 @@ for i in data:
     del i["sort_helper"]
     booth_id = i.pop("booth_id")
     level = i.pop("level")
-    
     cleaned_level = level[0].lower()+level[1]
     if "," in i["tags"]:
         i["tags"] = [i.strip() for i in i["tags"].split(",")]
