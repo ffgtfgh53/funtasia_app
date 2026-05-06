@@ -4,7 +4,7 @@ Function: animate() -> Main animation loop
 
 import { Icon } from "@/js/marker/icon.js";
 import { Floor } from "@/js/floor/floor.js";
-import { TextMarker } from "@/js/marker/textmarker.js";
+import { TextMarker, BoothIDMarker } from "@/js/marker/textmarker.js";
 import { Navigation, floorOrder } from "@/js/events/navigation.js";
 
 export function animateCameraTo(appState, cameraTarget, controlsTarget, isSystemAction = false, lerpFactor = 0.05) {
@@ -92,6 +92,13 @@ export function startAnimationLoop(appState) {
     Animate text markers
     */
     Object.values(TextMarker.textMarkersByLevel).forEach(levelMarkers => {
+      levelMarkers.forEach(marker => marker.animate(time, appState.camera));
+    });
+
+    /*
+    Animate booth ID markers
+    */
+    Object.values(BoothIDMarker.boothMarkersByLevel).forEach(levelMarkers => {
       levelMarkers.forEach(marker => marker.animate(time, appState.camera));
     });
     

@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { loadModel } from "@/js/floor/modelLoader.js";
 import { parseModel } from "@/js/floor/modelParser.js";
-import { TextMarker } from "@/js/marker/textmarker.js";
+import { TextMarker, BoothIDMarker } from "@/js/marker/textmarker.js";
 
 export class Floor {
   // Static class attributes initialized in main.js
@@ -35,6 +35,7 @@ export class Floor {
     this.targetY = 0;
     this.interactiveObjects = [];
     this.textMarkers = [];
+    this.boothIDMarkers = [];
     
     // Register self
     Floor.registerFloor(this);
@@ -69,7 +70,7 @@ export class Floor {
     const gltf = await loadModel(this.modelPath);
     const parsingId = this.parentFloorId || this.id;
     const result = parseModel(gltf, this.id, appState.scene, funtasiaData, parsingId);
-    this.attachParsedData(result.model, result.interactiveObjects, result.cameraConfig, result.textMarkers);
+    this.attachParsedData(result.model, result.interactiveObjects, result.cameraConfig, result.textMarkers, result.boothIDMarkers);
     
     this._loading = false;
     window.dispatchEvent(new CustomEvent("floorReady", { detail: { floorId: this.id } }));
@@ -90,6 +91,7 @@ export class Floor {
     
     // Notify TextMarker system of the active level to sync visibility
     TextMarker.setLevel(this.id);
+    BoothIDMarker.setLevel(this.id);
 
     // Apply specific camera config 
     if (this.cameraConfig) {
@@ -115,16 +117,18 @@ export class Floor {
     if (this.isLoaded()) {
       this.sceneModel.visible = false;
       this.textMarkers.forEach(tm => { if (tm.group) tm.group.visible = false; });
+      this.boothIDMarkers.forEach(bm => { if (bm.group) bm.group.visible = false; });
     }
   }
 
   /**
    * Populates the internal state after the GLTF model is parsed.
    */
-  attachParsedData(model, interactiveObjects, cameraConfig, textMarkers = []) {
+  attachParsedData(model, interactiveObjects, cameraConfig, textMarkers = [], boothIDMarkers = []) {
     this.sceneModel = model;
     this.interactiveObjects = interactiveObjects;
     this.cameraConfig = cameraConfig;
     this.textMarkers = textMarkers;
+    this.boothIDMarkers = boothIDMarkers;
   }
 }

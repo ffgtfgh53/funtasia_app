@@ -5,7 +5,7 @@ import { Floor } from "@/js/floor/floor.js";
 import { focusOnObject, focusOnFloor } from "@/js/ui_ux/cameraUtils.js";
 import { Icon } from "@/js/marker/icon.js";
 import { QRMarker } from "@/js/marker/qrmarker.js";
-import { TextMarker } from "@/js/marker/textmarker.js";
+import { TextMarker, BoothIDMarker } from "@/js/marker/textmarker.js";
 import { hideBottomSheet, hideToast, showToast, updateFloorUI, showBottomSheet } from "@/js/ui_ux/ui.js";
 import { animateCameraTo } from "@/js/ui_ux/animate.js";
 import { setFloorOpacity } from "@/js/helper/util.js";
@@ -256,6 +256,7 @@ export class Navigation {
       appState.currentFloor = targetFloor;
       Icon.setLevel(floorId);
       TextMarker.setLevel(floorId);
+BoothIDMarker.setLevel(floorId);
       console.log(`Switched to floor: ${floorId}`);
     }
 

@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { Floor } from "@/js/floor/floor.js";
 import { Icon } from "@/js/marker/icon.js";
 import { QRMarker } from "@/js/marker/qrmarker.js";
-import { TextMarker } from "@/js/marker/textmarker.js";
+import { TextMarker, BoothIDMarker } from "@/js/marker/textmarker.js";
 
 // Add names of interactive objects here to display a TextMarker above them
 export const textMarkerMap = {
@@ -181,7 +181,9 @@ export function parseModel(gltf, floorId, scene, funtasiaData, dataFloorId = flo
       };
   console.log(`[Parser]   Camera Config:`, cameraConfig);
   const objects = [];
+  const boothIDMarkers = [];
   const textMarkers = [];
+  const boothMarkerNodes = new Set();
   const markerNames = new Set();
 
   // Normalize floor lookup key to match the lowercase keys in textMarkerMap
@@ -294,7 +296,6 @@ export function parseModel(gltf, floorId, scene, funtasiaData, dataFloorId = flo
       if (isInteractive) child.userData.material = child.material;
     }
 
-    // 9. Return for non-interactive children
     if (!isInteractive) return;
 
     // 10. Data attribution for interactive objects
@@ -318,6 +319,7 @@ export function parseModel(gltf, floorId, scene, funtasiaData, dataFloorId = flo
     }
 
     if (funtasiaData && funtasiaData[dataFloorId] && funtasiaData[dataFloorId][lookupName]) {
+      let friendlyNameSet = false;
       const entry = funtasiaData[dataFloorId][lookupName];
       if (parentModelName) {
         entry["parent_model"] = parentModelName;
@@ -325,12 +327,25 @@ export function parseModel(gltf, floorId, scene, funtasiaData, dataFloorId = flo
       const boothName = entry["booth_name"];
       if (boothName && boothName !== "-") {
         logicalNode.name = boothName;
+        friendlyNameSet = true;
       }
       const boothDesc = entry["booth_description"];
       if (boothDesc) {
         logicalNode.userData.boothDescription = boothDesc;
       }
       entry["Location"] = logicalNode.getWorldPosition(new THREE.Vector3());
+
+      // Only create a marker if we found a friendly name and haven't labeled this node yet
+      if (friendlyNameSet && !boothMarkerNodes.has(logicalNode.uuid)) {
+          const box = new THREE.Box3().setFromObject(child);
+          const pos = new THREE.Vector3();
+          box.getCenter(pos);
+          pos.y = box.max.y;
+
+          const bim = new BoothIDMarker(model, pos, logicalNode.name, floorId);
+          boothIDMarkers.push(bim);
+          boothMarkerNodes.add(logicalNode.uuid);
+      }
     }
 
     if (Floor.childModels && Floor.childModels[dataFloorId] && Floor.childModels[dataFloorId][logicalNode.name]) {
@@ -342,5 +357,5 @@ export function parseModel(gltf, floorId, scene, funtasiaData, dataFloorId = flo
     }
   });
   
-  return { model, interactiveObjects: objects, cameraConfig, textMarkers };
+  return { model, interactiveObjects: objects, cameraConfig, textMarkers, boothIDMarkers };
 }
