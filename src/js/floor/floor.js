@@ -93,11 +93,26 @@ export class Floor {
     TextMarker.setLevel(this.id);
     BoothIDMarker.setLevel(this.id);
 
-    // Apply specific camera config 
+    // Apply specific camera config
     if (this.cameraConfig) {
       console.log(`[Floor] Applying camera config for ${this.id}:`, this.cameraConfig);
-      controls.target.copy(this.cameraConfig.target);
-      camera.position.copy(this.cameraConfig.initialPosition);
+
+      const isMainLevelTransition = !this.parentFloorId && Floor.currentFloor && !Floor.currentFloor.parentFloorId;
+      const shouldPreserveRotation = window.ghostLayersEnabled && isMainLevelTransition && !Floor.appState.rotationLocked;
+
+      if (shouldPreserveRotation) {
+        // Calculate current vector from target to camera to preserve orientation and zoom
+        const offset = new THREE.Vector3().subVectors(camera.position, controls.target);
+        // Update target to the new floor's center
+        controls.target.copy(this.cameraConfig.target);
+        // Re-apply the offset to the new target
+        camera.position.addVectors(controls.target, offset);
+      } else {
+        // Default: reset to the floor's specific initial position (child models, or if conditions aren't met)
+        controls.target.copy(this.cameraConfig.target);
+        camera.position.copy(this.cameraConfig.initialPosition);
+      }
+
       controls.minDistance = this.cameraConfig.minDistance;
       controls.maxDistance = this.cameraConfig.maxDistance;
       camera.updateProjectionMatrix();

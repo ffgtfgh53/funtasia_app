@@ -11,7 +11,7 @@ import { animateCameraTo } from "@/js/ui_ux/animate.js";
 import { setFloorOpacity } from "@/js/helper/util.js";
 
 export const floorOrder = ['b3', 'b2', 'b1', 'l1', 'l2'];
-const GHOST_SPACING = 2.5; // Tighter spacing for better visual stacking
+const GHOST_SPACING = 1.234567; // Tighter spacing for better visual stacking
 
 export class Navigation {
   static appState = null;
@@ -256,7 +256,7 @@ export class Navigation {
       appState.currentFloor = targetFloor;
       Icon.setLevel(floorId);
       TextMarker.setLevel(floorId);
-BoothIDMarker.setLevel(floorId);
+      BoothIDMarker.setLevel(floorId);
       console.log(`Switched to floor: ${floorId}`);
     }
 
