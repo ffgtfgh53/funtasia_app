@@ -1,4 +1,4 @@
-import{d as e,S as t,t as n,b as i}from"./vendor-BTUyxvrs.js";
+import{d as e,S as t,t as n,b as i}from"./vendor-zZajph6k.js";
 /**
  * @license
  * Copyright 2010-2024 Three.js Authors
