@@ -1,0 +1,1 @@
+import{LocationMarker as s}from"./marker-B5ooNd9M.js";import{F as o}from"./main-DSabtdNp.js";class r extends s{constructor(s,r){const e=o.floors[r];super(e?e.sceneModel:null,s,r,!1,!1),this.level=r}}export{r as D};

@@ -1,1 +1,0 @@
-import{LocationMarker as s}from"./marker-HcX202MK.js";import{F as o}from"./main-Bvpkz6Qy.js";class r extends s{constructor(s,r){const e=o.floors[r];super(e?e.sceneModel:null,s,r,!1,!1),this.level=r}}export{r as D};
